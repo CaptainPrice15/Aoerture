@@ -9,13 +9,33 @@ export const CATEGORIES = [
 
 export const photos = [
   {
+    id: "uploaded-pics-chatgpt-image",
+    title: "Uploaded Frame 01",
+    category: "Landscapes",
+    location: "ImageKit /Pics Cloud",
+    date: "2025-04-03",
+    aspectRatio: "1/1",
+    featured: true,
+    description: "Original photo streamed directly from your ImageKit /Pics cloud folder with automatic responsive optimization.",
+    tags: ["imagekit", "pics-folder", "cloud", "featured"],
+    src: "/Pics/ChatGPT%20Image%20Apr%203,%202025,%2009_39_36%20PM.png",
+    exif: {
+      camera: "Cloud Uploaded Photo",
+      lens: "ImageKit Media Library",
+      focalLength: "Native",
+      aperture: "Auto",
+      shutterSpeed: "Instant",
+      iso: "20GB Free CDN"
+    }
+  },
+  {
     id: "live-imagekit-asset",
-    title: "ImageKit Live Asset",
+    title: "ImageKit Starter Asset",
     category: "Landscapes",
     location: "ImageKit CDN (fm5abuzok)",
     date: "2026-09-19",
     aspectRatio: "3/2",
-    featured: true,
+    featured: false,
     description: "Live verified asset served directly from your ImageKit account (fm5abuzok) with on-the-fly transformations and WebP compression.",
     tags: ["imagekit", "cloud-storage", "live-cdn", "verified"],
     src: "/default-image.jpg",

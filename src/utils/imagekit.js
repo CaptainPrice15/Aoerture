@@ -26,9 +26,12 @@ export const buildOptimizedUrl = (source, { width, height, quality = 80, blur = 
   const isImageKit = source.startsWith('/') || source.includes('ik.imagekit.io');
 
   if (isImageKit) {
-    const cleanPath = source.startsWith('http')
+    let rawPath = source.startsWith('http')
       ? source.replace(/^https?:\/\/ik\.imagekit\.io\/[^/]+/, '')
       : source.startsWith('/') ? source : `/${source}`;
+
+    // Separate clean path from any query parameters (e.g. ?updatedAt=...)
+    const [cleanPath, queryPart] = rawPath.split('?');
 
     const transforms = [];
     if (width) transforms.push(`w-${width}`);
@@ -38,8 +41,13 @@ export const buildOptimizedUrl = (source, { width, height, quality = 80, blur = 
     if (blur > 0) transforms.push(`bl-${blur}`);
     transforms.push('f-auto'); // Auto-deliver WebP or AVIF based on browser
 
-    const trQuery = transforms.length > 0 ? `?tr=${transforms.join(',')}` : '';
-    return `${endpoint}${cleanPath}${trQuery}`;
+    const searchParams = new URLSearchParams(queryPart || '');
+    if (transforms.length > 0) {
+      searchParams.set('tr', transforms.join(','));
+    }
+
+    const queryString = searchParams.toString();
+    return `${endpoint}${cleanPath}${queryString ? `?${queryString}` : ''}`;
   }
 
   // If this is an Unsplash fallback image for previewing out-of-the-box
