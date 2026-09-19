@@ -9,6 +9,26 @@ export const CATEGORIES = [
 
 export const photos = [
   {
+    id: "live-imagekit-asset",
+    title: "ImageKit Live Asset",
+    category: "Landscapes",
+    location: "ImageKit CDN (fm5abuzok)",
+    date: "2026-09-19",
+    aspectRatio: "3/2",
+    featured: true,
+    description: "Live verified asset served directly from your ImageKit account (fm5abuzok) with on-the-fly transformations and WebP compression.",
+    tags: ["imagekit", "cloud-storage", "live-cdn", "verified"],
+    src: "/default-image.jpg",
+    exif: {
+      camera: "ImageKit.io CDN",
+      lens: "Cloud Transformation Engine",
+      focalLength: "Auto-format",
+      aperture: "q-80",
+      shutterSpeed: "Instant",
+      iso: "20 GB Free"
+    }
+  },
+  {
     id: "dolomites-morning",
     title: "Alpenglow on the Tre Cime",
     category: "Landscapes",

@@ -25,8 +25,8 @@ export const siteConfig = {
     ]
   },
   imagekit: {
-    // Default demo endpoint; user can replace this with their own free ImageKit ID in .env
-    urlEndpoint: import.meta.env.VITE_IMAGEKIT_URL_ENDPOINT || "https://ik.imagekit.io/demo",
+    // Verified user endpoint
+    urlEndpoint: import.meta.env.VITE_IMAGEKIT_URL_ENDPOINT || "https://ik.imagekit.io/fm5abuzok",
     defaultFolder: "photography"
   }
 };
