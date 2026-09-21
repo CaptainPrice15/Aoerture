@@ -1,8 +1,8 @@
 import React from 'react';
-import { Camera, Aperture, Sun, Moon, Cloud } from 'lucide-react';
+import { Camera, Aperture, Sun, Moon, Cloud, Plus } from 'lucide-react';
 import { siteConfig } from '../data/siteConfig';
 
-export const Navbar = ({ theme, toggleTheme, onOpenAbout, onOpenCloudGuide, totalPhotos }) => {
+export const Navbar = ({ theme, toggleTheme, onOpenAbout, onOpenCloudGuide, onOpenAddMedia, totalPhotos }) => {
   return (
     <header className="sticky top-0 z-40 w-full backdrop-blur-xl bg-white/80 dark:bg-zinc-950/80 border-b border-zinc-200 dark:border-zinc-800/60 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -28,6 +28,16 @@ export const Navbar = ({ theme, toggleTheme, onOpenAbout, onOpenCloudGuide, tota
 
         {/* Action Buttons */}
         <div className="flex items-center gap-2 sm:gap-3">
+          {/* Add Media Button */}
+          <button
+            onClick={onOpenAddMedia}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-white bg-purple-600 hover:bg-purple-500 shadow-md shadow-purple-600/20 transition-all"
+            title="Add Picture or Video"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            <span>Add Media</span>
+          </button>
+
           {/* Cloud Storage Guide Modal Trigger */}
           <button
             onClick={onOpenCloudGuide}

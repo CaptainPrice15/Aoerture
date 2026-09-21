@@ -1,5 +1,7 @@
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
+import fs from 'node:fs';
+import path from 'node:path';
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
@@ -12,6 +14,34 @@ export default defineConfig(({ mode }) => {
         name: 'imagekit-api-dev-middleware',
         configureServer(server) {
           server.middlewares.use(async (req, res, next) => {
+            if (req.url === '/api/add-photo' && req.method === 'POST') {
+              let body = '';
+              req.on('data', (chunk) => { body += chunk; });
+              req.on('end', () => {
+                try {
+                  const newMedia = JSON.parse(body);
+                  const photosFilePath = path.resolve(process.cwd(), 'src/data/photos.js');
+                  let fileContent = fs.readFileSync(photosFilePath, 'utf8');
+
+                  const marker = 'export const photos = [';
+                  if (fileContent.includes(marker)) {
+                    const jsonFormatted = JSON.stringify(newMedia, null, 2);
+                    const indented = jsonFormatted.split('\n').map((l) => '  ' + l).join('\n');
+                    fileContent = fileContent.replace(marker, `${marker}\n${indented},`);
+                    fs.writeFileSync(photosFilePath, fileContent, 'utf8');
+                  }
+
+                  res.setHeader('Content-Type', 'application/json');
+                  res.end(JSON.stringify({ success: true, photo: newMedia }));
+                } catch (err) {
+                  res.statusCode = 500;
+                  res.setHeader('Content-Type', 'application/json');
+                  res.end(JSON.stringify({ error: err.message }));
+                }
+              });
+              return;
+            }
+
             if (req.url === '/api/photos') {
               const privateKey = env.IMAGEKIT_PRIVATE_KEY || process.env.IMAGEKIT_PRIVATE_KEY || env.VITE_IMAGEKIT_PRIVATE_KEY;
               if (!privateKey) {

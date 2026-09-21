@@ -9,6 +9,7 @@ import { LightboxModal } from './components/LightboxModal';
 import { ExifDrawer } from './components/ExifDrawer';
 import { AboutModal } from './components/AboutModal';
 import { ImageKitGuideModal } from './components/ImageKitGuideModal';
+import { AddMediaModal } from './components/AddMediaModal';
 import { Footer } from './components/Footer';
 import { photos as initialPhotos } from './data/photos';
 
@@ -16,7 +17,18 @@ export default function App() {
   const { theme, toggleTheme } = useTheme();
 
   // State
-  const [photosList, setPhotosList] = useState(initialPhotos);
+  const [photosList, setPhotosList] = useState(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('user_gallery_photos');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+      } catch (e) {}
+    }
+    return initialPhotos;
+  });
   const [isLiveSync, setIsLiveSync] = useState(false);
   const [showSyncBanner, setShowSyncBanner] = useState(true);
   const [activeCategory, setActiveCategory] = useState('All');
@@ -26,6 +38,20 @@ export default function App() {
   const [selectedExifPhoto, setSelectedExifPhoto] = useState(null);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isGuideOpen, setIsGuideOpen] = useState(false);
+  const [isAddMediaOpen, setIsAddMediaOpen] = useState(false);
+
+  const handleAddMedia = (newMedia) => {
+    setPhotosList((prev) => {
+      const filtered = prev.filter((p) => p.id !== newMedia.id);
+      const updated = [newMedia, ...filtered];
+      if (typeof window !== 'undefined') {
+        try {
+          localStorage.setItem('user_gallery_photos', JSON.stringify(updated));
+        } catch (e) {}
+      }
+      return updated;
+    });
+  };
 
   // Attempt to fetch live photos from ImageKit if /api/photos is available
   useEffect(() => {
@@ -138,6 +164,7 @@ export default function App() {
         toggleTheme={toggleTheme}
         onOpenAbout={() => setIsAboutOpen(true)}
         onOpenCloudGuide={() => setIsGuideOpen(true)}
+        onOpenAddMedia={() => setIsAddMediaOpen(true)}
         totalPhotos={photosList.length}
       />
 
@@ -239,6 +266,14 @@ export default function App() {
       <ImageKitGuideModal
         isOpen={isGuideOpen}
         onClose={() => setIsGuideOpen(false)}
+      />
+
+      {/* Add Media (Picture/Video) Modal */}
+      <AddMediaModal
+        isOpen={isAddMediaOpen}
+        onClose={() => setIsAddMediaOpen(false)}
+        onAddMedia={handleAddMedia}
+        categories={availableCategories}
       />
     </div>
   );
