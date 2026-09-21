@@ -51,7 +51,7 @@ export default defineConfig(({ mode }) => {
               }
               try {
                 const authHeader = 'Basic ' + Buffer.from(privateKey + ':').toString('base64');
-                const response = await fetch('https://api.imagekit.io/v1/files?limit=100', {
+                const response = await fetch('https://api.imagekit.io/v1/files?limit=1000', {
                   headers: { Authorization: authHeader }
                 });
                 if (!response.ok) {
@@ -86,12 +86,15 @@ export default defineConfig(({ mode }) => {
                     (file.mime && file.mime.startsWith('video/')) ||
                     /\.(mp4|webm|mov|mkv|avi|m4v)$/i.test(file.name);
 
-                  let category = 'Gallery';
-                  if (file.filePath?.includes('/Pics')) {
-                    category = isVideo ? 'Videos' : 'Pics';
-                  } else if (isVideo) {
-                    category = 'Videos';
+                  // Extract top folder name dynamically if present (e.g. /Pics/img.jpg -> "Pics", /Nature/img.jpg -> "Nature")
+                  let folderName = '';
+                  if (file.filePath) {
+                    const parts = file.filePath.split('/').filter(Boolean);
+                    if (parts.length > 1) {
+                      folderName = parts[0];
+                    }
                   }
+                  const category = folderName || (isVideo ? 'Videos' : 'Gallery');
 
                   return {
                     id: file.fileId || `ik-${idx}`,
@@ -99,7 +102,7 @@ export default defineConfig(({ mode }) => {
                     category: category,
                     mediaType: isVideo ? 'video' : 'photo',
                     mime: file.mime || (isVideo ? 'video/mp4' : 'image/jpeg'),
-                    location: isVideo ? 'ImageKit Video CDN' : 'ImageKit Media Library',
+                    location: folderName ? `ImageKit /${folderName}` : (isVideo ? 'ImageKit Video Stream' : 'ImageKit Media Library'),
                     date: file.createdAt ? file.createdAt.slice(0, 10) : new Date().toISOString().slice(0, 10),
                     aspectRatio: file.width && file.height
                       ? (file.width === file.height ? '1/1' : file.width > file.height ? (isVideo ? '16/9' : '3/2') : '4/5')
@@ -112,7 +115,7 @@ export default defineConfig(({ mode }) => {
                       : `Original photo streamed from your ImageKit cloud folder: ${file.name}`,
                     tags: file.tags && file.tags.length > 0
                       ? file.tags
-                      : (isVideo ? ['video', 'imagekit', 'cloud'] : ['imagekit', 'cloud']),
+                      : [folderName ? folderName.toLowerCase() : '', isVideo ? 'video' : 'photo', 'imagekit', 'cloud'].filter(Boolean),
                     src: file.filePath || `/${file.name}`,
                     thumbnail: file.thumbnailUrl || undefined,
                     exif: {
