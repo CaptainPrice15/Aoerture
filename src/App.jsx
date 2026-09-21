@@ -1,10 +1,11 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Sparkles, X } from 'lucide-react';
+import { Sparkles, X, ArrowLeft, Folder } from 'lucide-react';
 import { useTheme } from './hooks/useTheme';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { FilterBar } from './components/FilterBar';
 import { GalleryGrid } from './components/GalleryGrid';
+import { FolderGrid } from './components/FolderGrid';
 import { LightboxModal } from './components/LightboxModal';
 import { ExifDrawer } from './components/ExifDrawer';
 import { AboutModal } from './components/AboutModal';
@@ -32,6 +33,7 @@ export default function App() {
   const [isLiveSync, setIsLiveSync] = useState(false);
   const [showSyncBanner, setShowSyncBanner] = useState(true);
   const [activeCategory, setActiveCategory] = useState('All');
+  const [selectedFolderPath, setSelectedFolderPath] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('featured');
   const [lightboxIndex, setLightboxIndex] = useState(-1);
@@ -88,6 +90,24 @@ export default function App() {
     return Array.from(cats);
   }, [photosList]);
 
+  // Compute folders dynamically from photos
+  const availableFolders = useMemo(() => {
+    const foldersMap = new Map();
+    photosList.forEach((photo) => {
+      const path = photo.folderPath || (photo.src?.startsWith('/Pics') ? '/Pics' : '/');
+      const name = photo.folder || (path === '/' ? 'Root Library' : path.replace(/^\/+/, ''));
+      if (!foldersMap.has(path)) {
+        foldersMap.set(path, {
+          name,
+          path,
+          photos: []
+        });
+      }
+      foldersMap.get(path).photos.push(photo);
+    });
+    return Array.from(foldersMap.values());
+  }, [photosList]);
+
   // Category counts calculation
   const categoryCounts = useMemo(() => {
     const counts = { All: photosList.length };
@@ -103,22 +123,28 @@ export default function App() {
   const filteredPhotos = useMemo(() => {
     return photosList
       .filter((photo) => {
-        // Category match
-        if (activeCategory !== 'All' && photo.category !== activeCategory) {
+        // Folder match
+        if (activeCategory === 'Folders') {
+          if (selectedFolderPath) {
+            const photoPath = photo.folderPath || (photo.src?.startsWith('/Pics') ? '/Pics' : '/');
+            if (photoPath !== selectedFolderPath) return false;
+          }
+        } else if (activeCategory !== 'All' && photo.category !== activeCategory) {
           return false;
         }
 
         // Search match
         if (searchQuery.trim()) {
           const query = searchQuery.toLowerCase().trim();
-          const matchTitle = photo.title.toLowerCase().includes(query);
+          const matchTitle = photo.title?.toLowerCase().includes(query);
           const matchDesc = photo.description?.toLowerCase().includes(query);
           const matchLoc = photo.location?.toLowerCase().includes(query);
           const matchTags = photo.tags?.some((t) => t.toLowerCase().includes(query));
+          const matchFolder = photo.folder?.toLowerCase().includes(query);
           const matchCamera = photo.exif?.camera?.toLowerCase().includes(query);
           const matchLens = photo.exif?.lens?.toLowerCase().includes(query);
 
-          return matchTitle || matchDesc || matchLoc || matchTags || matchCamera || matchLens;
+          return matchTitle || matchDesc || matchLoc || matchTags || matchFolder || matchCamera || matchLens;
         }
 
         return true;
@@ -207,7 +233,16 @@ export default function App() {
         <FilterBar
           categories={availableCategories}
           activeCategory={activeCategory}
-          onSelectCategory={setActiveCategory}
+          onSelectCategory={(cat) => {
+            setActiveCategory(cat);
+            if (cat !== 'Folders') setSelectedFolderPath(null);
+          }}
+          folders={availableFolders}
+          activeFolder={selectedFolderPath}
+          onSelectFolder={(path) => {
+            setActiveCategory('Folders');
+            setSelectedFolderPath(path);
+          }}
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
           sortBy={sortBy}
@@ -216,13 +251,43 @@ export default function App() {
           categoryCounts={categoryCounts}
         />
 
-        {/* Masonry Image Gallery */}
-        <GalleryGrid
-          photos={filteredPhotos}
-          onSelectPhoto={handleOpenLightbox}
-          onOpenExif={handleOpenExif}
-          onResetFilters={handleResetFilters}
-        />
+        {/* If in Folders view with no specific folder selected: show Folders Grid */}
+        {activeCategory === 'Folders' && !selectedFolderPath ? (
+          <FolderGrid
+            folders={availableFolders}
+            onSelectFolder={(path) => setSelectedFolderPath(path)}
+          />
+        ) : (
+          <>
+            {/* Breadcrumb if inside a folder */}
+            {activeCategory === 'Folders' && selectedFolderPath && (
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <button
+                  onClick={() => setSelectedFolderPath(null)}
+                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-zinc-100 dark:bg-zinc-900 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-600 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-800 transition-all shadow-sm w-fit"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5" />
+                  <span>All Folders</span>
+                </button>
+                <div className="flex items-center gap-2 text-xs text-zinc-600 dark:text-zinc-400">
+                  <span>Viewing folder:</span>
+                  <span className="font-bold text-purple-600 dark:text-purple-400 font-mono bg-purple-50 dark:bg-purple-950/60 px-2.5 py-1 rounded-md border border-purple-200 dark:border-purple-800/60">
+                    {availableFolders.find((f) => f.path === selectedFolderPath)?.name || selectedFolderPath}
+                  </span>
+                  <span className="text-[11px] font-mono">({filteredPhotos.length} works)</span>
+                </div>
+              </div>
+            )}
+
+            {/* Masonry Image Gallery */}
+            <GalleryGrid
+              photos={filteredPhotos}
+              onSelectPhoto={handleOpenLightbox}
+              onOpenExif={handleOpenExif}
+              onResetFilters={handleResetFilters}
+            />
+          </>
+        )}
       </main>
 
       {/* Footer */}

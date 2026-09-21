@@ -86,15 +86,17 @@ export default defineConfig(({ mode }) => {
                     (file.mime && file.mime.startsWith('video/')) ||
                     /\.(mp4|webm|mov|mkv|avi|m4v)$/i.test(file.name);
 
-                  // Extract top folder name dynamically if present (e.g. /Pics/img.jpg -> "Pics", /Nature/img.jpg -> "Nature")
-                  let folderName = '';
+                  // Extract top folder name dynamically if present (e.g. /Pics/img.jpg -> "Pics")
+                  let folderName = 'Root Library';
+                  let folderPath = '/';
                   if (file.filePath) {
                     const parts = file.filePath.split('/').filter(Boolean);
                     if (parts.length > 1) {
                       folderName = parts[0];
+                      folderPath = `/${parts[0]}`;
                     }
                   }
-                  const category = folderName || (isVideo ? 'Videos' : 'Pics');
+                  const category = (folderName !== 'Root Library' ? folderName : '') || (isVideo ? 'Videos' : 'Pics');
 
                   const meta = file.embeddedMetadata || {};
                   const cameraModel = [meta.Make, meta.Model].filter(Boolean).join(' ');
@@ -115,6 +117,8 @@ export default defineConfig(({ mode }) => {
                     id: file.fileId || `ik-${idx}`,
                     title: title,
                     category: category,
+                    folder: folderName,
+                    folderPath: folderPath,
                     mediaType: isVideo ? 'video' : 'photo',
                     mime: file.mime || (isVideo ? 'video/mp4' : 'image/jpeg'),
                     location: folderName ? `ImageKit /${folderName}` : (isVideo ? 'ImageKit Video Stream' : 'ImageKit Media Library'),
