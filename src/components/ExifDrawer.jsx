@@ -23,18 +23,18 @@ export const ExifDrawer = ({ photo, isOpen, onClose, onOpenLightbox }) => {
 
       {/* Slide-over panel */}
       <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-        <div className="w-screen max-w-md bg-zinc-950 border-l border-zinc-800 text-zinc-100 shadow-2xl flex flex-col justify-between overflow-y-auto">
+        <div className="w-screen max-w-md bg-white dark:bg-zinc-950 border-l border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-2xl flex flex-col justify-between overflow-y-auto transition-colors duration-300">
           {/* Header */}
-          <div className="p-6 border-b border-zinc-800 flex items-center justify-between">
+          <div className="p-6 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Aperture className="w-5 h-5 text-purple-400" />
-              <h2 className="text-sm font-bold uppercase tracking-wider text-zinc-200">
+              <Aperture className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+              <h2 className="text-sm font-bold uppercase tracking-wider text-zinc-800 dark:text-zinc-200">
                 Camera & Shot Data
               </h2>
             </div>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
+              className="p-1.5 rounded-lg text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -43,7 +43,7 @@ export const ExifDrawer = ({ photo, isOpen, onClose, onOpenLightbox }) => {
           {/* Body Content */}
           <div className="p-6 space-y-6 flex-1">
             {/* Image Preview Thumbnail */}
-            <div className="relative rounded-xl overflow-hidden border border-zinc-800 group aspect-[3/2] bg-zinc-900">
+            <div className="relative rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 group aspect-[3/2] bg-zinc-100 dark:bg-zinc-900">
               <img
                 src={getThumbnailUrl(photo)}
                 alt={photo.title}
@@ -59,25 +59,25 @@ export const ExifDrawer = ({ photo, isOpen, onClose, onOpenLightbox }) => {
 
             {/* Title & Description */}
             <div>
-              <div className="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20 mb-2">
+              <div className="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 mb-2">
                 {photo.category}
               </div>
-              <h3 className="text-xl font-bold tracking-tight text-white">{photo.title}</h3>
+              <h3 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white">{photo.title}</h3>
               {photo.description && (
-                <p className="mt-2 text-sm text-zinc-400 leading-relaxed font-light">
+                <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed font-light">
                   {photo.description}
                 </p>
               )}
             </div>
 
             {/* Location & Date */}
-            <div className="grid grid-cols-2 gap-3 p-3 rounded-xl bg-zinc-900/60 border border-zinc-800/80 text-xs">
-              <div className="flex items-center gap-2 text-zinc-300">
-                <MapPin className="w-4 h-4 text-purple-400 shrink-0" />
+            <div className="grid grid-cols-2 gap-3 p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800/80 text-xs">
+              <div className="flex items-center gap-2 text-zinc-700 dark:text-zinc-300">
+                <MapPin className="w-4 h-4 text-purple-500 shrink-0" />
                 <span className="truncate">{photo.location || 'Undisclosed'}</span>
               </div>
-              <div className="flex items-center gap-2 text-zinc-300">
-                <Calendar className="w-4 h-4 text-purple-400 shrink-0" />
+              <div className="flex items-center gap-2 text-zinc-700 dark:text-zinc-300">
+                <Calendar className="w-4 h-4 text-purple-500 shrink-0" />
                 <span>{photo.date || 'Unknown'}</span>
               </div>
             </div>
@@ -85,63 +85,63 @@ export const ExifDrawer = ({ photo, isOpen, onClose, onOpenLightbox }) => {
             {/* Technical EXIF Grid */}
             {photo.exif ? (
               <div className="space-y-3">
-                <h4 className="text-xs font-semibold uppercase tracking-wider text-zinc-400">
+                <h4 className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
                   Exposure Parameters
                 </h4>
 
                 <div className="grid grid-cols-2 gap-2.5">
                   {/* Camera Body */}
-                  <div className="col-span-2 p-3 rounded-xl bg-zinc-900/80 border border-zinc-800">
-                    <div className="flex items-center gap-2 text-xs text-zinc-400 mb-1">
-                      <Camera className="w-3.5 h-3.5 text-purple-400" />
+                  <div className="col-span-2 p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800">
+                    <div className="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400 mb-1">
+                      <Camera className="w-3.5 h-3.5 text-purple-500" />
                       <span>Camera Body</span>
                     </div>
-                    <p className="font-mono text-sm font-semibold text-white">{photo.exif.camera}</p>
+                    <p className="font-mono text-sm font-semibold text-zinc-900 dark:text-white">{photo.exif.camera}</p>
                   </div>
 
                   {/* Lens */}
-                  <div className="col-span-2 p-3 rounded-xl bg-zinc-900/80 border border-zinc-800">
-                    <div className="flex items-center gap-2 text-xs text-zinc-400 mb-1">
-                      <Layers className="w-3.5 h-3.5 text-purple-400" />
+                  <div className="col-span-2 p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800">
+                    <div className="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400 mb-1">
+                      <Layers className="w-3.5 h-3.5 text-purple-500" />
                       <span>Lens</span>
                     </div>
-                    <p className="font-mono text-sm font-semibold text-white">{photo.exif.lens}</p>
+                    <p className="font-mono text-sm font-semibold text-zinc-900 dark:text-white">{photo.exif.lens}</p>
                   </div>
 
                   {/* Aperture */}
-                  <div className="p-3 rounded-xl bg-zinc-900/80 border border-zinc-800">
-                    <div className="flex items-center gap-1.5 text-xs text-zinc-400 mb-1">
-                      <Aperture className="w-3.5 h-3.5 text-amber-400" />
+                  <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800">
+                    <div className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 mb-1">
+                      <Aperture className="w-3.5 h-3.5 text-amber-500" />
                       <span>Aperture</span>
                     </div>
-                    <p className="font-mono text-sm font-bold text-white">{photo.exif.aperture}</p>
+                    <p className="font-mono text-sm font-bold text-zinc-900 dark:text-white">{photo.exif.aperture}</p>
                   </div>
 
                   {/* Shutter Speed */}
-                  <div className="p-3 rounded-xl bg-zinc-900/80 border border-zinc-800">
-                    <div className="flex items-center gap-1.5 text-xs text-zinc-400 mb-1">
-                      <Clock className="w-3.5 h-3.5 text-cyan-400" />
+                  <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800">
+                    <div className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 mb-1">
+                      <Clock className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
                       <span>Shutter</span>
                     </div>
-                    <p className="font-mono text-sm font-bold text-white">{photo.exif.shutterSpeed}</p>
+                    <p className="font-mono text-sm font-bold text-zinc-900 dark:text-white">{photo.exif.shutterSpeed}</p>
                   </div>
 
                   {/* ISO */}
-                  <div className="p-3 rounded-xl bg-zinc-900/80 border border-zinc-800">
-                    <div className="flex items-center gap-1.5 text-xs text-zinc-400 mb-1">
-                      <Zap className="w-3.5 h-3.5 text-emerald-400" />
+                  <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800">
+                    <div className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 mb-1">
+                      <Zap className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                       <span>ISO</span>
                     </div>
-                    <p className="font-mono text-sm font-bold text-white">{photo.exif.iso}</p>
+                    <p className="font-mono text-sm font-bold text-zinc-900 dark:text-white">{photo.exif.iso}</p>
                   </div>
 
                   {/* Focal Length */}
-                  <div className="p-3 rounded-xl bg-zinc-900/80 border border-zinc-800">
-                    <div className="flex items-center gap-1.5 text-xs text-zinc-400 mb-1">
-                      <Layers className="w-3.5 h-3.5 text-pink-400" />
+                  <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800">
+                    <div className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 mb-1">
+                      <Layers className="w-3.5 h-3.5 text-pink-500" />
                       <span>Focal Length</span>
                     </div>
-                    <p className="font-mono text-sm font-bold text-white">{photo.exif.focalLength}</p>
+                    <p className="font-mono text-sm font-bold text-zinc-900 dark:text-white">{photo.exif.focalLength}</p>
                   </div>
                 </div>
               </div>
@@ -152,14 +152,14 @@ export const ExifDrawer = ({ photo, isOpen, onClose, onOpenLightbox }) => {
             {/* Tags */}
             {photo.tags && photo.tags.length > 0 && (
               <div>
-                <h4 className="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2.5">
+                <h4 className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-2.5">
                   Tags
                 </h4>
                 <div className="flex flex-wrap gap-1.5">
                   {photo.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-mono bg-zinc-900 border border-zinc-800 text-zinc-400"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-mono bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400"
                     >
                       <Tag className="w-2.5 h-2.5" />
                       <span>{tag}</span>
@@ -171,7 +171,7 @@ export const ExifDrawer = ({ photo, isOpen, onClose, onOpenLightbox }) => {
           </div>
 
           {/* Footer Actions */}
-          <div className="p-6 border-t border-zinc-800 bg-zinc-950 flex gap-3">
+          <div className="p-6 border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 flex gap-3">
             <button
               onClick={onOpenLightbox}
               className="flex-1 py-2.5 px-4 rounded-xl text-xs font-semibold bg-purple-600 hover:bg-purple-500 text-white shadow-lg shadow-purple-600/30 transition-all text-center"
@@ -180,9 +180,9 @@ export const ExifDrawer = ({ photo, isOpen, onClose, onOpenLightbox }) => {
             </button>
             <button
               onClick={handleCopyLink}
-              className="py-2.5 px-4 rounded-xl text-xs font-medium bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white transition-all flex items-center gap-1.5"
+              className="py-2.5 px-4 rounded-xl text-xs font-medium bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-all flex items-center gap-1.5"
             >
-              {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Share2 className="w-3.5 h-3.5" />}
+              {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Share2 className="w-3.5 h-3.5" />}
               <span>{copied ? 'Copied' : 'Share'}</span>
             </button>
           </div>

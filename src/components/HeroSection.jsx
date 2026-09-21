@@ -7,7 +7,7 @@ export const HeroSection = ({ totalPhotos, onScrollToGallery }) => {
   const displayPhotosCount = totalPhotos !== undefined ? totalPhotos : photographer.stats.photosCount;
 
   return (
-    <section className="relative overflow-hidden pt-10 pb-8 sm:pt-14 sm:pb-12 border-b border-zinc-800/40 dark:border-zinc-800/40 border-zinc-200">
+    <section className="relative overflow-hidden pt-10 pb-8 sm:pt-14 sm:pb-12 border-b border-zinc-200 dark:border-zinc-800/40 transition-colors duration-300">
       {/* Subtle background ambient radial light */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500/10 dark:bg-purple-600/10 rounded-full blur-3xl pointer-events-none" />
 

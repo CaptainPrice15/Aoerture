@@ -124,7 +124,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 dark:bg-zinc-950 bg-white text-zinc-900 dark:text-zinc-100 flex flex-col transition-colors selection:bg-purple-500/30 selection:text-purple-300">
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 flex flex-col transition-colors duration-300 selection:bg-purple-500/30 selection:text-purple-300">
       {/* Top Navigation */}
       <Navbar
         theme={theme}

@@ -1,12 +1,12 @@
 import React from 'react';
-import { X, Cloud, ArrowRight, CheckCircle2, Copy, ExternalLink } from 'lucide-react';
+import { X, Cloud, CheckCircle2, Copy, ExternalLink } from 'lucide-react';
 
 export const ImageKitGuideModal = ({ isOpen, onClose }) => {
   const [copiedEnv, setCopiedEnv] = React.useState(false);
 
   if (!isOpen) return null;
 
-  const envSnippet = 'VITE_IMAGEKIT_URL_ENDPOINT=https://ik.imagekit.io/your_imagekit_id';
+  const envSnippet = 'VITE_IMAGEKIT_URL_ENDPOINT=https://ik.imagekit.io/fm5abuzok';
 
   const handleCopyEnv = () => {
     navigator.clipboard.writeText(envSnippet);
@@ -18,26 +18,26 @@ export const ImageKitGuideModal = ({ isOpen, onClose }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
 
       {/* Modal Card */}
-      <div className="relative w-full max-w-2xl bg-zinc-950 border border-zinc-800 rounded-3xl text-zinc-100 shadow-2xl overflow-hidden z-10 my-8">
+      <div className="relative w-full max-w-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-3xl text-zinc-900 dark:text-zinc-100 shadow-2xl overflow-hidden z-10 my-8 transition-colors duration-300">
         {/* Header */}
-        <div className="p-6 border-b border-zinc-800 flex items-center justify-between">
+        <div className="p-6 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400">
+            <div className="p-2 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-600 dark:text-purple-400">
               <Cloud className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-base font-bold text-white">ImageKit.io Free Cloud Storage Setup</h2>
-              <p className="text-xs text-zinc-400">20 GB/month Free CDN, auto-format & on-the-fly transformations</p>
+              <h2 className="text-base font-bold text-zinc-900 dark:text-white">ImageKit.io Free Cloud Storage Setup</h2>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400">20 GB/month Free CDN, auto-format & on-the-fly transformations</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
+            className="p-1.5 rounded-lg text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -51,9 +51,9 @@ export const ImageKitGuideModal = ({ isOpen, onClose }) => {
               1
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-white">Sign up for Free ImageKit</h3>
-              <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
-                Go to <a href="https://imagekit.io" target="_blank" rel="noreferrer" className="text-purple-400 underline inline-flex items-center gap-0.5">imagekit.io <ExternalLink className="w-3 h-3" /></a> and register a free account. No credit card is required.
+              <h3 className="text-sm font-semibold text-zinc-900 dark:text-white">Sign up for Free ImageKit</h3>
+              <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-1 leading-relaxed">
+                Go to <a href="https://imagekit.io" target="_blank" rel="noreferrer" className="text-purple-600 dark:text-purple-400 underline inline-flex items-center gap-0.5 font-medium">imagekit.io <ExternalLink className="w-3 h-3" /></a> and register a free account. No credit card is required.
               </p>
             </div>
           </div>
@@ -64,9 +64,9 @@ export const ImageKitGuideModal = ({ isOpen, onClose }) => {
               2
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-white">Find your URL-Endpoint</h3>
-              <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
-                In your ImageKit dashboard, open the <strong>Developer Options</strong> tab. Copy your <strong>URL-endpoint</strong> (it looks like <code className="text-purple-300 bg-zinc-900 px-1 py-0.5 rounded font-mono">https://ik.imagekit.io/your_id</code>).
+              <h3 className="text-sm font-semibold text-zinc-900 dark:text-white">Find your URL-Endpoint</h3>
+              <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-1 leading-relaxed">
+                In your ImageKit dashboard, open the <strong>Developer Options</strong> tab. Copy your <strong>URL-endpoint</strong> (it looks like <code className="text-purple-600 dark:text-purple-300 bg-zinc-100 dark:bg-zinc-900 px-1 py-0.5 rounded font-mono">https://ik.imagekit.io/your_id</code>).
               </p>
             </div>
           </div>
@@ -77,18 +77,18 @@ export const ImageKitGuideModal = ({ isOpen, onClose }) => {
               3
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-white">Update your .env file</h3>
-              <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
-                Add your endpoint to the <code className="text-purple-300 bg-zinc-900 px-1 py-0.5 rounded font-mono">.env</code> file in this project:
+              <h3 className="text-sm font-semibold text-zinc-900 dark:text-white">Update your .env file</h3>
+              <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-1 leading-relaxed">
+                Add your endpoint to the <code className="text-purple-600 dark:text-purple-300 bg-zinc-100 dark:bg-zinc-900 px-1 py-0.5 rounded font-mono">.env</code> file in this project:
               </p>
-              <div className="mt-2.5 p-3 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-between">
-                <code className="text-xs font-mono text-zinc-200 truncate">{envSnippet}</code>
+              <div className="mt-2.5 p-3 rounded-xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+                <code className="text-xs font-mono text-zinc-800 dark:text-zinc-200 truncate">{envSnippet}</code>
                 <button
                   onClick={handleCopyEnv}
-                  className="p-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white transition-colors shrink-0 ml-2"
+                  className="p-1.5 rounded-lg bg-zinc-200 dark:bg-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-colors shrink-0 ml-2"
                   title="Copy snippet"
                 >
-                  {copiedEnv ? <CheckCircle2 className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                  {copiedEnv ? <CheckCircle2 className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
                 </button>
               </div>
             </div>
@@ -100,32 +100,32 @@ export const ImageKitGuideModal = ({ isOpen, onClose }) => {
               4
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-white">Show Your ImageKit Photos</h3>
-              <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
+              <h3 className="text-sm font-semibold text-zinc-900 dark:text-white">Show Your ImageKit Photos</h3>
+              <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-1 leading-relaxed">
                 You have two seamless options:
               </p>
-              <ul className="mt-2 space-y-1.5 text-xs text-zinc-300">
+              <ul className="mt-2 space-y-1.5 text-xs text-zinc-700 dark:text-zinc-300">
                 <li className="flex items-start gap-2">
-                  <span className="text-purple-400 font-bold">A.</span>
-                  <span><strong>Automatic Sync (Recommended):</strong> Add <code className="text-purple-300 bg-zinc-900 px-1 py-0.5 rounded font-mono">IMAGEKIT_PRIVATE_KEY</code> in <code className="text-zinc-200">.env</code> or Vercel Environment Variables. All images in your ImageKit account will automatically stream to the gallery!</span>
+                  <span className="text-purple-600 dark:text-purple-400 font-bold">A.</span>
+                  <span><strong>Automatic Sync (Recommended):</strong> Add <code className="text-purple-600 dark:text-purple-300 bg-zinc-100 dark:bg-zinc-900 px-1 py-0.5 rounded font-mono">IMAGEKIT_PRIVATE_KEY</code> in <code className="font-mono">.env</code> or Vercel. All images in your ImageKit account stream to the gallery!</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-purple-400 font-bold">B.</span>
-                  <span><strong>Manual Catalogue:</strong> Add individual photo paths directly to <code className="text-purple-300 bg-zinc-900 px-1 py-0.5 rounded font-mono">src/data/photos.js</code>.</span>
+                  <span className="text-purple-600 dark:text-purple-400 font-bold">B.</span>
+                  <span><strong>Manual Catalogue:</strong> Add individual photo paths directly to <code className="text-purple-600 dark:text-purple-300 bg-zinc-100 dark:bg-zinc-900 px-1 py-0.5 rounded font-mono">src/data/photos.js</code>.</span>
                 </li>
               </ul>
             </div>
           </div>
 
           {/* Callout box */}
-          <div className="p-4 rounded-2xl bg-zinc-900/80 border border-zinc-800 text-xs text-zinc-300">
-            <span className="font-semibold text-purple-400">✨ Automatic Magic: </span>
+          <div className="p-4 rounded-2xl bg-zinc-100 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800 text-xs text-zinc-700 dark:text-zinc-300">
+            <span className="font-semibold text-purple-600 dark:text-purple-400">✨ Automatic Magic: </span>
             The website automatically requests ImageKit to convert your photos to modern WebP format, delivers responsive thumbnail cards, and generates 25px blur-up placeholders!
           </div>
         </div>
 
         {/* Footer */}
-        <div className="p-6 border-t border-zinc-800 bg-zinc-950 flex justify-end">
+        <div className="p-6 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 flex justify-end">
           <button
             onClick={onClose}
             className="px-5 py-2.5 rounded-xl text-xs font-semibold bg-purple-600 hover:bg-purple-500 text-white transition-all shadow-lg shadow-purple-600/30"

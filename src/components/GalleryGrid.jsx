@@ -6,7 +6,7 @@ export const GalleryGrid = ({ photos, onSelectPhoto, onOpenExif, onResetFilters 
   if (photos.length === 0) {
     return (
       <div className="py-24 text-center">
-        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-500">
+        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 flex items-center justify-center text-zinc-400 dark:text-zinc-500">
           <ImageOff className="w-8 h-8" />
         </div>
         <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">No photos found</h3>

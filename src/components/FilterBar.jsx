@@ -14,7 +14,7 @@ export const FilterBar = ({
   categoryCounts
 }) => {
   return (
-    <div className="sticky top-16 z-30 w-full backdrop-blur-xl bg-zinc-950/90 dark:bg-zinc-950/90 bg-white/90 border-b border-zinc-800/40 dark:border-zinc-800/40 border-zinc-200 py-3.5 transition-colors">
+    <div className="sticky top-16 z-30 w-full backdrop-blur-xl bg-white/90 dark:bg-zinc-950/90 border-b border-zinc-200 dark:border-zinc-800/40 py-3.5 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center justify-between gap-3">
         {/* Category Pills */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 no-scrollbar">

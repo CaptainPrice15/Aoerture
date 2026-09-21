@@ -28,7 +28,7 @@ export const PhotoCard = ({ photo, onClick, onOpenExif }) => {
 
   return (
     <div
-      className="group relative mb-6 break-inside-avoid rounded-2xl overflow-hidden bg-zinc-900 border border-zinc-800/80 shadow-md hover:shadow-2xl hover:shadow-purple-950/20 transition-all duration-300 transform hover:-translate-y-1 cursor-pointer"
+      className="group relative mb-6 break-inside-avoid rounded-2xl overflow-hidden bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 shadow-md hover:shadow-xl hover:shadow-purple-500/10 dark:hover:shadow-purple-950/20 transition-all duration-300 transform hover:-translate-y-1 cursor-pointer"
       onClick={onClick}
     >
       {/* Aspect Ratio Container */}
