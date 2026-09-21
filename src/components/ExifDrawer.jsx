@@ -1,11 +1,13 @@
 import React from 'react';
-import { X, Camera, Aperture, Clock, Zap, MapPin, Calendar, Tag, Layers, Share2, Check } from 'lucide-react';
-import { getThumbnailUrl } from '../utils/imagekit';
+import { X, Camera, Aperture, Clock, Zap, MapPin, Calendar, Tag, Layers, Share2, Check, Play } from 'lucide-react';
+import { getThumbnailUrl, isVideoSource } from '../utils/imagekit';
 
 export const ExifDrawer = ({ photo, isOpen, onClose, onOpenLightbox }) => {
   const [copied, setCopied] = React.useState(false);
 
   if (!isOpen || !photo) return null;
+
+  const isVideo = photo.mediaType === 'video' || isVideoSource(photo.src);
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -29,7 +31,7 @@ export const ExifDrawer = ({ photo, isOpen, onClose, onOpenLightbox }) => {
             <div className="flex items-center gap-2">
               <Aperture className="w-5 h-5 text-purple-600 dark:text-purple-400" />
               <h2 className="text-sm font-bold uppercase tracking-wider text-zinc-800 dark:text-zinc-200">
-                Camera & Shot Data
+                {isVideo ? 'Media & Technical Specs' : 'Camera & Shot Data'}
               </h2>
             </div>
             <button
@@ -42,18 +44,25 @@ export const ExifDrawer = ({ photo, isOpen, onClose, onOpenLightbox }) => {
 
           {/* Body Content */}
           <div className="p-6 space-y-6 flex-1">
-            {/* Image Preview Thumbnail */}
+            {/* Image/Video Preview Thumbnail */}
             <div className="relative rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 group aspect-[3/2] bg-zinc-100 dark:bg-zinc-900">
               <img
                 src={getThumbnailUrl(photo)}
                 alt={photo.title}
                 className="w-full h-full object-cover"
               />
+              {isVideo && (
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="w-10 h-10 rounded-full bg-black/60 backdrop-blur-md border border-white/20 flex items-center justify-center text-white shadow-xl">
+                    <Play className="w-4 h-4 fill-white ml-0.5" />
+                  </div>
+                </div>
+              )}
               <button
                 onClick={onOpenLightbox}
                 className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-xs font-medium text-white gap-2 backdrop-blur-xs"
               >
-                <span>Click for Fullscreen</span>
+                <span>{isVideo ? 'Click to Play Video' : 'Click for Fullscreen'}</span>
               </button>
             </div>
 
@@ -176,7 +185,7 @@ export const ExifDrawer = ({ photo, isOpen, onClose, onOpenLightbox }) => {
               onClick={onOpenLightbox}
               className="flex-1 py-2.5 px-4 rounded-xl text-xs font-semibold bg-purple-600 hover:bg-purple-500 text-white shadow-lg shadow-purple-600/30 transition-all text-center"
             >
-              Open Fullscreen
+              {isVideo ? 'Play Video Fullscreen' : 'Open Fullscreen'}
             </button>
             <button
               onClick={handleCopyLink}

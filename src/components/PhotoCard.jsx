@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Maximize2, MapPin, Camera, Sparkles, Aperture } from 'lucide-react';
-import { getThumbnailUrl, getLqipUrl } from '../utils/imagekit';
+import { Maximize2, MapPin, Camera, Sparkles, Aperture, Play } from 'lucide-react';
+import { getThumbnailUrl, getLqipUrl, isVideoSource } from '../utils/imagekit';
 
 export const PhotoCard = ({ photo, onClick, onOpenExif }) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
+  const isVideo = photo.mediaType === 'video' || isVideoSource(photo.src);
   const thumbUrl = getThumbnailUrl(photo);
   const lqipUrl = getLqipUrl(photo);
 
@@ -22,7 +23,7 @@ export const PhotoCard = ({ photo, onClick, onOpenExif }) => {
       case '1/1':
         return 'aspect-square';
       default:
-        return 'aspect-[3/2]';
+        return isVideo ? 'aspect-[16/9]' : 'aspect-[3/2]';
     }
   };
 
@@ -54,12 +55,27 @@ export const PhotoCard = ({ photo, onClick, onOpenExif }) => {
           }`}
         />
 
-        {/* Category Pill Tag (top-left) */}
-        <div className="absolute top-3 left-3 z-10">
-          <span className="px-2.5 py-1 rounded-full text-[11px] font-medium tracking-wide bg-zinc-950/60 backdrop-blur-md text-white border border-white/10 shadow-sm">
+        {/* Category & Video Pill Tag (top-left) */}
+        <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5">
+          <span className="px-2.5 py-1 rounded-full text-[11px] font-medium tracking-wide bg-zinc-950/70 backdrop-blur-md text-white border border-white/10 shadow-sm">
             {photo.category}
           </span>
+          {isVideo && (
+            <span className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-medium tracking-wide bg-purple-600/90 backdrop-blur-md text-white border border-purple-400/30 shadow-sm">
+              <Play className="w-2.5 h-2.5 fill-white" />
+              <span>Video</span>
+            </span>
+          )}
         </div>
+
+        {/* Center Play Button Overlay for Videos */}
+        {isVideo && (
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="w-12 h-12 rounded-full bg-black/50 backdrop-blur-md border border-white/20 flex items-center justify-center text-white shadow-2xl transition-all duration-300 group-hover:scale-110 group-hover:bg-purple-600/80">
+              <Play className="w-5 h-5 fill-white ml-0.5" />
+            </div>
+          </div>
+        )}
 
         {/* Featured Star (top-right) */}
         {photo.featured && (
@@ -76,8 +92,9 @@ export const PhotoCard = ({ photo, onClick, onOpenExif }) => {
           <div className="transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
             <div className="flex items-center justify-between gap-2">
               <div>
-                <h3 className="text-white font-semibold text-sm tracking-tight drop-shadow-sm">
-                  {photo.title}
+                <h3 className="text-white font-semibold text-sm tracking-tight drop-shadow-sm flex items-center gap-1.5">
+                  {isVideo && <Play className="w-3.5 h-3.5 fill-purple-400 text-purple-400 shrink-0" />}
+                  <span>{photo.title}</span>
                 </h3>
                 {photo.location && (
                   <p className="text-zinc-300 text-xs flex items-center gap-1 mt-0.5 font-light">
@@ -92,19 +109,19 @@ export const PhotoCard = ({ photo, onClick, onOpenExif }) => {
                 {/* EXIF Quick Button */}
                 <button
                   onClick={() => onOpenExif(photo)}
-                  title="View Camera EXIF Details"
+                  title={isVideo ? "View Video Details" : "View Camera EXIF Details"}
                   className="p-2 rounded-full bg-zinc-900/80 hover:bg-purple-600 text-zinc-200 hover:text-white backdrop-blur-md border border-white/10 transition-colors shadow-lg"
                 >
                   <Aperture className="w-3.5 h-3.5" />
                 </button>
 
-                {/* Lightbox Expand Button */}
+                {/* Lightbox Expand / Play Button */}
                 <button
                   onClick={onClick}
-                  title="Fullscreen Preview"
+                  title={isVideo ? "Play Fullscreen" : "Fullscreen Preview"}
                   className="p-2 rounded-full bg-zinc-900/80 hover:bg-purple-600 text-zinc-200 hover:text-white backdrop-blur-md border border-white/10 transition-colors shadow-lg"
                 >
-                  <Maximize2 className="w-3.5 h-3.5" />
+                  {isVideo ? <Play className="w-3.5 h-3.5 fill-current" /> : <Maximize2 className="w-3.5 h-3.5" />}
                 </button>
               </div>
             </div>

@@ -100,18 +100,28 @@ export const ImageKitGuideModal = ({ isOpen, onClose }) => {
               4
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-zinc-900 dark:text-white">Show Your ImageKit Photos</h3>
+              <h3 className="text-sm font-semibold text-zinc-900 dark:text-white">Show Your ImageKit Photos & Videos</h3>
               <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-1 leading-relaxed">
-                You have two seamless options:
+                You have two seamless options to display newly uploaded media:
               </p>
-              <ul className="mt-2 space-y-1.5 text-xs text-zinc-700 dark:text-zinc-300">
-                <li className="flex items-start gap-2">
+              <ul className="mt-2 space-y-2 text-xs text-zinc-700 dark:text-zinc-300">
+                <li className="flex items-start gap-2 bg-purple-50 dark:bg-purple-950/30 p-2.5 rounded-xl border border-purple-200 dark:border-purple-900/50">
                   <span className="text-purple-600 dark:text-purple-400 font-bold">A.</span>
-                  <span><strong>Automatic Sync (Recommended):</strong> Add <code className="text-purple-600 dark:text-purple-300 bg-zinc-100 dark:bg-zinc-900 px-1 py-0.5 rounded font-mono">IMAGEKIT_PRIVATE_KEY</code> in <code className="font-mono">.env</code> or Vercel. All images in your ImageKit account stream to the gallery!</span>
+                  <div>
+                    <strong className="text-purple-950 dark:text-purple-200">Automatic Sync (Recommended):</strong>
+                    <p className="mt-0.5 text-zinc-600 dark:text-zinc-400">
+                      In ImageKit Dashboard &gt; <strong>Developer Options</strong> &gt; <strong>API Keys</strong>, copy your <strong>Private Key</strong> and add it to <code className="text-purple-600 dark:text-purple-300 bg-zinc-100 dark:bg-zinc-900 px-1 py-0.5 rounded font-mono">IMAGEKIT_PRIVATE_KEY</code> in <code className="font-mono">.env</code> (and in Vercel settings if deployed). <strong>All photos and videos in your account will sync and show up automatically!</strong>
+                    </p>
+                  </div>
                 </li>
-                <li className="flex items-start gap-2">
+                <li className="flex items-start gap-2 bg-zinc-50 dark:bg-zinc-900/40 p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800">
                   <span className="text-purple-600 dark:text-purple-400 font-bold">B.</span>
-                  <span><strong>Manual Catalogue:</strong> Add individual photo paths directly to <code className="text-purple-600 dark:text-purple-300 bg-zinc-100 dark:bg-zinc-900 px-1 py-0.5 rounded font-mono">src/data/photos.js</code>.</span>
+                  <div>
+                    <strong className="text-zinc-900 dark:text-white">Manual Catalogue:</strong>
+                    <p className="mt-0.5 text-zinc-600 dark:text-zinc-400">
+                      Add individual photo and video entries directly into <code className="text-purple-600 dark:text-purple-300 bg-zinc-100 dark:bg-zinc-900 px-1 py-0.5 rounded font-mono">src/data/photos.js</code> with their relative paths (e.g. <code className="font-mono">/Pics/photo.png</code> or <code className="font-mono">/Pics/video.mp4</code>).
+                    </p>
+                  </div>
                 </li>
               </ul>
             </div>
@@ -119,8 +129,8 @@ export const ImageKitGuideModal = ({ isOpen, onClose }) => {
 
           {/* Callout box */}
           <div className="p-4 rounded-2xl bg-zinc-100 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800 text-xs text-zinc-700 dark:text-zinc-300">
-            <span className="font-semibold text-purple-600 dark:text-purple-400">✨ Automatic Magic: </span>
-            The website automatically requests ImageKit to convert your photos to modern WebP format, delivers responsive thumbnail cards, and generates 25px blur-up placeholders!
+            <span className="font-semibold text-purple-600 dark:text-purple-400">✨ Automatic Video & Photo Magic: </span>
+            Photos get automated WebP conversion and blur-up loading. Videos automatically generate instant poster frames and stream directly through ImageKit's global CDN!
           </div>
         </div>
 

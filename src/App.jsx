@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { Sparkles, X } from 'lucide-react';
 import { useTheme } from './hooks/useTheme';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
@@ -16,6 +17,8 @@ export default function App() {
 
   // State
   const [photosList, setPhotosList] = useState(initialPhotos);
+  const [isLiveSync, setIsLiveSync] = useState(false);
+  const [showSyncBanner, setShowSyncBanner] = useState(true);
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('featured');
@@ -33,8 +36,12 @@ export default function App() {
         return null;
       })
       .then((data) => {
-        if (isMounted && data && data.configured && Array.isArray(data.photos) && data.photos.length > 0) {
-          setPhotosList(data.photos);
+        if (!isMounted) return;
+        if (data && data.configured) {
+          setIsLiveSync(true);
+          if (Array.isArray(data.photos) && data.photos.length > 0) {
+            setPhotosList(data.photos);
+          }
         }
       })
       .catch(() => {
@@ -137,6 +144,37 @@ export default function App() {
       <main className="flex-1">
         {/* Photographer Intro & Stats */}
         <HeroSection totalPhotos={photosList.length} />
+
+        {/* Sync Notice Banner if in Static Mode */}
+        {!isLiveSync && showSyncBanner && (
+          <div className="bg-purple-50 dark:bg-purple-950/40 border-y border-purple-200/80 dark:border-purple-800/40 py-2.5 px-4 sm:px-6 transition-colors">
+            <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+              <div className="flex items-center gap-2.5 text-purple-950 dark:text-purple-200 text-center sm:text-left">
+                <span className="p-1 rounded-full bg-purple-200 dark:bg-purple-900/60 text-purple-700 dark:text-purple-300">
+                  <Sparkles className="w-3.5 h-3.5" />
+                </span>
+                <span>
+                  <strong>Added new pics or videos to ImageKit?</strong> Add <code className="font-mono bg-purple-100 dark:bg-purple-900/70 text-purple-800 dark:text-purple-300 px-1 py-0.5 rounded font-semibold">IMAGEKIT_PRIVATE_KEY</code> to your <code className="font-mono">.env</code> to stream all uploads automatically, or register them in <code className="font-mono">photos.js</code>.
+                </span>
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  onClick={() => setIsGuideOpen(true)}
+                  className="px-3 py-1 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-medium transition-colors shadow-sm"
+                >
+                  Quick Setup
+                </button>
+                <button
+                  onClick={() => setShowSyncBanner(false)}
+                  className="p-1 rounded-md text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors"
+                  title="Dismiss notification"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Filter, Search & Sort Bar */}
         <FilterBar
