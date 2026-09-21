@@ -94,16 +94,31 @@ export default defineConfig(({ mode }) => {
                       folderName = parts[0];
                     }
                   }
-                  const category = folderName || (isVideo ? 'Videos' : 'Gallery');
+                  const category = folderName || (isVideo ? 'Videos' : 'Pics');
+
+                  const meta = file.embeddedMetadata || {};
+                  const cameraModel = [meta.Make, meta.Model].filter(Boolean).join(' ');
+                  const shotDate = meta.DateTimeOriginal
+                    ? meta.DateTimeOriginal.slice(0, 10)
+                    : (file.createdAt ? file.createdAt.slice(0, 10) : new Date().toISOString().slice(0, 10));
+
+                  let title = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
+                  const imgMatch = file.name.match(/^IMG(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/i);
+                  const vidMatch = file.name.match(/^VID(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/i);
+                  if (imgMatch) {
+                    title = `Frame ${imgMatch[1]}-${imgMatch[2]}-${imgMatch[3]} ${imgMatch[4]}:${imgMatch[5]}`;
+                  } else if (vidMatch) {
+                    title = `Reel ${vidMatch[1]}-${vidMatch[2]}-${vidMatch[3]} ${vidMatch[4]}:${vidMatch[5]}`;
+                  }
 
                   return {
                     id: file.fileId || `ik-${idx}`,
-                    title: file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' '),
+                    title: title,
                     category: category,
                     mediaType: isVideo ? 'video' : 'photo',
                     mime: file.mime || (isVideo ? 'video/mp4' : 'image/jpeg'),
                     location: folderName ? `ImageKit /${folderName}` : (isVideo ? 'ImageKit Video Stream' : 'ImageKit Media Library'),
-                    date: file.createdAt ? file.createdAt.slice(0, 10) : new Date().toISOString().slice(0, 10),
+                    date: shotDate,
                     aspectRatio: file.width && file.height
                       ? (file.width === file.height ? '1/1' : file.width > file.height ? (isVideo ? '16/9' : '3/2') : '4/5')
                       : (isVideo ? '16/9' : '3/2'),
@@ -115,16 +130,16 @@ export default defineConfig(({ mode }) => {
                       : `Original photo streamed from your ImageKit cloud folder: ${file.name}`,
                     tags: file.tags && file.tags.length > 0
                       ? file.tags
-                      : [folderName ? folderName.toLowerCase() : '', isVideo ? 'video' : 'photo', 'imagekit', 'cloud'].filter(Boolean),
+                      : [folderName ? folderName.toLowerCase() : '', isVideo ? 'video' : 'photo', cameraModel ? cameraModel.toLowerCase() : '', 'imagekit'].filter(Boolean),
                     src: file.filePath || `/${file.name}`,
                     thumbnail: file.thumbnailUrl || undefined,
                     exif: {
-                      camera: isVideo ? 'ImageKit Cloud Video' : 'ImageKit Media Library',
+                      camera: isVideo ? 'ImageKit Cloud Video' : (cameraModel || 'Mobile Camera'),
                       lens: `${file.width || (isVideo ? 1920 : 'Auto')} × ${file.height || (isVideo ? 1080 : 'Auto')}`,
-                      focalLength: isVideo ? 'High Definition' : 'Native',
-                      aperture: isVideo ? (file.format || 'H.264 / MP4') : 'Auto',
-                      shutterSpeed: isVideo ? 'Streaming CDN' : 'Cloud CDN',
-                      iso: `${Math.round((file.size || 0) / 1024)} KB`
+                      focalLength: meta.FocalLength || (isVideo ? 'High Definition' : 'Native'),
+                      aperture: meta.FNumber ? `f/${meta.FNumber}` : (meta.ApertureValue ? `f/${meta.ApertureValue}` : (isVideo ? (file.format || 'H.264 / MP4') : 'Auto')),
+                      shutterSpeed: meta.ExposureTime ? `${meta.ExposureTime}s` : (isVideo ? 'Streaming CDN' : 'Cloud CDN'),
+                      iso: meta.ISO ? `${meta.ISO}` : `${Math.round((file.size || 0) / 1024)} KB`
                     }
                   };
                 });
