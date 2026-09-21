@@ -100,17 +100,27 @@ export const ImageKitGuideModal = ({ isOpen, onClose }) => {
               4
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-white">Upload Photos & Add to catalogue</h3>
+              <h3 className="text-sm font-semibold text-white">Show Your ImageKit Photos</h3>
               <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
-                Upload your photos into your ImageKit <strong>Media Library</strong>. Then add their relative paths (e.g. <code className="text-purple-300 bg-zinc-900 px-1 py-0.5 rounded font-mono">/photos/my-sunset.jpg</code>) to <code className="text-purple-300 bg-zinc-900 px-1 py-0.5 rounded font-mono">src/data/photos.js</code>.
+                You have two seamless options:
               </p>
+              <ul className="mt-2 space-y-1.5 text-xs text-zinc-300">
+                <li className="flex items-start gap-2">
+                  <span className="text-purple-400 font-bold">A.</span>
+                  <span><strong>Automatic Sync (Recommended):</strong> Add <code className="text-purple-300 bg-zinc-900 px-1 py-0.5 rounded font-mono">IMAGEKIT_PRIVATE_KEY</code> in <code className="text-zinc-200">.env</code> or Vercel Environment Variables. All images in your ImageKit account will automatically stream to the gallery!</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-purple-400 font-bold">B.</span>
+                  <span><strong>Manual Catalogue:</strong> Add individual photo paths directly to <code className="text-purple-300 bg-zinc-900 px-1 py-0.5 rounded font-mono">src/data/photos.js</code>.</span>
+                </li>
+              </ul>
             </div>
           </div>
 
           {/* Callout box */}
           <div className="p-4 rounded-2xl bg-zinc-900/80 border border-zinc-800 text-xs text-zinc-300">
             <span className="font-semibold text-purple-400">✨ Automatic Magic: </span>
-            The website automatically asks ImageKit to convert your photos to modern WebP format, generates 600px cards for the grid, and generates 25px blur-up placeholders—saving 80%+ of bandwidth!
+            The website automatically requests ImageKit to convert your photos to modern WebP format, delivers responsive thumbnail cards, and generates 25px blur-up placeholders!
           </div>
         </div>
 

@@ -3,6 +3,7 @@ import { Search, X, ArrowDownAZ, Sparkles, Calendar, Layers } from 'lucide-react
 import { CATEGORIES } from '../data/photos';
 
 export const FilterBar = ({
+  categories = CATEGORIES,
   activeCategory,
   onSelectCategory,
   searchQuery,
@@ -17,7 +18,7 @@ export const FilterBar = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center justify-between gap-3">
         {/* Category Pills */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 no-scrollbar">
-          {CATEGORIES.map((cat) => {
+          {categories.map((cat) => {
             const isActive = activeCategory === cat;
             const count = categoryCounts[cat] ?? 0;
 

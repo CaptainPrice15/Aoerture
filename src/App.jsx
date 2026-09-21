@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useTheme } from './hooks/useTheme';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
@@ -9,12 +9,13 @@ import { ExifDrawer } from './components/ExifDrawer';
 import { AboutModal } from './components/AboutModal';
 import { ImageKitGuideModal } from './components/ImageKitGuideModal';
 import { Footer } from './components/Footer';
-import { photos as initialPhotos, CATEGORIES } from './data/photos';
+import { photos as initialPhotos } from './data/photos';
 
 export default function App() {
   const { theme, toggleTheme } = useTheme();
 
   // State
+  const [photosList, setPhotosList] = useState(initialPhotos);
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('featured');
@@ -23,20 +24,51 @@ export default function App() {
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isGuideOpen, setIsGuideOpen] = useState(false);
 
+  // Attempt to fetch live photos from ImageKit if /api/photos is available
+  useEffect(() => {
+    let isMounted = true;
+    fetch('/api/photos')
+      .then((res) => {
+        if (res.ok) return res.json();
+        return null;
+      })
+      .then((data) => {
+        if (isMounted && data && data.configured && Array.isArray(data.photos) && data.photos.length > 0) {
+          setPhotosList(data.photos);
+        }
+      })
+      .catch(() => {
+        // Fall back gracefully to initialPhotos
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  // Compute categories dynamically from photos
+  const availableCategories = useMemo(() => {
+    const cats = new Set(['All']);
+    photosList.forEach((photo) => {
+      if (photo.category) cats.add(photo.category);
+    });
+    return Array.from(cats);
+  }, [photosList]);
+
   // Category counts calculation
   const categoryCounts = useMemo(() => {
-    const counts = { All: initialPhotos.length };
-    CATEGORIES.forEach((cat) => {
+    const counts = { All: photosList.length };
+    availableCategories.forEach((cat) => {
       if (cat !== 'All') {
-        counts[cat] = initialPhotos.filter((p) => p.category === cat).length;
+        counts[cat] = photosList.filter((p) => p.category === cat).length;
       }
     });
     return counts;
-  }, []);
+  }, [photosList, availableCategories]);
 
   // Filter and sort photos
   const filteredPhotos = useMemo(() => {
-    return initialPhotos
+    return photosList
       .filter((photo) => {
         // Category match
         if (activeCategory !== 'All' && photo.category !== activeCategory) {
@@ -75,7 +107,7 @@ export default function App() {
         }
         return 0;
       });
-  }, [activeCategory, searchQuery, sortBy]);
+  }, [photosList, activeCategory, searchQuery, sortBy]);
 
   const handleResetFilters = () => {
     setActiveCategory('All');
@@ -99,15 +131,16 @@ export default function App() {
         toggleTheme={toggleTheme}
         onOpenAbout={() => setIsAboutOpen(true)}
         onOpenCloudGuide={() => setIsGuideOpen(true)}
-        totalPhotos={initialPhotos.length}
+        totalPhotos={photosList.length}
       />
 
       <main className="flex-1">
         {/* Photographer Intro & Stats */}
-        <HeroSection />
+        <HeroSection totalPhotos={photosList.length} />
 
         {/* Filter, Search & Sort Bar */}
         <FilterBar
+          categories={availableCategories}
           activeCategory={activeCategory}
           onSelectCategory={setActiveCategory}
           searchQuery={searchQuery}

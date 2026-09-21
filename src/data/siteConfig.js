@@ -2,14 +2,14 @@ export const siteConfig = {
   photographer: {
     name: "Gourav",
     handle: "@gourav.visuals",
-    title: "Landscape & Street Photographer",
-    bio: "Chasing fleeting light, dramatic vistas, and candid urban rhythms. Creating visual stories through deep contrasts, natural color palettes, and thoughtful composition.",
+    title: "Visual Showcase",
+    bio: "Curated photography collection streamed directly from ImageKit cloud media storage with responsive optimization.",
     location: "India",
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
+    avatar: "https://ik.imagekit.io/fm5abuzok/Pics/ChatGPT%20Image%20Apr%203,%202025,%2009_39_36%20PM.png?tr=w-400,h-400,fo-auto",
     stats: {
-      photosCount: "12+",
-      locationsCount: "8 Countries",
-      experience: "5+ Years",
+      photosCount: "1",
+      locationsCount: "ImageKit Cloud",
+      experience: "Visuals",
     },
     social: {
       instagram: "https://instagram.com",
@@ -18,15 +18,14 @@ export const siteConfig = {
       email: "gourav@example.com"
     },
     gearList: [
-      { category: "Camera Bodies", items: ["Sony Alpha A7 IV", "Fujifilm X-T5"] },
-      { category: "Lenses", items: ["Sony FE 24-70mm f/2.8 GM II", "Sony FE 70-200mm f/4 G OSS", "Fujinon XF 33mm f/1.4 R LM WR", "Sigma 85mm f/1.4 DG DN Art"] },
-      { category: "Accessories", items: ["Peak Design Carbon Fiber Tripod", "PolarPro QuartzLine ND Filters", "Shimoda Action X30 V2 Backpack"] },
-      { category: "Editing", items: ["Adobe Lightroom Classic", "Photoshop", "Capture One Pro"] }
+      { category: "Cloud Storage", items: ["ImageKit.io Media Library", "Global CDN Streaming"] },
+      { category: "Optimization", items: ["Auto WebP / AVIF format", "On-the-fly transformations"] },
+      { category: "Display", items: ["Responsive Masonry Grid", "Full-res Lightbox & EXIF drawer"] }
     ]
   },
   imagekit: {
     // Verified user endpoint
     urlEndpoint: import.meta.env.VITE_IMAGEKIT_URL_ENDPOINT || "https://ik.imagekit.io/fm5abuzok",
-    defaultFolder: "photography"
+    defaultFolder: "Pics"
   }
 };

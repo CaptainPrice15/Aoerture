@@ -2,8 +2,9 @@ import React from 'react';
 import { MapPin, Sparkles, Instagram, Twitter, Github, Mail, SlidersHorizontal } from 'lucide-react';
 import { siteConfig } from '../data/siteConfig';
 
-export const HeroSection = ({ onScrollToGallery }) => {
+export const HeroSection = ({ totalPhotos, onScrollToGallery }) => {
   const { photographer } = siteConfig;
+  const displayPhotosCount = totalPhotos !== undefined ? totalPhotos : photographer.stats.photosCount;
 
   return (
     <section className="relative overflow-hidden pt-10 pb-8 sm:pt-14 sm:pb-12 border-b border-zinc-800/40 dark:border-zinc-800/40 border-zinc-200">
@@ -33,7 +34,7 @@ export const HeroSection = ({ onScrollToGallery }) => {
           {/* Stats Bar */}
           <div className="mt-7 flex flex-wrap items-center gap-6 sm:gap-8 pt-6 border-t border-zinc-200/80 dark:border-zinc-800/80">
             <div>
-              <p className="text-2xl font-bold font-mono text-zinc-900 dark:text-white">{photographer.stats.photosCount}</p>
+              <p className="text-2xl font-bold font-mono text-zinc-900 dark:text-white">{displayPhotosCount}</p>
               <p className="text-xs uppercase tracking-wider text-zinc-500 font-medium">Curated Frames</p>
             </div>
             <div className="w-px h-8 bg-zinc-200 dark:bg-zinc-800" />
