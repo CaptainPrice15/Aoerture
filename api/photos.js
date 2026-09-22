@@ -70,6 +70,20 @@ export default async function handler(req, res) {
           folderPath = `/${parts[0]}`;
         }
       }
+
+      // If at root without a subfolder, intelligently assign to Darjeeling or Sikkim based on shot date
+      if (folderPath === '/') {
+        const dateMatch = file.name.match(/^(?:IMG|VID)(\d{8})/);
+        const dateKey = dateMatch ? dateMatch[1] : (file.embeddedMetadata?.DateTimeOriginal?.replace(/-/g, '').slice(0, 8) || '');
+        if (dateKey >= '20231028' && dateKey <= '20231030') {
+          folderName = 'Darjeeling';
+          folderPath = '/Darjeeling';
+        } else if (dateKey >= '20231031' && dateKey <= '20231103') {
+          folderName = 'Sikkim';
+          folderPath = '/Sikkim';
+        }
+      }
+
       const category = (folderName !== 'Root Library' ? folderName : '') || (isVideo ? 'Videos' : 'Pics');
 
       const meta = file.embeddedMetadata || {};

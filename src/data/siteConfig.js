@@ -7,7 +7,7 @@ export const siteConfig = {
     location: "India",
     avatar: "https://ik.imagekit.io/fm5abuzok/Pics/ChatGPT%20Image%20Apr%203,%202025,%2009_39_36%20PM.png?tr=w-400,h-400,fo-auto",
     stats: {
-      photosCount: "1",
+      photosCount: "92",
       locationsCount: "ImageKit Cloud",
       experience: "Visuals",
     },
