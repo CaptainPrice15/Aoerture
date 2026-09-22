@@ -8,9 +8,20 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
   body {
     @apply transition-colors duration-200;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
+}
+
+/* iOS and mobile safe horizontal momentum scrolling */
+.touch-scroll {
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Custom smooth scrollbar */

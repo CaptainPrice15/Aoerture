@@ -120,7 +120,7 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [] }) 
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
       {/* Backdrop */}
       <div
         className="fixed inset-0 bg-black/75 backdrop-blur-sm transition-opacity"
@@ -128,16 +128,16 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [] }) 
       />
 
       {/* Modal Card */}
-      <div className="relative w-full max-w-xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-3xl text-zinc-900 dark:text-zinc-100 shadow-2xl overflow-hidden z-10 my-8 transition-colors duration-300">
+      <div className="relative w-full max-w-xl max-h-[92vh] bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl sm:rounded-3xl text-zinc-900 dark:text-zinc-100 shadow-2xl overflow-hidden flex flex-col z-10 my-4 sm:my-8 transition-colors duration-300">
         {/* Header */}
-        <div className="p-5 sm:p-6 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+        <div className="p-4 sm:p-6 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-600 dark:text-purple-400">
               <Plus className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-base font-bold text-zinc-900 dark:text-white">Add Picture or Video</h2>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400">Add an uploaded ImageKit file directly to your showcase</p>
+              <h2 className="text-sm sm:text-base font-bold text-zinc-900 dark:text-white">Add Picture or Video</h2>
+              <p className="text-[11px] sm:text-xs text-zinc-500 dark:text-zinc-400">Add an uploaded ImageKit file directly to your showcase</p>
             </div>
           </div>
           <button
@@ -149,7 +149,7 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [] }) 
         </div>
 
         {/* Form Body */}
-        <form onSubmit={handleSubmit} className="p-5 sm:p-6 space-y-4 text-xs">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 text-xs flex-1 overflow-y-auto">
           {/* Media Type Toggle */}
           <div>
             <label className="block font-semibold mb-1.5 text-zinc-700 dark:text-zinc-300">
@@ -204,7 +204,7 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [] }) 
                 setPreviewError(false);
               }}
               placeholder="e.g. /Pics/sunset.jpg or myvideo.mp4"
-              className="w-full px-3 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-1 focus:ring-purple-500 font-mono text-xs"
+              className="w-full px-3 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-1 focus:ring-purple-500 font-mono text-sm sm:text-xs"
             />
             <p className="mt-1 text-[11px] text-zinc-500 dark:text-zinc-400">
               Enter relative path (e.g. <code className="font-mono">/Pics/photo.png</code>) or full ImageKit URL.
@@ -222,7 +222,7 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [] }) 
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g. Mountain Dawn"
-                className="w-full px-3 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-1 focus:ring-purple-500 text-xs"
+                className="w-full px-3 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-1 focus:ring-purple-500 text-sm sm:text-xs"
               />
             </div>
 
@@ -233,7 +233,7 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [] }) 
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-purple-500 text-xs cursor-pointer"
+                className="w-full px-3 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-purple-500 text-sm sm:text-xs cursor-pointer"
               >
                 <option value="Pics">Pics</option>
                 <option value="Videos">Videos</option>
@@ -251,7 +251,7 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [] }) 
             <select
               value={selectedFolder}
               onChange={(e) => setSelectedFolder(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-purple-500 text-xs cursor-pointer font-mono"
+              className="w-full px-3 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-purple-500 text-sm sm:text-xs cursor-pointer font-mono"
             >
               <option value="/Pics">/Pics</option>
               <option value="/Darjeeling">/Darjeeling</option>
@@ -274,7 +274,7 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [] }) 
                 value={customCategory}
                 onChange={(e) => setCustomCategory(e.target.value)}
                 placeholder="e.g. Architecture or Drone"
-                className="w-full px-3 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-1 focus:ring-purple-500 text-xs"
+                className="w-full px-3 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-1 focus:ring-purple-500 text-sm sm:text-xs"
               />
             </div>
           )}
@@ -284,10 +284,10 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [] }) 
             <label className="block font-semibold mb-1.5 text-zinc-700 dark:text-zinc-300">
               Aspect Ratio
             </label>
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
               {[
                 { label: '3:2 Landscape', val: '3/2' },
-                { label: '16:9 Video/Cinema', val: '16/9' },
+                { label: '16:9 Video', val: '16/9' },
                 { label: '1:1 Square', val: '1/1' },
                 { label: '4:5 Portrait', val: '4/5' },
               ].map((opt) => (
@@ -295,7 +295,7 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [] }) 
                   key={opt.val}
                   type="button"
                   onClick={() => setAspectRatio(opt.val)}
-                  className={`py-1.5 px-2 rounded-lg border text-center font-mono text-[11px] transition-all ${
+                  className={`py-2 px-2 rounded-lg border text-center font-mono text-[11px] transition-all active:scale-95 ${
                     aspectRatio === opt.val
                       ? 'bg-purple-500/10 border-purple-500 text-purple-600 dark:text-purple-400 font-semibold'
                       : 'bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400'
@@ -355,18 +355,18 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [] }) 
           )}
 
           {/* Footer Buttons */}
-          <div className="pt-2 flex items-center justify-end gap-2 border-t border-zinc-200 dark:border-zinc-800">
+          <div className="pt-3 flex items-center justify-end gap-2 border-t border-zinc-200 dark:border-zinc-800 shrink-0">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-xl text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white transition-colors"
+              className="px-4 py-2.5 sm:py-2 rounded-xl text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white transition-colors active:scale-95"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting || !srcInput.trim()}
-              className="px-5 py-2 rounded-xl font-semibold bg-purple-600 hover:bg-purple-500 disabled:opacity-50 text-white shadow-lg shadow-purple-600/30 transition-all flex items-center gap-1.5"
+              className="px-5 py-2.5 sm:py-2 rounded-xl font-semibold bg-purple-600 hover:bg-purple-500 disabled:opacity-50 text-white shadow-lg shadow-purple-600/30 transition-all flex items-center gap-1.5 active:scale-95"
             >
               <Plus className="w-4 h-4" />
               <span>{isSubmitting ? 'Adding...' : 'Add to Gallery'}</span>

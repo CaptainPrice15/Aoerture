@@ -15,7 +15,7 @@ export const ImageKitGuideModal = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
       {/* Backdrop */}
       <div
         className="fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity"
@@ -23,16 +23,16 @@ export const ImageKitGuideModal = ({ isOpen, onClose }) => {
       />
 
       {/* Modal Card */}
-      <div className="relative w-full max-w-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-3xl text-zinc-900 dark:text-zinc-100 shadow-2xl overflow-hidden z-10 my-8 transition-colors duration-300">
+      <div className="relative w-full max-w-2xl max-h-[92vh] bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl sm:rounded-3xl text-zinc-900 dark:text-zinc-100 shadow-2xl overflow-hidden flex flex-col z-10 my-4 sm:my-8 transition-colors duration-300">
         {/* Header */}
-        <div className="p-6 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+        <div className="p-4 sm:p-6 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-600 dark:text-purple-400">
               <Cloud className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-base font-bold text-zinc-900 dark:text-white">ImageKit.io Free Cloud Storage Setup</h2>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400">20 GB/month Free CDN, auto-format & on-the-fly transformations</p>
+              <h2 className="text-sm sm:text-base font-bold text-zinc-900 dark:text-white">ImageKit Cloud Setup</h2>
+              <p className="text-[11px] sm:text-xs text-zinc-500 dark:text-zinc-400">20 GB/month Free CDN, auto-format & transformations</p>
             </div>
           </div>
           <button
@@ -44,7 +44,7 @@ export const ImageKitGuideModal = ({ isOpen, onClose }) => {
         </div>
 
         {/* Steps List */}
-        <div className="p-6 space-y-6">
+        <div className="p-4 sm:p-6 space-y-5 sm:space-y-6 flex-1 overflow-y-auto">
           {/* Step 1 */}
           <div className="flex gap-4">
             <div className="w-7 h-7 rounded-full bg-purple-600 text-white flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">
@@ -135,10 +135,10 @@ export const ImageKitGuideModal = ({ isOpen, onClose }) => {
         </div>
 
         {/* Footer */}
-        <div className="p-6 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 flex justify-end">
+        <div className="p-4 sm:p-6 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 flex justify-end shrink-0">
           <button
             onClick={onClose}
-            className="px-5 py-2.5 rounded-xl text-xs font-semibold bg-purple-600 hover:bg-purple-500 text-white transition-all shadow-lg shadow-purple-600/30"
+            className="w-full sm:w-auto px-5 py-2.5 rounded-xl text-xs font-semibold bg-purple-600 hover:bg-purple-500 active:scale-95 text-white transition-all shadow-lg shadow-purple-600/30 text-center"
           >
             Got it, Let's Browse!
           </button>

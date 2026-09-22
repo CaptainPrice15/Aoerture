@@ -34,12 +34,12 @@ export const FilterBar = ({
   const activeFolderObj = activeFolder ? folders.find((f) => f.path === activeFolder) : null;
 
   return (
-    <div className="sticky top-16 z-30 w-full backdrop-blur-xl bg-white/90 dark:bg-zinc-950/90 border-b border-zinc-200 dark:border-zinc-800/40 py-3.5 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center justify-between gap-3">
+    <div className="sticky top-16 z-30 w-full backdrop-blur-xl bg-white/90 dark:bg-zinc-950/90 border-b border-zinc-200 dark:border-zinc-800/40 py-2.5 sm:py-3.5 transition-colors duration-300">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center justify-between gap-2.5 sm:gap-3">
         {/* Category Pills & Folders Dropdown */}
         <div className="flex items-center gap-2 overflow-visible min-w-0">
           {/* Scrollable Category Pills */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 no-scrollbar">
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 no-scrollbar touch-scroll">
             {categories.map((cat) => {
               const isActive = !isFoldersActive && activeCategory === cat;
               const count = categoryCounts[cat] ?? 0;
@@ -52,7 +52,7 @@ export const FilterBar = ({
                     if (onSelectFolder) onSelectFolder(null);
                     setIsDropdownOpen(false);
                   }}
-                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all duration-200 ${
+                  className={`flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap active:scale-95 transition-all duration-200 touch-manipulation ${
                     isActive
                       ? 'bg-purple-600 text-white shadow-md shadow-purple-600/30 font-semibold'
                       : 'bg-zinc-100 dark:bg-zinc-900/80 text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-800/80'
@@ -87,7 +87,7 @@ export const FilterBar = ({
                     onSelectFolder(null);
                   }
                 }}
-                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all duration-200 ${
+                className={`flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap active:scale-95 transition-all duration-200 touch-manipulation ${
                   isFoldersActive
                     ? 'bg-purple-600 text-white shadow-md shadow-purple-600/30 font-semibold'
                     : 'bg-zinc-100 dark:bg-zinc-900/80 text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-800/80'
@@ -108,9 +108,9 @@ export const FilterBar = ({
               </button>
             </div>
 
-            {/* Folders Dropdown Menu */}
+            {/* Folders Dropdown Menu (Safe right-0 sm:left-0 positioning to never overflow screen) */}
             {isDropdownOpen && (
-              <div className="absolute left-0 mt-2 w-64 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-2xl py-2 z-50 animate-fade-in max-h-80 overflow-y-auto">
+              <div className="absolute right-0 sm:left-0 mt-2 w-64 max-w-[calc(100vw-2rem)] rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-2xl py-2 z-50 animate-fade-in max-h-80 overflow-y-auto">
                 <div className="px-3.5 py-1.5 text-[11px] font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider flex items-center justify-between">
                   <span>Cloud Folders</span>
                   <span className="font-mono text-[10px] text-zinc-400">{folders.length} folders</span>
@@ -176,12 +176,12 @@ export const FilterBar = ({
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder="Search gear, place, tag..."
-              className="w-full pl-8 pr-8 py-1.5 text-xs rounded-lg bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 transition-all"
+              className="w-full pl-8 pr-8 py-1.5 text-sm sm:text-xs rounded-xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 transition-all"
             />
             {searchQuery && (
               <button
                 onClick={() => onSearchChange('')}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 p-0.5"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -193,12 +193,12 @@ export const FilterBar = ({
             <select
               value={sortBy}
               onChange={(e) => onSortChange(e.target.value)}
-              className="appearance-none pl-3 pr-8 py-1.5 text-xs rounded-lg bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-1 focus:ring-purple-500 cursor-pointer transition-all"
+              className="appearance-none pl-3 pr-7 py-1.5 text-sm sm:text-xs rounded-xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-1 focus:ring-purple-500 cursor-pointer transition-all"
             >
               <option value="featured">✨ Featured</option>
-              <option value="newest">📅 Newest First</option>
-              <option value="oldest">⏳ Oldest First</option>
-              <option value="title">🔤 Title (A-Z)</option>
+              <option value="newest">📅 Newest</option>
+              <option value="oldest">⏳ Oldest</option>
+              <option value="title">🔤 Title</option>
             </select>
             <div className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 text-[10px]">
               ▼

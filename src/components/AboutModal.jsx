@@ -8,7 +8,7 @@ export const AboutModal = ({ isOpen, onClose }) => {
   const { photographer } = siteConfig;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
       {/* Backdrop */}
       <div
         className="fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity"
@@ -16,21 +16,21 @@ export const AboutModal = ({ isOpen, onClose }) => {
       />
 
       {/* Modal Card */}
-      <div className="relative w-full max-w-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-3xl text-zinc-900 dark:text-zinc-100 shadow-2xl overflow-hidden z-10 my-8 transition-colors duration-300">
+      <div className="relative w-full max-w-2xl max-h-[92vh] bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl sm:rounded-3xl text-zinc-900 dark:text-zinc-100 shadow-2xl overflow-hidden flex flex-col z-10 my-4 sm:my-8 transition-colors duration-300">
         {/* Header background banner */}
-        <div className="h-32 bg-gradient-to-r from-purple-600/30 via-indigo-600/20 to-purple-800/30 dark:from-purple-900/60 dark:via-indigo-900/40 dark:to-zinc-900 border-b border-zinc-200 dark:border-zinc-800/80 relative">
+        <div className="h-24 sm:h-32 bg-gradient-to-r from-purple-600/30 via-indigo-600/20 to-purple-800/30 dark:from-purple-900/60 dark:via-indigo-900/40 dark:to-zinc-900 border-b border-zinc-200 dark:border-zinc-800/80 relative shrink-0">
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 p-2 rounded-full bg-black/20 hover:bg-black/40 dark:bg-black/40 dark:hover:bg-black/70 text-zinc-800 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-colors backdrop-blur-md"
+            className="absolute top-3 right-3 sm:top-4 sm:right-4 p-2 rounded-full bg-black/20 hover:bg-black/40 dark:bg-black/40 dark:hover:bg-black/70 text-zinc-800 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-colors backdrop-blur-md"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        <div className="px-6 pb-8 pt-0 relative">
+        <div className="px-4 sm:px-6 pb-6 sm:pb-8 pt-0 relative overflow-y-auto flex-1">
           {/* Avatar */}
-          <div className="-mt-14 mb-4 flex items-end justify-between">
-            <div className="w-24 h-24 rounded-2xl overflow-hidden border-4 border-white dark:border-zinc-950 shadow-xl bg-zinc-100 dark:bg-zinc-900">
+          <div className="-mt-10 sm:-mt-14 mb-3 sm:mb-4 flex items-end justify-between">
+            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-4 border-white dark:border-zinc-950 shadow-xl bg-zinc-100 dark:bg-zinc-900 shrink-0">
               <img
                 src={photographer.avatar}
                 alt={photographer.name}
@@ -58,7 +58,7 @@ export const AboutModal = ({ isOpen, onClose }) => {
           </div>
 
           {/* Name & Title */}
-          <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white flex items-center gap-2">
+          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-white flex items-center gap-2">
             {photographer.name}
             <span className="text-xs px-2.5 py-0.5 rounded-full bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 font-mono font-medium">
               Pro

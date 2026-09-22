@@ -25,7 +25,7 @@ export const GalleryGrid = ({ photos, onSelectPhoto, onOpenExif, onResetFilters 
   }
 
   return (
-    <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto py-8">
+    <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 sm:gap-6 px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto py-4 sm:py-8">
       {photos.map((photo, index) => (
         <PhotoCard
           key={photo.id}

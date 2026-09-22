@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Lightbox from 'yet-another-react-lightbox';
 import Zoom from 'yet-another-react-lightbox/plugins/zoom';
 import Fullscreen from 'yet-another-react-lightbox/plugins/fullscreen';
@@ -8,6 +8,16 @@ import Video from 'yet-another-react-lightbox/plugins/video';
 import { getFullUrl, getThumbnailUrl, isVideoSource } from '../utils/imagekit';
 
 export const LightboxModal = ({ photos, currentIndex, isOpen, onClose, onIndexChange, onOpenExif }) => {
+  const [isMobile, setIsMobile] = useState(() => (typeof window !== 'undefined' ? window.innerWidth < 640 : false));
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   if (!isOpen) return null;
 
   // Prepare slide objects for Yet Another React Lightbox
@@ -72,14 +82,15 @@ export const LightboxModal = ({ photos, currentIndex, isOpen, onClose, onIndexCh
       }}
       thumbnails={{
         position: 'bottom',
-        width: 100,
-        height: 66,
-        gap: 12,
-        borderRadius: 8,
+        width: isMobile ? 56 : 100,
+        height: isMobile ? 38 : 66,
+        gap: isMobile ? 6 : 12,
+        borderRadius: 6,
+        showToggle: true,
       }}
       captions={{
         showToggle: true,
-        descriptionMaxLines: 2,
+        descriptionMaxLines: isMobile ? 1 : 2,
       }}
       carousel={{
         finite: false,

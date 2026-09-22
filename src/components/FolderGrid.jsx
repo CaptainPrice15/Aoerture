@@ -18,25 +18,25 @@ export const FolderGrid = ({ folders = [], onSelectFolder }) => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8">
       {/* Section Header */}
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-5 sm:mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-0">
         <div>
-          <h2 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white flex items-center gap-2">
+          <h2 className="text-lg sm:text-xl font-bold tracking-tight text-zinc-900 dark:text-white flex items-center gap-2">
             <FolderOpen className="w-5 h-5 text-purple-600 dark:text-purple-400" />
             <span>ImageKit Folders & Albums</span>
           </h2>
-          <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5 sm:mt-1">
             Browse your media organized by their cloud directory in ImageKit
           </p>
         </div>
-        <span className="text-xs font-mono font-medium px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-800">
+        <span className="self-start sm:self-auto text-xs font-mono font-medium px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-800">
           {folders.length} {folders.length === 1 ? 'Folder' : 'Folders'}
         </span>
       </div>
 
       {/* Folders Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {folders.map((folder) => {
           const photoCount = folder.photos.filter((p) => p.mediaType !== 'video').length;
           const videoCount = folder.photos.filter((p) => p.mediaType === 'video').length;
@@ -46,7 +46,7 @@ export const FolderGrid = ({ folders = [], onSelectFolder }) => {
             <div
               key={folder.path}
               onClick={() => onSelectFolder(folder.path)}
-              className="group relative rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 p-5 shadow-sm hover:shadow-xl hover:shadow-purple-500/10 dark:hover:shadow-purple-950/20 transition-all duration-300 transform hover:-translate-y-1 cursor-pointer overflow-hidden flex flex-col justify-between"
+              className="group relative rounded-2xl sm:rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 p-4 sm:p-5 shadow-sm hover:shadow-xl hover:shadow-purple-500/10 dark:hover:shadow-purple-950/20 active:scale-[0.98] touch-manipulation transform-gpu transition-all duration-200 cursor-pointer overflow-hidden flex flex-col justify-between"
             >
               {/* Preview Image Stack */}
               <div className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-950 border border-zinc-200/60 dark:border-zinc-800/60 mb-4">

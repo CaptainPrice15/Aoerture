@@ -216,8 +216,8 @@ export default function App() {
 
         {/* Sync Notice Banner if in Static Mode */}
         {!isLiveSync && showSyncBanner && (
-          <div className="bg-purple-50 dark:bg-purple-950/40 border-y border-purple-200/80 dark:border-purple-800/40 py-2.5 px-4 sm:px-6 transition-colors">
-            <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+          <div className="bg-purple-50 dark:bg-purple-950/40 border-y border-purple-200/80 dark:border-purple-800/40 py-2.5 px-3 sm:px-6 transition-colors">
+            <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2.5 sm:gap-3 text-[11px] sm:text-xs">
               <div className="flex items-center gap-2.5 text-purple-950 dark:text-purple-200 text-center sm:text-left">
                 <span className="p-1 rounded-full bg-purple-200 dark:bg-purple-900/60 text-purple-700 dark:text-purple-300">
                   <Sparkles className="w-3.5 h-3.5" />
@@ -239,6 +239,29 @@ export default function App() {
                   title="Dismiss notification"
                 >
                   <X className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ImageKit Live Sync Notification Banner */}
+        {isLiveSync && showSyncBanner && (
+          <div className="bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-800 text-white text-[11px] sm:text-xs py-2 px-3 sm:px-4 shadow-sm">
+            <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-4">
+              <div className="flex items-center gap-2 min-w-0">
+                <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-200 animate-pulse shrink-0" />
+                <p className="font-medium truncate">
+                  <span className="font-bold">ImageKit Live Sync:</span> {photosList.length} media items synced from cloud
+                </p>
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  onClick={() => setShowSyncBanner(false)}
+                  className="p-1 rounded-md hover:bg-white/20 transition-colors"
+                  aria-label="Dismiss banner"
+                >
+                  <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </button>
               </div>
             </div>
@@ -277,10 +300,10 @@ export default function App() {
           <>
             {/* Breadcrumb if inside a folder */}
             {activeCategory === 'Folders' && selectedFolderPath && (
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <button
                   onClick={() => setSelectedFolderPath(null)}
-                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-zinc-100 dark:bg-zinc-900 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-600 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-800 transition-all shadow-sm w-fit"
+                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-zinc-100 dark:bg-zinc-900 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-600 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-800 transition-all shadow-sm w-fit active:scale-95"
                 >
                   <ArrowLeft className="w-3.5 h-3.5" />
                   <span>All Folders</span>

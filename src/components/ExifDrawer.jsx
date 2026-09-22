@@ -23,14 +23,19 @@ export const ExifDrawer = ({ photo, isOpen, onClose, onOpenLightbox }) => {
         onClick={onClose}
       />
 
-      {/* Slide-over panel */}
-      <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-        <div className="w-screen max-w-md bg-white dark:bg-zinc-950 border-l border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-2xl flex flex-col justify-between overflow-y-auto transition-colors duration-300">
+      {/* Slide-over panel (Desktop: right drawer, Mobile: bottom sheet) */}
+      <div className="fixed inset-x-0 bottom-0 sm:inset-x-auto sm:inset-y-0 sm:right-0 max-w-full flex sm:pl-10 z-50">
+        <div className="w-full sm:w-screen sm:max-w-md max-h-[88vh] sm:max-h-full rounded-t-3xl sm:rounded-none bg-white dark:bg-zinc-950 border-t sm:border-t-0 sm:border-l border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-2xl flex flex-col justify-between overflow-hidden transition-all duration-300">
+          {/* Mobile Bottom Sheet Pill Handle */}
+          <div className="sm:hidden w-full pt-3 pb-1 flex justify-center shrink-0">
+            <div className="w-12 h-1.5 rounded-full bg-zinc-300 dark:bg-zinc-700" />
+          </div>
+
           {/* Header */}
-          <div className="p-6 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+          <div className="p-4 sm:p-6 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between shrink-0">
             <div className="flex items-center gap-2">
               <Aperture className="w-5 h-5 text-purple-600 dark:text-purple-400" />
-              <h2 className="text-sm font-bold uppercase tracking-wider text-zinc-800 dark:text-zinc-200">
+              <h2 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-zinc-800 dark:text-zinc-200">
                 {isVideo ? 'Media & Technical Specs' : 'Camera & Shot Data'}
               </h2>
             </div>
@@ -43,7 +48,7 @@ export const ExifDrawer = ({ photo, isOpen, onClose, onOpenLightbox }) => {
           </div>
 
           {/* Body Content */}
-          <div className="p-6 space-y-6 flex-1">
+          <div className="p-4 sm:p-6 space-y-5 sm:space-y-6 flex-1 overflow-y-auto">
             {/* Image/Video Preview Thumbnail */}
             <div className="relative rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 group aspect-[3/2] bg-zinc-100 dark:bg-zinc-900">
               <img
@@ -180,16 +185,16 @@ export const ExifDrawer = ({ photo, isOpen, onClose, onOpenLightbox }) => {
           </div>
 
           {/* Footer Actions */}
-          <div className="p-6 border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 flex gap-3">
+          <div className="p-4 sm:p-6 border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 flex gap-3 shrink-0">
             <button
               onClick={onOpenLightbox}
-              className="flex-1 py-2.5 px-4 rounded-xl text-xs font-semibold bg-purple-600 hover:bg-purple-500 text-white shadow-lg shadow-purple-600/30 transition-all text-center"
+              className="flex-1 py-3 sm:py-2.5 px-4 rounded-xl text-xs font-semibold bg-purple-600 hover:bg-purple-500 active:scale-[0.98] text-white shadow-lg shadow-purple-600/30 transition-all text-center"
             >
               {isVideo ? 'Play Video Fullscreen' : 'Open Fullscreen'}
             </button>
             <button
               onClick={handleCopyLink}
-              className="py-2.5 px-4 rounded-xl text-xs font-medium bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-all flex items-center gap-1.5"
+              className="py-3 sm:py-2.5 px-4 rounded-xl text-xs font-medium bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 active:scale-[0.98] border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-all flex items-center gap-1.5"
             >
               {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Share2 className="w-3.5 h-3.5" />}
               <span>{copied ? 'Copied' : 'Share'}</span>
