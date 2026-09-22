@@ -36,49 +36,55 @@ export const FilterBar = ({
   return (
     <div className="sticky top-16 z-30 w-full backdrop-blur-xl bg-white/90 dark:bg-zinc-950/90 border-b border-zinc-200 dark:border-zinc-800/40 py-3.5 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center justify-between gap-3">
-        {/* Category Pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 no-scrollbar">
-          {categories.map((cat) => {
-            const isActive = !isFoldersActive && activeCategory === cat;
-            const count = categoryCounts[cat] ?? 0;
+        {/* Category Pills & Folders Dropdown */}
+        <div className="flex items-center gap-2 overflow-visible min-w-0">
+          {/* Scrollable Category Pills */}
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 no-scrollbar">
+            {categories.map((cat) => {
+              const isActive = !isFoldersActive && activeCategory === cat;
+              const count = categoryCounts[cat] ?? 0;
 
-            return (
-              <button
-                key={cat}
-                onClick={() => {
-                  onSelectCategory(cat);
-                  if (onSelectFolder) onSelectFolder(null);
-                }}
-                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all duration-200 ${
-                  isActive
-                    ? 'bg-purple-600 text-white shadow-md shadow-purple-600/30 font-semibold'
-                    : 'bg-zinc-100 dark:bg-zinc-900/80 text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-800/80'
-                }`}
-              >
-                <span>{cat}</span>
-                <span
-                  className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
+              return (
+                <button
+                  key={cat}
+                  onClick={() => {
+                    onSelectCategory(cat);
+                    if (onSelectFolder) onSelectFolder(null);
+                    setIsDropdownOpen(false);
+                  }}
+                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all duration-200 ${
                     isActive
-                      ? 'bg-purple-700 text-white'
-                      : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400'
+                      ? 'bg-purple-600 text-white shadow-md shadow-purple-600/30 font-semibold'
+                      : 'bg-zinc-100 dark:bg-zinc-900/80 text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-800/80'
                   }`}
                 >
-                  {count}
-                </span>
-              </button>
-            );
-          })}
+                  <span>{cat}</span>
+                  <span
+                    className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
+                      isActive
+                        ? 'bg-purple-700 text-white'
+                        : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400'
+                    }`}
+                  >
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
 
-          {/* Folders Category Pill & Dropdown */}
-          <div className="relative" ref={dropdownRef}>
+          {/* Divider */}
+          <div className="h-5 w-px bg-zinc-200 dark:bg-zinc-800 shrink-0 hidden sm:block" />
+
+          {/* Folders Category Pill & Dropdown (OUTSIDE overflow-x-auto so dropdown is NEVER clipped) */}
+          <div className="relative shrink-0" ref={dropdownRef}>
             <div className="flex items-center">
               <button
                 onClick={() => {
-                  if (activeCategory === 'Folders' && !activeFolder) {
-                    setIsDropdownOpen(!isDropdownOpen);
-                  } else {
-                    onSelectCategory('Folders');
-                    if (onSelectFolder) onSelectFolder(null);
+                  setIsDropdownOpen((prev) => !prev);
+                  onSelectCategory('Folders');
+                  if (!activeFolder && onSelectFolder) {
+                    onSelectFolder(null);
                   }
                 }}
                 className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all duration-200 ${
@@ -96,27 +102,21 @@ export const FilterBar = ({
                       : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400'
                   }`}
                 >
-                  {activeFolderObj ? activeFolderObj.photos.length : folders.length}
+                  {activeFolderObj ? (activeFolderObj.photos ? activeFolderObj.photos.length : 0) : folders.length}
                 </span>
-                <span
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsDropdownOpen(!isDropdownOpen);
-                  }}
-                  className="p-0.5 hover:bg-black/10 dark:hover:bg-white/10 rounded-full transition-colors"
-                >
-                  <ChevronDown className="w-3 h-3" />
-                </span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} />
               </button>
             </div>
 
             {/* Folders Dropdown Menu */}
             {isDropdownOpen && (
-              <div className="absolute left-0 mt-2 w-60 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-2xl py-2 z-50 animate-fade-in">
-                <div className="px-3 py-1.5 text-[11px] font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">
-                  Cloud Folders
+              <div className="absolute left-0 mt-2 w-64 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-2xl py-2 z-50 animate-fade-in max-h-80 overflow-y-auto">
+                <div className="px-3.5 py-1.5 text-[11px] font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider flex items-center justify-between">
+                  <span>Cloud Folders</span>
+                  <span className="font-mono text-[10px] text-zinc-400">{folders.length} folders</span>
                 </div>
                 
+                {/* All Folders Overview Option */}
                 <button
                   onClick={() => {
                     onSelectCategory('Folders');
@@ -157,7 +157,7 @@ export const FilterBar = ({
                       <span className="truncate">{f.name}</span>
                     </span>
                     <span className="text-[10px] font-mono text-zinc-400 shrink-0 ml-2">
-                      {f.photos.length}
+                      {f.photos ? f.photos.length : 0} {f.photos?.length === 1 ? 'item' : 'items'}
                     </span>
                   </button>
                 ))}

@@ -74,8 +74,9 @@ export const FolderGrid = ({ folders = [], onSelectFolder }) => {
                     ))}
                   </div>
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-zinc-400">
-                    <Folder className="w-12 h-12 stroke-1" />
+                  <div className="w-full h-full flex flex-col items-center justify-center text-zinc-400 bg-zinc-100/60 dark:bg-zinc-950/60">
+                    <Folder className="w-10 h-10 stroke-1 text-purple-400/70 mb-1" />
+                    <span className="text-[11px] font-mono text-zinc-400">Cloud Folder</span>
                   </div>
                 )}
 
@@ -112,6 +113,9 @@ export const FolderGrid = ({ folders = [], onSelectFolder }) => {
                       <Video className="w-3.5 h-3.5 text-indigo-500" />
                       <span>{videoCount} {videoCount === 1 ? 'video' : 'videos'}</span>
                     </span>
+                  )}
+                  {photoCount === 0 && videoCount === 0 && (
+                    <span className="text-zinc-400 italic text-[11px]">0 items</span>
                   )}
                   <span className="ml-auto font-mono text-[11px] text-zinc-400">
                     {folder.photos.length} total

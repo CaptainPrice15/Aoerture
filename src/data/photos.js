@@ -4,6 +4,12 @@ export const CATEGORIES = [
   "Videos"
 ];
 
+export const INITIAL_FOLDERS = [
+  { name: "Pics", path: "/Pics" },
+  { name: "Darjeeling", path: "/Darjeeling" },
+  { name: "Sikkim", path: "/Sikkim" }
+];
+
 /**
  * Static photo & video catalogue
  * 
@@ -21,6 +27,8 @@ export const photos = [
     id: "uploaded-pics-chatgpt-image",
     title: "Frame 01",
     category: "Pics",
+    folder: "Pics",
+    folderPath: "/Pics",
     mediaType: "photo",
     location: "ImageKit /Pics Cloud",
     date: "2025-04-03",

@@ -12,7 +12,7 @@ import { AboutModal } from './components/AboutModal';
 import { ImageKitGuideModal } from './components/ImageKitGuideModal';
 import { AddMediaModal } from './components/AddMediaModal';
 import { Footer } from './components/Footer';
-import { photos as initialPhotos } from './data/photos';
+import { photos as initialPhotos, INITIAL_FOLDERS } from './data/photos';
 
 export default function App() {
   const { theme, toggleTheme } = useTheme();
@@ -30,6 +30,7 @@ export default function App() {
     }
     return initialPhotos;
   });
+  const [cloudFolders, setCloudFolders] = useState(INITIAL_FOLDERS);
   const [isLiveSync, setIsLiveSync] = useState(false);
   const [showSyncBanner, setShowSyncBanner] = useState(true);
   const [activeCategory, setActiveCategory] = useState('All');
@@ -55,7 +56,7 @@ export default function App() {
     });
   };
 
-  // Attempt to fetch live photos from ImageKit if /api/photos is available
+  // Attempt to fetch live photos and folders from ImageKit if /api/photos is available
   useEffect(() => {
     let isMounted = true;
     fetch('/api/photos')
@@ -69,6 +70,9 @@ export default function App() {
           setIsLiveSync(true);
           if (Array.isArray(data.photos) && data.photos.length > 0) {
             setPhotosList(data.photos);
+          }
+          if (Array.isArray(data.folders) && data.folders.length > 0) {
+            setCloudFolders(data.folders);
           }
         }
       })
@@ -90,9 +94,20 @@ export default function App() {
     return Array.from(cats);
   }, [photosList]);
 
-  // Compute folders dynamically from photos
+  // Compute folders dynamically from cloud folders + photos
   const availableFolders = useMemo(() => {
     const foldersMap = new Map();
+
+    // 1. Seed with known / fetched cloud folders so empty folders are kept
+    cloudFolders.forEach((f) => {
+      foldersMap.set(f.path, {
+        name: f.name,
+        path: f.path,
+        photos: []
+      });
+    });
+
+    // 2. Attach photos to corresponding folders
     photosList.forEach((photo) => {
       const path = photo.folderPath || (photo.src?.startsWith('/Pics') ? '/Pics' : '/');
       const name = photo.folder || (path === '/' ? 'Root Library' : path.replace(/^\/+/, ''));
@@ -105,8 +120,9 @@ export default function App() {
       }
       foldersMap.get(path).photos.push(photo);
     });
+
     return Array.from(foldersMap.values());
-  }, [photosList]);
+  }, [cloudFolders, photosList]);
 
   // Category counts calculation
   const categoryCounts = useMemo(() => {
@@ -279,13 +295,42 @@ export default function App() {
               </div>
             )}
 
-            {/* Masonry Image Gallery */}
-            <GalleryGrid
-              photos={filteredPhotos}
-              onSelectPhoto={handleOpenLightbox}
-              onOpenExif={handleOpenExif}
-              onResetFilters={handleResetFilters}
-            />
+            {/* Masonry Image Gallery or Empty Folder State */}
+            {activeCategory === 'Folders' && selectedFolderPath && filteredPhotos.length === 0 ? (
+              <div className="py-24 text-center max-w-md mx-auto px-4">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-purple-50 dark:bg-purple-950/50 border border-purple-200 dark:border-purple-800/60 flex items-center justify-center text-purple-600 dark:text-purple-400">
+                  <Folder className="w-8 h-8" />
+                </div>
+                <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">
+                  Folder "{availableFolders.find((f) => f.path === selectedFolderPath)?.name || selectedFolderPath}" is Empty
+                </h3>
+                <p className="mt-2 text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                  This folder is ready in your cloud storage. Once photos or videos are uploaded to or organized inside this folder in ImageKit, they will show up here automatically.
+                </p>
+                <div className="mt-6 flex flex-wrap items-center justify-center gap-2.5">
+                  <button
+                    onClick={() => setSelectedFolderPath(null)}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-800 transition-all shadow-sm"
+                  >
+                    <ArrowLeft className="w-3.5 h-3.5" />
+                    <span>Back to All Folders</span>
+                  </button>
+                  <button
+                    onClick={() => setIsAddMediaOpen(true)}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-purple-600 hover:bg-purple-500 text-white shadow-md shadow-purple-600/20 transition-all"
+                  >
+                    <span>Add Media</span>
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <GalleryGrid
+                photos={filteredPhotos}
+                onSelectPhoto={handleOpenLightbox}
+                onOpenExif={handleOpenExif}
+                onResetFilters={handleResetFilters}
+              />
+            )}
           </>
         )}
       </main>

@@ -46,7 +46,15 @@ export default defineConfig(({ mode }) => {
               const privateKey = env.IMAGEKIT_PRIVATE_KEY || process.env.IMAGEKIT_PRIVATE_KEY || env.VITE_IMAGEKIT_PRIVATE_KEY;
               if (!privateKey) {
                 res.setHeader('Content-Type', 'application/json');
-                res.end(JSON.stringify({ configured: false, photos: [] }));
+                res.end(JSON.stringify({
+                  configured: false,
+                  photos: [],
+                  folders: [
+                    { name: 'Pics', path: '/Pics' },
+                    { name: 'Darjeeling', path: '/Darjeeling' },
+                    { name: 'Sikkim', path: '/Sikkim' }
+                  ]
+                }));
                 return;
               }
               try {
@@ -148,12 +156,66 @@ export default defineConfig(({ mode }) => {
                   };
                 });
 
+                // Fetch media library folders from ImageKit API
+                let ikFolders = [];
+                try {
+                  const foldersRes = await fetch('https://api.imagekit.io/v1/files?path=%2F&type=folder', {
+                    headers: { Authorization: authHeader }
+                  });
+                  if (foldersRes.ok) {
+                    const foldersData = await foldersRes.json();
+                    if (Array.isArray(foldersData)) {
+                      ikFolders = foldersData.map((f) => ({
+                        name: f.name,
+                        path: f.folderPath || (f.name.startsWith('/') ? f.name : `/${f.name}`)
+                      }));
+                    }
+                  }
+                } catch (fErr) {
+                  console.error('Error fetching folders from ImageKit:', fErr);
+                }
+
+                // Merge API folders with folders found in file paths
+                const foldersMap = new Map();
+                ['Pics', 'Darjeeling', 'Sikkim'].forEach((name) => {
+                  foldersMap.set(`/${name}`, { name, path: `/${name}` });
+                });
+                ikFolders.forEach((f) => {
+                  foldersMap.set(f.path, f);
+                });
+                mappedMedia.forEach((p) => {
+                  if (p.folderPath && p.folderPath !== '/') {
+                    if (!foldersMap.has(p.folderPath)) {
+                      foldersMap.set(p.folderPath, {
+                        name: p.folder || p.folderPath.replace(/^\/+/, ''),
+                        path: p.folderPath
+                      });
+                    }
+                  }
+                });
+                if (mappedMedia.some((p) => p.folderPath === '/')) {
+                  foldersMap.set('/', { name: 'Root Library', path: '/' });
+                }
+
                 res.setHeader('Content-Type', 'application/json');
-                res.end(JSON.stringify({ configured: true, photos: mappedMedia }));
+                res.end(JSON.stringify({
+                  configured: true,
+                  photos: mappedMedia,
+                  folders: Array.from(foldersMap.values())
+                }));
               } catch (err) {
                 res.statusCode = 500;
                 res.setHeader('Content-Type', 'application/json');
-                res.end(JSON.stringify({ error: err.message, configured: true, photos: [] }));
+                res.end(JSON.stringify({
+                  error: err.message,
+                  configured: true,
+                  photos: [],
+                  folders: [
+                    { name: 'Pics', path: '/Pics' },
+                    { name: 'Darjeeling', path: '/Darjeeling' },
+                    { name: 'Sikkim', path: '/Sikkim' }
+                  ]
+                }));
               }
               return;
             }

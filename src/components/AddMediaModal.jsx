@@ -7,6 +7,7 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [] }) 
   const [srcInput, setSrcInput] = useState('');
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('Pics');
+  const [selectedFolder, setSelectedFolder] = useState('/Pics');
   const [customCategory, setCustomCategory] = useState('');
   const [aspectRatio, setAspectRatio] = useState('3/2');
   const [location, setLocation] = useState('ImageKit /Pics Cloud');
@@ -47,7 +48,8 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [] }) 
       return clean;
     }
     if (!clean.startsWith('/')) {
-      clean = `/Pics/${clean}`;
+      const folderPrefix = selectedFolder === '/' ? '' : selectedFolder;
+      clean = `${folderPrefix}/${clean}`;
     }
     return clean;
   };
@@ -64,18 +66,21 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [] }) 
     const finalCategory = category === 'Custom' ? (customCategory.trim() || 'Gallery') : category;
     const cleanSrc = getNormalizedSrc();
     const isVid = mediaType === 'video' || isVideoSource(cleanSrc);
+    const folderName = selectedFolder === '/' ? 'Root Library' : selectedFolder.replace(/^\/+/, '');
 
     const newPhoto = {
       id: `custom-${Date.now()}`,
       title: title.trim() || (isVid ? 'New Video' : 'New Photo'),
       category: finalCategory,
+      folder: folderName,
+      folderPath: selectedFolder,
       mediaType: isVid ? 'video' : 'photo',
-      location: location.trim() || 'ImageKit Media Library',
+      location: location.trim() || `ImageKit ${selectedFolder} Cloud`,
       date: new Date().toISOString().slice(0, 10),
       aspectRatio: aspectRatio,
       featured: false,
       description: description.trim() || (isVid ? `Original video streamed from ImageKit: ${title}` : `Original photo streamed from ImageKit: ${title}`),
-      tags: [isVid ? 'video' : 'photo', 'imagekit', finalCategory.toLowerCase()],
+      tags: [isVid ? 'video' : 'photo', 'imagekit', finalCategory.toLowerCase(), folderName.toLowerCase()].filter(Boolean),
       src: cleanSrc,
       exif: {
         camera: isVid ? 'ImageKit Video CDN' : 'Cloud Uploaded Photo',
@@ -236,6 +241,26 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [] }) 
                 <option value="Custom">+ New Category...</option>
               </select>
             </div>
+          </div>
+
+          {/* Cloud Folder Destination */}
+          <div>
+            <label className="block font-semibold mb-1 text-zinc-700 dark:text-zinc-300">
+              Cloud Folder
+            </label>
+            <select
+              value={selectedFolder}
+              onChange={(e) => setSelectedFolder(e.target.value)}
+              className="w-full px-3 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-purple-500 text-xs cursor-pointer font-mono"
+            >
+              <option value="/Pics">/Pics</option>
+              <option value="/Darjeeling">/Darjeeling</option>
+              <option value="/Sikkim">/Sikkim</option>
+              <option value="/">/ (Root Library)</option>
+            </select>
+            <p className="mt-1 text-[11px] text-zinc-500 dark:text-zinc-400">
+              Select which cloud folder this item is organized into.
+            </p>
           </div>
 
           {/* Custom Category if selected */}

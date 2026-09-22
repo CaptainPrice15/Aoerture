@@ -9,7 +9,12 @@ export default async function handler(req, res) {
     return res.status(200).json({
       configured: false,
       message: 'No IMAGEKIT_PRIVATE_KEY configured in environment variables',
-      photos: []
+      photos: [],
+      folders: [
+        { name: 'Pics', path: '/Pics' },
+        { name: 'Darjeeling', path: '/Darjeeling' },
+        { name: 'Sikkim', path: '/Sikkim' }
+      ]
     });
   }
 
@@ -117,15 +122,64 @@ export default async function handler(req, res) {
       };
     });
 
+    // Fetch media library folders from ImageKit API
+    let ikFolders = [];
+    try {
+      const foldersRes = await fetch('https://api.imagekit.io/v1/files?path=%2F&type=folder', {
+        headers: { Authorization: authHeader }
+      });
+      if (foldersRes.ok) {
+        const foldersData = await foldersRes.json();
+        if (Array.isArray(foldersData)) {
+          ikFolders = foldersData.map((f) => ({
+            name: f.name,
+            path: f.folderPath || (f.name.startsWith('/') ? f.name : `/${f.name}`)
+          }));
+        }
+      }
+    } catch (fErr) {
+      console.error('Error fetching folders from ImageKit:', fErr);
+    }
+
+    // Merge API folders with folders found in file paths
+    const foldersMap = new Map();
+    // Default known folders
+    ['Pics', 'Darjeeling', 'Sikkim'].forEach((name) => {
+      foldersMap.set(`/${name}`, { name, path: `/${name}` });
+    });
+    ikFolders.forEach((f) => {
+      foldersMap.set(f.path, f);
+    });
+    mappedMedia.forEach((p) => {
+      if (p.folderPath && p.folderPath !== '/') {
+        if (!foldersMap.has(p.folderPath)) {
+          foldersMap.set(p.folderPath, {
+            name: p.folder || p.folderPath.replace(/^\/+/, ''),
+            path: p.folderPath
+          });
+        }
+      }
+    });
+    // If there are photos at root, add Root Library folder
+    if (mappedMedia.some((p) => p.folderPath === '/')) {
+      foldersMap.set('/', { name: 'Root Library', path: '/' });
+    }
+
     return res.status(200).json({
       configured: true,
-      photos: mappedMedia
+      photos: mappedMedia,
+      folders: Array.from(foldersMap.values())
     });
   } catch (err) {
     return res.status(500).json({
       error: err.message,
       configured: true,
-      photos: []
+      photos: [],
+      folders: [
+        { name: 'Pics', path: '/Pics' },
+        { name: 'Darjeeling', path: '/Darjeeling' },
+        { name: 'Sikkim', path: '/Sikkim' }
+      ]
     });
   }
 }
