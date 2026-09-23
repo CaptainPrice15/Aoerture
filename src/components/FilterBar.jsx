@@ -49,7 +49,6 @@ export const FilterBar = ({
                   key={cat}
                   onClick={() => {
                     onSelectCategory(cat);
-                    if (onSelectFolder) onSelectFolder(null);
                     setIsDropdownOpen(false);
                   }}
                   className={`flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap active:scale-95 transition-all duration-200 touch-manipulation ${

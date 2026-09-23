@@ -147,7 +147,11 @@ export default function App() {
     const counts = { All: photosList.length };
     availableCategories.forEach((cat) => {
       if (cat !== 'All') {
-        counts[cat] = photosList.filter((p) => p.category === cat).length;
+        if (cat === 'Videos') {
+          counts[cat] = photosList.filter((p) => p.mediaType === 'video' || p.category === 'Videos').length;
+        } else {
+          counts[cat] = photosList.filter((p) => p.category === cat || p.folder === cat || p.folderPath === `/${cat}`).length;
+        }
       }
     });
     return counts;
@@ -163,8 +167,12 @@ export default function App() {
             const photoPath = photo.folderPath || (photo.src?.startsWith('/Pics') ? '/Pics' : '/');
             if (photoPath !== selectedFolderPath) return false;
           }
-        } else if (activeCategory !== 'All' && photo.category !== activeCategory) {
-          return false;
+        } else if (activeCategory === 'Videos') {
+          if (photo.mediaType !== 'video' && photo.category !== 'Videos') return false;
+        } else if (activeCategory !== 'All') {
+          const matchCategory = photo.category === activeCategory;
+          const matchFolder = photo.folder === activeCategory || photo.folderPath === `/${activeCategory}`;
+          if (!matchCategory && !matchFolder) return false;
         }
 
         // Search match
@@ -297,8 +305,12 @@ export default function App() {
           folders={availableFolders}
           activeFolder={selectedFolderPath}
           onSelectFolder={(path) => {
-            setActiveCategory('Folders');
-            setSelectedFolderPath(path);
+            if (path) {
+              setActiveCategory('Folders');
+              setSelectedFolderPath(path);
+            } else {
+              setSelectedFolderPath(null);
+            }
           }}
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}

@@ -77,9 +77,9 @@ export default async function handler(req, res) {
       // If at root without a subfolder, intelligently assign folder
       if (folderPath === '/') {
         const nameLower = (file.name || '').toLowerCase();
-        const created = file.createdAt || '';
-        const dateMatch = file.name.match(/^(?:IMG|VID)(\d{8})/);
+        const dateMatch = file.name.match(/^(?:IMG|VID)(\d{8})(\d{6})?/);
         const dateKey = dateMatch ? dateMatch[1] : (file.embeddedMetadata?.DateTimeOriginal?.replace(/[-:T ]/g, '').slice(0, 8) || '');
+        const timeKey = dateMatch && dateMatch[2] ? dateMatch[2] : (file.embeddedMetadata?.DateTimeOriginal?.replace(/[-:T ]/g, '').slice(8, 14) || '');
 
         // 1. Check if filename contains a known folder name
         for (const f of ['Kedarnath', 'Badrinath', 'Haridwar', 'Darjeeling', 'Sikkim', 'Pics']) {
@@ -101,21 +101,7 @@ export default async function handler(req, res) {
           }
         }
 
-        // 3. Known ImageKit upload batches
-        if (folderPath === '/') {
-          if (created.startsWith('2026-09-22T15:3')) {
-            folderName = 'Kedarnath';
-            folderPath = '/Kedarnath';
-          } else if (created.startsWith('2026-09-22T15:4')) {
-            folderName = 'Badrinath';
-            folderPath = '/Badrinath';
-          } else if (created.startsWith('2026-09-22T15:5')) {
-            folderName = 'Haridwar';
-            folderPath = '/Haridwar';
-          }
-        }
-
-        // 4. Fallback based on shot date
+        // 3. Fallback based on verified trip dates
         if (folderPath === '/') {
           if (dateKey >= '20231028' && dateKey <= '20231030') {
             folderName = 'Darjeeling';
@@ -123,9 +109,20 @@ export default async function handler(req, res) {
           } else if (dateKey >= '20231031' && dateKey <= '20231103') {
             folderName = 'Sikkim';
             folderPath = '/Sikkim';
-          } else if (dateKey >= '20250524' && dateKey <= '20250527') {
+          } else if (dateKey === '20250523') {
+            folderName = 'Haridwar';
+            folderPath = '/Haridwar';
+          } else if (dateKey >= '20250524' && dateKey <= '20250526') {
             folderName = 'Kedarnath';
             folderPath = '/Kedarnath';
+          } else if (dateKey === '20250527') {
+            if (timeKey && timeKey >= '180000') {
+              folderName = 'Badrinath';
+              folderPath = '/Badrinath';
+            } else {
+              folderName = 'Kedarnath';
+              folderPath = '/Kedarnath';
+            }
           } else if (dateKey >= '20250528' && dateKey <= '20250529') {
             folderName = 'Badrinath';
             folderPath = '/Badrinath';
@@ -140,9 +137,15 @@ export default async function handler(req, res) {
 
       const meta = file.embeddedMetadata || {};
       const cameraModel = [meta.Make, meta.Model].filter(Boolean).join(' ').replace(/realme\s+realme/i, 'realme');
-      const shotDate = meta.DateTimeOriginal
+
+      let shotDate = meta.DateTimeOriginal
         ? meta.DateTimeOriginal.slice(0, 10)
         : (file.createdAt ? file.createdAt.slice(0, 10) : new Date().toISOString().slice(0, 10));
+
+      const fileDateMatch = file.name.match(/^(?:IMG|VID)(\d{4})(\d{2})(\d{2})/);
+      if (fileDateMatch && (!meta.DateTimeOriginal || shotDate.startsWith('2026-09'))) {
+        shotDate = `${fileDateMatch[1]}-${fileDateMatch[2]}-${fileDateMatch[3]}`;
+      }
 
       let title = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
       const imgMatch = file.name.match(/^IMG(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/i);
