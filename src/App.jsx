@@ -24,7 +24,7 @@ export default function App() {
         const saved = localStorage.getItem('user_gallery_photos');
         if (saved) {
           const parsed = JSON.parse(saved);
-          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+          if (Array.isArray(parsed) && parsed.length >= initialPhotos.length) return parsed;
         }
       } catch (e) {}
     }
@@ -69,6 +69,24 @@ export default function App() {
         if (data && data.configured) {
           setIsLiveSync(true);
           if (Array.isArray(data.photos) && data.photos.length > 0) {
+            try {
+              const saved = localStorage.getItem('user_gallery_photos');
+              if (saved) {
+                const parsed = JSON.parse(saved);
+                if (Array.isArray(parsed)) {
+                  const customOnly = parsed.filter((p) => p.id && String(p.id).startsWith('custom-'));
+                  const liveIds = new Set(data.photos.map((p) => p.id));
+                  const extra = customOnly.filter((p) => !liveIds.has(p.id));
+                  if (extra.length > 0) {
+                    setPhotosList([...extra, ...data.photos]);
+                    if (Array.isArray(data.folders) && data.folders.length > 0) {
+                      setCloudFolders(data.folders);
+                    }
+                    return;
+                  }
+                }
+              }
+            } catch (e) {}
             setPhotosList(data.photos);
           }
           if (Array.isArray(data.folders) && data.folders.length > 0) {
@@ -407,6 +425,7 @@ export default function App() {
         onClose={() => setIsAddMediaOpen(false)}
         onAddMedia={handleAddMedia}
         categories={availableCategories}
+        folders={availableFolders}
       />
     </div>
   );

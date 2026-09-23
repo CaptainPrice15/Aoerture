@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { X, Plus, Image as ImageIcon, Video, Check, Sparkles, AlertCircle, Eye } from 'lucide-react';
 import { buildOptimizedUrl, isVideoSource } from '../utils/imagekit';
 
-export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [] }) => {
+export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [], folders = [] }) => {
   const [mediaType, setMediaType] = useState('photo');
   const [srcInput, setSrcInput] = useState('');
   const [title, setTitle] = useState('');
@@ -253,10 +253,28 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [] }) 
               onChange={(e) => setSelectedFolder(e.target.value)}
               className="w-full px-3 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-purple-500 text-sm sm:text-xs cursor-pointer font-mono"
             >
-              <option value="/Pics">/Pics</option>
-              <option value="/Darjeeling">/Darjeeling</option>
-              <option value="/Sikkim">/Sikkim</option>
-              <option value="/">/ (Root Library)</option>
+              {folders.length > 0 ? (
+                <>
+                  {folders.map((f) => (
+                    <option key={f.path} value={f.path}>
+                      {f.path} {f.name && f.name !== f.path.replace(/^\/+/, '') ? `(${f.name})` : ''}
+                    </option>
+                  ))}
+                  {!folders.some((f) => f.path === '/') && (
+                    <option value="/">/ (Root Library)</option>
+                  )}
+                </>
+              ) : (
+                <>
+                  <option value="/Pics">/Pics</option>
+                  <option value="/Darjeeling">/Darjeeling</option>
+                  <option value="/Sikkim">/Sikkim</option>
+                  <option value="/Kedarnath">/Kedarnath</option>
+                  <option value="/Badrinath">/Badrinath</option>
+                  <option value="/Haridwar">/Haridwar</option>
+                  <option value="/">/ (Root Library)</option>
+                </>
+              )}
             </select>
             <p className="mt-1 text-[11px] text-zinc-500 dark:text-zinc-400">
               Select which cloud folder this item is organized into.

@@ -2,14 +2,38 @@ export const CATEGORIES = [
   "All",
   "Darjeeling",
   "Sikkim",
+  "Kedarnath",
+  "Badrinath",
+  "Haridwar",
   "Pics",
   "Videos"
 ];
 
 export const INITIAL_FOLDERS = [
-  { name: "Darjeeling", path: "/Darjeeling" },
-  { name: "Sikkim", path: "/Sikkim" },
-  { name: "Pics", path: "/Pics" }
+  {
+    "name": "Darjeeling",
+    "path": "/Darjeeling"
+  },
+  {
+    "name": "Sikkim",
+    "path": "/Sikkim"
+  },
+  {
+    "name": "Kedarnath",
+    "path": "/Kedarnath"
+  },
+  {
+    "name": "Badrinath",
+    "path": "/Badrinath"
+  },
+  {
+    "name": "Haridwar",
+    "path": "/Haridwar"
+  },
+  {
+    "name": "Pics",
+    "path": "/Pics"
+  }
 ];
 
 /**
@@ -31,7 +55,7 @@ export const photos = [
     "width": 1024,
     "height": 1536,
     "featured": true,
-    "description": "Original photo streamed from your ImageKit cloud: ChatGPT Image Apr 3, 2025, 09_39_36 PM.png",
+    "description": "Original photo streamed from your ImageKit cloud folder: ChatGPT Image Apr 3, 2025, 09_39_36 PM.png",
     "tags": [
       "pics",
       "photo",
@@ -39,12 +63,12 @@ export const photos = [
     ],
     "src": "/Pics/ChatGPT Image Apr 3, 2025, 09_39_36 PM.png",
     "exif": {
-      "camera": "realme 10 Pro+ 5G",
+      "camera": "Mobile Camera",
       "lens": "1024 × 1536",
-      "focalLength": "5.2 mm",
-      "aperture": "f/1.8",
-      "shutterSpeed": "1/120s",
-      "iso": "100"
+      "focalLength": "Native",
+      "aperture": "Auto",
+      "shutterSpeed": "Cloud CDN",
+      "iso": "3048 KB"
     }
   },
   {
@@ -60,16 +84,17 @@ export const photos = [
     "aspectRatio": "4/5",
     "width": 3000,
     "height": 4000,
-    "featured": true,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231029082602.heic",
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231029082602.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231029082602.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -91,15 +116,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231030073601.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231030073601.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231030073601.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -121,15 +147,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231030181017.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231030181017.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231030181017.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -151,15 +178,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231028182111.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231028182111.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231028182111.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -181,15 +209,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231030060430.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231030060430.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231030060430.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -211,15 +240,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231030173232.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231030173232.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231030173232.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -241,15 +271,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231029075117.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231029075117.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231029075117.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -271,15 +302,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231029181050.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231029181050.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231029181050.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -301,15 +333,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231028201252.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231028201252.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231028201252.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -331,15 +364,16 @@ export const photos = [
     "width": 3264,
     "height": 2448,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231030105342.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231030105342.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231030105342.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3264 × 2448",
       "focalLength": "1.7 mm",
       "aperture": "f/2.2",
@@ -361,15 +395,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231029115906.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231029115906.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231029115906.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -391,15 +426,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231030132340.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231030132340.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231030132340.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -421,15 +457,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231030171756.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231030171756.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231030171756.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -451,15 +488,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231030165257.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231030165257.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231030165257.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -481,15 +519,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231029083043.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231029083043.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231029083043.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -511,15 +550,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231030171449.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231030171449.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231030171449.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -541,15 +581,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231030102017.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231030102017.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231030102017.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -571,15 +612,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231028123913.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231028123913.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231028123913.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -601,15 +643,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231030172923.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231030172923.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231030172923.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -631,15 +674,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231029063612.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231029063612.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231029063612.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -661,15 +705,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231030171700.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231030171700.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231030171700.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -691,15 +736,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231030060444.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231030060444.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231030060444.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -721,15 +767,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231030171719.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231030171719.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231030171719.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -751,15 +798,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231029093237.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231029093237.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231029093237.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -781,15 +829,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231030171645.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231030171645.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231030171645.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -811,15 +860,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231030110511.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231030110511.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231030110511.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -841,15 +891,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231029125508.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231029125508.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231029125508.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -871,15 +922,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231030105527.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231030105527.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231030105527.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -901,15 +953,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231029135801.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231029135801.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231029135801.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -931,15 +984,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231030100032.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231030100032.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231030100032.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -961,15 +1015,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231029131216.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231029131216.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231029131216.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -991,15 +1046,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231028184652.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231028184652.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231028184652.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1021,15 +1077,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231030060423.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231030060423.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231030060423.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1051,15 +1108,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231029063621.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231029063621.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231029063621.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1081,15 +1139,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231029165020.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231029165020.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231029165020.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1111,15 +1170,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231029093904.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231029093904.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231029093904.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1141,15 +1201,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231029131754.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231029131754.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231029131754.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1171,15 +1232,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231029105050.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231029105050.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231029105050.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1201,15 +1263,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231030105532.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231030105532.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231030105532.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1231,15 +1294,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231029093929.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231029093929.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231029093929.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1261,15 +1325,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231029094057.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231029094057.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231029094057.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1291,15 +1356,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231029144301.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231029144301.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231029144301.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1321,15 +1387,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231029103147.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231029103147.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231029103147.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1351,15 +1418,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231030164350.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231030164350.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231030164350.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1381,15 +1449,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231029105037.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231029105037.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231029105037.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1411,15 +1480,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231029125359.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231029125359.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231029125359.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1441,15 +1511,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231029120607.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231029120607.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231029120607.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1471,15 +1542,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231029131716.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231029131716.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231029131716.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1501,15 +1573,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231029122649.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231029122649.heic",
     "tags": [
       "darjeeling",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231029122649.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1531,15 +1604,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231102123101.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231102123101.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231102123101.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1561,15 +1635,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231102122252.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231102122252.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231102122252.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1591,15 +1666,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231102114124.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231102114124.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231102114124.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1621,15 +1697,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231102114128.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231102114128.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231102114128.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1651,15 +1728,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231102171035.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231102171035.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231102171035.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1681,15 +1759,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231031174335.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231031174335.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231031174335.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1711,15 +1790,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231102111955.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231102111955.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231102111955.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1741,15 +1821,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231102114039.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231102114039.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231102114039.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1771,15 +1852,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231102115617.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231102115617.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231102115617.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1801,15 +1883,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231031175333.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231031175333.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231031175333.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1831,15 +1914,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231102115815.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231102115815.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231102115815.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1861,15 +1945,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231102185653.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231102185653.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231102185653.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1891,15 +1976,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231101145016.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231101145016.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231101145016.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1921,15 +2007,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231102111136.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231102111136.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231102111136.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1951,15 +2038,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231102112005.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231102112005.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231102112005.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -1981,15 +2069,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231102115420.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231102115420.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231102115420.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -2011,15 +2100,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231101093902.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231101093902.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231101093902.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -2041,15 +2131,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231102110730.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231102110730.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231102110730.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -2071,15 +2162,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231102115411.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231102115411.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231102115411.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -2101,15 +2193,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231031174801.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231031174801.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231031174801.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -2131,15 +2224,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231101150031.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231101150031.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231101150031.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -2161,15 +2255,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231031174347.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231031174347.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231031174347.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -2191,15 +2286,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231102111212.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231102111212.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231102111212.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -2221,15 +2317,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231101145020.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231101145020.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231101145020.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -2251,15 +2348,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231031193853.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231031193853.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231031193853.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -2281,15 +2379,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231103072923.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231103072923.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231103072923.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -2311,15 +2410,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231101085004.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231101085004.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231101085004.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -2341,15 +2441,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231101140041.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231101140041.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231101140041.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -2371,15 +2472,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231102193959.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231102193959.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231102193959.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -2401,15 +2503,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231102122956.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231102122956.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231102122956.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -2431,15 +2534,16 @@ export const photos = [
     "width": 3000,
     "height": 4000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231101093906.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231101093906.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231101093906.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "3000 × 4000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -2461,15 +2565,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231102114330.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231102114330.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231102114330.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -2491,15 +2596,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231101145010.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231101145010.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231101145010.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -2521,15 +2627,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231102111258.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231102111258.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231102111258.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -2551,15 +2658,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231102111242.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231102111242.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231102111242.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -2581,15 +2689,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231102114413.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231102114413.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231102114413.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -2611,15 +2720,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231102114237.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231102114237.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231102114237.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -2641,15 +2751,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231102114159.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231102114159.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231102114159.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -2671,15 +2782,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231102114334.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231102114334.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231102114334.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -2701,15 +2813,16 @@ export const photos = [
     "width": 4000,
     "height": 3000,
     "featured": false,
-    "description": "Original photo streamed from your ImageKit cloud: IMG20231102102421.heic",
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20231102102421.heic",
     "tags": [
       "sikkim",
       "photo",
+      "realme 10 pro+ 5g",
       "imagekit"
     ],
     "src": "/IMG20231102102421.heic",
     "exif": {
-      "camera": "realme realme 10 Pro+ 5G",
+      "camera": "realme 10 Pro+ 5G",
       "lens": "4000 × 3000",
       "focalLength": "5.2 mm",
       "aperture": "f/1.8",
@@ -2742,9 +2855,9 @@ export const photos = [
       "camera": "ImageKit Cloud Video",
       "lens": "1920 × 1080",
       "focalLength": "High Definition",
-      "aperture": "f/1.8",
-      "shutterSpeed": "1/120s",
-      "iso": "100"
+      "aperture": "H.264 / MP4",
+      "shutterSpeed": "Streaming CDN",
+      "iso": "13130 KB"
     }
   },
   {
@@ -2772,9 +2885,2768 @@ export const photos = [
       "camera": "ImageKit Cloud Video",
       "lens": "1920 × 1080",
       "focalLength": "High Definition",
+      "aperture": "H.264 / MP4",
+      "shutterSpeed": "Streaming CDN",
+      "iso": "42415 KB"
+    }
+  },
+  {
+    "id": "6ab2a13bead997d09a73136b",
+    "title": "Frame 2025-05-24 17:42",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Kedarnath",
+    "date": "2025-05-24",
+    "aspectRatio": "3/2",
+    "width": 3264,
+    "height": 2448,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250524174216.heic",
+    "tags": [
+      "kedarnath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250524174216.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3264 × 2448",
+      "focalLength": "1.7 mm",
+      "aperture": "f/2.2",
+      "shutterSpeed": "1/261s",
+      "iso": "64"
+    }
+  },
+  {
+    "id": "6ab2a13bead997d09a731687",
+    "title": "Frame 2025-05-23 18:59",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Kedarnath",
+    "date": "2025-05-23",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250523185910.heic",
+    "tags": [
+      "kedarnath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250523185910.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
       "aperture": "f/1.8",
       "shutterSpeed": "1/120s",
+      "iso": "250"
+    }
+  },
+  {
+    "id": "6ab2a13cead997d09a732149",
+    "title": "Frame 2025-05-25 18:15",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Kedarnath",
+    "date": "2025-05-25",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250525181543.heic",
+    "tags": [
+      "kedarnath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250525181543.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/200s",
       "iso": "100"
+    }
+  },
+  {
+    "id": "6ab2a13cead997d09a733750",
+    "title": "Frame 2025-05-26 07:55",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Kedarnath",
+    "date": "2025-05-26",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250526075518.heic",
+    "tags": [
+      "kedarnath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250526075518.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/1034s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a13dead997d09a733e2c",
+    "title": "Frame 2025-05-26 08:02",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Kedarnath",
+    "date": "2025-05-26",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250526080240.heic",
+    "tags": [
+      "kedarnath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250526080240.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/986s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a13dead997d09a7342dd",
+    "title": "Frame 2025-05-26 11:55",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Kedarnath",
+    "date": "2025-05-26",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250526115529.heic",
+    "tags": [
+      "kedarnath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250526115529.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/838s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a13dead997d09a7348ea",
+    "title": "Frame 2025-05-26 11:47",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Kedarnath",
+    "date": "2025-05-26",
+    "aspectRatio": "3/2",
+    "width": 3264,
+    "height": 2448,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250526114757.heic",
+    "tags": [
+      "kedarnath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250526114757.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3264 × 2448",
+      "focalLength": "1.7 mm",
+      "aperture": "f/2.2",
+      "shutterSpeed": "1/2538s",
+      "iso": "64"
+    }
+  },
+  {
+    "id": "6ab2a13dead997d09a734ba4",
+    "title": "Frame 2025-05-25 16:12",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Kedarnath",
+    "date": "2025-05-25",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250525161243.heic",
+    "tags": [
+      "kedarnath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250525161243.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/134s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a13dead997d09a734c6c",
+    "title": "Frame 2025-05-23 19:29",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Kedarnath",
+    "date": "2025-05-23",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250523192949.heic",
+    "tags": [
+      "kedarnath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250523192949.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/25s",
+      "iso": "2000"
+    }
+  },
+  {
+    "id": "6ab2a13dead997d09a7350a1",
+    "title": "Frame 2025-05-25 04:58",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Kedarnath",
+    "date": "2025-05-24",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250525045801.heic",
+    "tags": [
+      "kedarnath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250525045801.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/25s",
+      "iso": "12800"
+    }
+  },
+  {
+    "id": "6ab2a13dead997d09a7352ba",
+    "title": "Frame 2025-05-25 05:24",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Kedarnath",
+    "date": "2025-05-24",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250525052416.heic",
+    "tags": [
+      "kedarnath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250525052416.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/100s",
+      "iso": "500"
+    }
+  },
+  {
+    "id": "6ab2a13dead997d09a7355ef",
+    "title": "Frame 2025-05-27 13:04",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Kedarnath",
+    "date": "2025-05-27",
+    "aspectRatio": "3/2",
+    "width": 3264,
+    "height": 2448,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250527130449.heic",
+    "tags": [
+      "kedarnath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250527130449.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3264 × 2448",
+      "focalLength": "1.7 mm",
+      "aperture": "f/2.2",
+      "shutterSpeed": "1/626s",
+      "iso": "64"
+    }
+  },
+  {
+    "id": "6ab2a13dead997d09a73585d",
+    "title": "Frame 2025-05-27 13:16",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Kedarnath",
+    "date": "2025-05-27",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250527131642.heic",
+    "tags": [
+      "kedarnath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250527131642.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/424s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a13dead997d09a735bad",
+    "title": "Frame 2025-05-26 11:54",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Kedarnath",
+    "date": "2025-05-26",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250526115404.heic",
+    "tags": [
+      "kedarnath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250526115404.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/798s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a13dead997d09a735c1a",
+    "title": "Frame 2025-05-27 13:33",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Kedarnath",
+    "date": "2025-05-27",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250527133320.heic",
+    "tags": [
+      "kedarnath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250527133320.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/784s",
+      "iso": "64"
+    }
+  },
+  {
+    "id": "6ab2a13eead997d09a735ddd",
+    "title": "Frame 2025-05-25 11:01",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Kedarnath",
+    "date": "2025-05-25",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250525110134.heic",
+    "tags": [
+      "kedarnath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250525110134.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/715s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a13eead997d09a735fba",
+    "title": "Frame 2025-05-25 11:45",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Kedarnath",
+    "date": "2025-05-25",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250525114501.heic",
+    "tags": [
+      "kedarnath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250525114501.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/487s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a13eead997d09a735fd5",
+    "title": "Frame 2025-05-26 08:08",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Kedarnath",
+    "date": "2025-05-26",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250526080821.heic",
+    "tags": [
+      "kedarnath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250526080821.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/490s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a13eead997d09a7369d6",
+    "title": "Frame 2025-05-27 13:42",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Kedarnath",
+    "date": "2025-05-27",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250527134244.heic",
+    "tags": [
+      "kedarnath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250527134244.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/659s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a13eead997d09a736a1e",
+    "title": "Frame 2025-05-25 18:33",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Kedarnath",
+    "date": "2025-05-25",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250525183313.heic",
+    "tags": [
+      "kedarnath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250525183313.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/153s",
+      "iso": "100"
+    }
+  },
+  {
+    "id": "6ab2a13eead997d09a736c1c",
+    "title": "Frame 2025-05-25 05:40",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Kedarnath",
+    "date": "2025-05-25",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250525054015.heic",
+    "tags": [
+      "kedarnath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250525054015.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/50s",
+      "iso": "500"
+    }
+  },
+  {
+    "id": "6ab2a13eead997d09a736e25",
+    "title": "Frame 2025-05-25 04:30",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Kedarnath",
+    "date": "2025-05-24",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250525043055.heic",
+    "tags": [
+      "kedarnath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250525043055.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/17s",
+      "iso": "12800"
+    }
+  },
+  {
+    "id": "6ab2a13eead997d09a736e86",
+    "title": "Frame 2025-05-25 11:01",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Kedarnath",
+    "date": "2025-05-25",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250525110125.heic",
+    "tags": [
+      "kedarnath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250525110125.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/215s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a13eead997d09a73704e",
+    "title": "Frame 2025-05-25 08:04",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Kedarnath",
+    "date": "2025-05-25",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250525080403.heic",
+    "tags": [
+      "kedarnath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250525080403.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/100s",
+      "iso": "125"
+    }
+  },
+  {
+    "id": "6ab2a13fead997d09a73726e",
+    "title": "Frame 2025-05-25 05:50",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Kedarnath",
+    "date": "2025-05-25",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250525055050.heic",
+    "tags": [
+      "kedarnath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250525055050.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/50s",
+      "iso": "800"
+    }
+  },
+  {
+    "id": "6ab2a13fead997d09a737912",
+    "title": "Frame 2025-05-25 05:22",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Kedarnath",
+    "date": "2025-05-24",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250525052250.heic",
+    "tags": [
+      "kedarnath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250525052250.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/100s",
+      "iso": "640"
+    }
+  },
+  {
+    "id": "6ab2a13fead997d09a73880a",
+    "title": "Frame 2025-05-25 16:12",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Kedarnath",
+    "date": "2025-05-25",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250525161234.heic",
+    "tags": [
+      "kedarnath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250525161234.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/200s",
+      "iso": "100"
+    }
+  },
+  {
+    "id": "6ab2a140ead997d09a739a9a",
+    "title": "Frame 2025-05-25 13:11",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Kedarnath",
+    "date": "2025-05-25",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250525131157.heic",
+    "tags": [
+      "kedarnath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250525131157.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/271s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a2a3ead997d09a7fd077",
+    "title": "Frame 2025-05-28 06:19",
+    "category": "Badrinath",
+    "folder": "Badrinath",
+    "folderPath": "/Badrinath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Badrinath",
+    "date": "2025-05-28",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250528061937.heic",
+    "tags": [
+      "badrinath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250528061937.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/200s",
+      "iso": "100"
+    }
+  },
+  {
+    "id": "6ab2a2a5ead997d09a7fd6fa",
+    "title": "Frame 2025-05-28 13:32",
+    "category": "Badrinath",
+    "folder": "Badrinath",
+    "folderPath": "/Badrinath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Badrinath",
+    "date": "2025-05-28",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250528133220.heic",
+    "tags": [
+      "badrinath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250528133220.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/998s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a2a5ead997d09a7fd70b",
+    "title": "Frame 2025-05-28 15:11",
+    "category": "Badrinath",
+    "folder": "Badrinath",
+    "folderPath": "/Badrinath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Badrinath",
+    "date": "2025-05-28",
+    "aspectRatio": "3/2",
+    "width": 3264,
+    "height": 2448,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250528151148.heic",
+    "tags": [
+      "badrinath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250528151148.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3264 × 2448",
+      "focalLength": "1.7 mm",
+      "aperture": "f/2.2",
+      "shutterSpeed": "1/1773s",
+      "iso": "64"
+    }
+  },
+  {
+    "id": "6ab2a2a5ead997d09a7fd76c",
+    "title": "Frame 2025-05-28 08:19",
+    "category": "Badrinath",
+    "folder": "Badrinath",
+    "folderPath": "/Badrinath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Badrinath",
+    "date": "2025-05-28",
+    "aspectRatio": "3/2",
+    "width": 3264,
+    "height": 2448,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250528081918.heic",
+    "tags": [
+      "badrinath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250528081918.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3264 × 2448",
+      "focalLength": "1.7 mm",
+      "aperture": "f/2.2",
+      "shutterSpeed": "1/1018s",
+      "iso": "64"
+    }
+  },
+  {
+    "id": "6ab2a2a5ead997d09a7fd7a0",
+    "title": "Frame 2025-05-29 10:28",
+    "category": "Badrinath",
+    "folder": "Badrinath",
+    "folderPath": "/Badrinath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Badrinath",
+    "date": "2025-05-29",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250529102817.heic",
+    "tags": [
+      "badrinath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250529102817.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/170s",
+      "iso": "100"
+    }
+  },
+  {
+    "id": "6ab2a2a5ead997d09a7fd8b0",
+    "title": "Frame 2025-05-28 09:24",
+    "category": "Badrinath",
+    "folder": "Badrinath",
+    "folderPath": "/Badrinath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Badrinath",
+    "date": "2025-05-28",
+    "aspectRatio": "3/2",
+    "width": 3264,
+    "height": 2448,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250528092408.heic",
+    "tags": [
+      "badrinath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250528092408.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3264 × 2448",
+      "focalLength": "1.7 mm",
+      "aperture": "f/2.2",
+      "shutterSpeed": "1/1558s",
+      "iso": "64"
+    }
+  },
+  {
+    "id": "6ab2a2a5ead997d09a7fd8e4",
+    "title": "Frame 2025-05-28 09:23",
+    "category": "Badrinath",
+    "folder": "Badrinath",
+    "folderPath": "/Badrinath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Badrinath",
+    "date": "2025-05-28",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250528092347.heic",
+    "tags": [
+      "badrinath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250528092347.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/1185s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a2a5ead997d09a7fd8f5",
+    "title": "Frame 2025-05-29 08:15",
+    "category": "Badrinath",
+    "folder": "Badrinath",
+    "folderPath": "/Badrinath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Badrinath",
+    "date": "2025-05-29",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250529081548.heic",
+    "tags": [
+      "badrinath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250529081548.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/196s",
+      "iso": "100"
+    }
+  },
+  {
+    "id": "6ab2a2a5ead997d09a7fd90d",
+    "title": "Frame 2025-05-28 06:22",
+    "category": "Badrinath",
+    "folder": "Badrinath",
+    "folderPath": "/Badrinath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Badrinath",
+    "date": "2025-05-28",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250528062205.heic",
+    "tags": [
+      "badrinath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250528062205.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/161s",
+      "iso": "100"
+    }
+  },
+  {
+    "id": "6ab2a2a5ead997d09a7fd942",
+    "title": "Frame 2025-05-29 08:15",
+    "category": "Badrinath",
+    "folder": "Badrinath",
+    "folderPath": "/Badrinath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Badrinath",
+    "date": "2025-05-29",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250529081558.heic",
+    "tags": [
+      "badrinath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250529081558.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/200s",
+      "iso": "80"
+    }
+  },
+  {
+    "id": "6ab2a2a6ead997d09a7fd96e",
+    "title": "Frame 2025-05-28 08:36",
+    "category": "Badrinath",
+    "folder": "Badrinath",
+    "folderPath": "/Badrinath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Badrinath",
+    "date": "2025-05-28",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250528083638.heic",
+    "tags": [
+      "badrinath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250528083638.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/100s",
+      "iso": "500"
+    }
+  },
+  {
+    "id": "6ab2a2a6ead997d09a7fd96f",
+    "title": "Frame 2025-05-27 21:00",
+    "category": "Badrinath",
+    "folder": "Badrinath",
+    "folderPath": "/Badrinath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Badrinath",
+    "date": "2025-05-27",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250527210012.heic",
+    "tags": [
+      "badrinath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250527210012.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/17s",
+      "iso": "12800"
+    }
+  },
+  {
+    "id": "6ab2a2a6ead997d09a7fda08",
+    "title": "Frame 2025-05-28 13:30",
+    "category": "Badrinath",
+    "folder": "Badrinath",
+    "folderPath": "/Badrinath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Badrinath",
+    "date": "2025-05-28",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250528133009.heic",
+    "tags": [
+      "badrinath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250528133009.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/120s",
+      "iso": "200"
+    }
+  },
+  {
+    "id": "6ab2a2a6ead997d09a7fdaa9",
+    "title": "Frame 2025-05-28 08:19",
+    "category": "Badrinath",
+    "folder": "Badrinath",
+    "folderPath": "/Badrinath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Badrinath",
+    "date": "2025-05-28",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250528081921.heic",
+    "tags": [
+      "badrinath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250528081921.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/900s",
+      "iso": "64"
+    }
+  },
+  {
+    "id": "6ab2a2a6ead997d09a7fdac8",
+    "title": "Frame 2025-05-28 12:55",
+    "category": "Badrinath",
+    "folder": "Badrinath",
+    "folderPath": "/Badrinath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Badrinath",
+    "date": "2025-05-28",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250528125526.heic",
+    "tags": [
+      "badrinath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250528125526.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/728s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a2a6ead997d09a7fdb06",
+    "title": "Frame 2025-05-28 09:18",
+    "category": "Badrinath",
+    "folder": "Badrinath",
+    "folderPath": "/Badrinath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Badrinath",
+    "date": "2025-05-28",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250528091839.heic",
+    "tags": [
+      "badrinath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250528091839.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/637s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a2a6ead997d09a7fdb40",
+    "title": "Frame 2025-05-28 11:59",
+    "category": "Badrinath",
+    "folder": "Badrinath",
+    "folderPath": "/Badrinath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Badrinath",
+    "date": "2025-05-28",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250528115946.heic",
+    "tags": [
+      "badrinath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250528115946.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/761s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a2a6ead997d09a7fdb79",
+    "title": "Frame 2025-05-28 09:18",
+    "category": "Badrinath",
+    "folder": "Badrinath",
+    "folderPath": "/Badrinath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Badrinath",
+    "date": "2025-05-28",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250528091822.heic",
+    "tags": [
+      "badrinath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250528091822.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/427s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a2a6ead997d09a7fdc32",
+    "title": "Frame 2025-05-28 13:41",
+    "category": "Badrinath",
+    "folder": "Badrinath",
+    "folderPath": "/Badrinath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Badrinath",
+    "date": "2025-05-28",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250528134158.heic",
+    "tags": [
+      "badrinath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250528134158.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/813s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a2a6ead997d09a7fdc35",
+    "title": "Frame 2025-05-28 13:30",
+    "category": "Badrinath",
+    "folder": "Badrinath",
+    "folderPath": "/Badrinath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Badrinath",
+    "date": "2025-05-28",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250528133051.heic",
+    "tags": [
+      "badrinath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250528133051.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/132s",
+      "iso": "100"
+    }
+  },
+  {
+    "id": "6ab2a2a6ead997d09a7fdc3b",
+    "title": "Frame 2025-05-28 13:30",
+    "category": "Badrinath",
+    "folder": "Badrinath",
+    "folderPath": "/Badrinath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Badrinath",
+    "date": "2025-05-28",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250528133038.heic",
+    "tags": [
+      "badrinath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250528133038.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/120s",
+      "iso": "125"
+    }
+  },
+  {
+    "id": "6ab2a2a6ead997d09a7fdc52",
+    "title": "Frame 2025-05-28 10:14",
+    "category": "Badrinath",
+    "folder": "Badrinath",
+    "folderPath": "/Badrinath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Badrinath",
+    "date": "2025-05-28",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250528101432.heic",
+    "tags": [
+      "badrinath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250528101432.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/761s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a2a6ead997d09a7fdc58",
+    "title": "Frame 2025-05-28 08:49",
+    "category": "Badrinath",
+    "folder": "Badrinath",
+    "folderPath": "/Badrinath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Badrinath",
+    "date": "2025-05-28",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250528084911.heic",
+    "tags": [
+      "badrinath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250528084911.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/838s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a2a6ead997d09a7fdc5d",
+    "title": "Frame 2025-05-28 10:16",
+    "category": "Badrinath",
+    "folder": "Badrinath",
+    "folderPath": "/Badrinath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Badrinath",
+    "date": "2025-05-28",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250528101636.heic",
+    "tags": [
+      "badrinath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250528101636.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/651s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a2a6ead997d09a7fdc87",
+    "title": "Frame 2025-05-28 08:06",
+    "category": "Badrinath",
+    "folder": "Badrinath",
+    "folderPath": "/Badrinath",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Badrinath",
+    "date": "2025-05-28",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250528080657.heic",
+    "tags": [
+      "badrinath",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250528080657.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/543s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a41fead997d09a86631a",
+    "title": "Frame 2026-05-05 18:40",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Haridwar",
+    "date": "2026-05-05",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260505184036.heic.heif",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20260505184036.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/50s",
+      "iso": "250"
+    }
+  },
+  {
+    "id": "6ab2a41fead997d09a8663a6",
+    "title": "Frame 2026-05-05 19:09",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Haridwar",
+    "date": "2026-05-05",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260505190953.heic.heif",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20260505190953.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/50s",
+      "iso": "2500"
+    }
+  },
+  {
+    "id": "6ab2a41fead997d09a866482",
+    "title": "Frame 2025-05-30 09:43",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Haridwar",
+    "date": "2025-05-30",
+    "aspectRatio": "3/2",
+    "width": 3264,
+    "height": 2448,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250530094323.heic",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250530094323.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3264 × 2448",
+      "focalLength": "1.7 mm",
+      "aperture": "f/2.2",
+      "shutterSpeed": "1/490s",
+      "iso": "64"
+    }
+  },
+  {
+    "id": "6ab2a41fead997d09a866535",
+    "title": "Frame 2026-05-05 18:40",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Haridwar",
+    "date": "2026-05-05",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260505184025.heic.heif",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20260505184025.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/100s",
+      "iso": "400"
+    }
+  },
+  {
+    "id": "6ab2a41fead997d09a866673",
+    "title": "Frame 2025-05-23 19:22",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Haridwar",
+    "date": "2025-05-23",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250523192204.heic",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250523192204.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/60s",
+      "iso": "2500"
+    }
+  },
+  {
+    "id": "6ab2a41fead997d09a8666b5",
+    "title": "Frame 2026-05-05 19:09",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Haridwar",
+    "date": "2026-05-05",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260505190948.heic.heif",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20260505190948.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/50s",
+      "iso": "2000"
+    }
+  },
+  {
+    "id": "6ab2a41fead997d09a8666f6",
+    "title": "Frame 2026-05-05 19:06",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Haridwar",
+    "date": "2026-05-05",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260505190648.heic.heif",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20260505190648.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/50s",
+      "iso": "2000"
+    }
+  },
+  {
+    "id": "6ab2a41fead997d09a86670b",
+    "title": "Frame 2025-05-23 18:43",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Haridwar",
+    "date": "2025-05-23",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250523184334.heic",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250523184334.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/116s",
+      "iso": "100"
+    }
+  },
+  {
+    "id": "6ab2a41fead997d09a866719",
+    "title": "Frame 2026-05-06 18:56",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Haridwar",
+    "date": "2026-05-06",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260506185659.heic.heif",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20260506185659.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/60s",
+      "iso": "400"
+    }
+  },
+  {
+    "id": "6ab2a41fead997d09a866739",
+    "title": "Frame 2025-05-30 09:43",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Haridwar",
+    "date": "2025-05-30",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250530094313.heic",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250530094313.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/476s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a41fead997d09a86674b",
+    "title": "Frame 2025-05-23 18:50",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Haridwar",
+    "date": "2025-05-23",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250523185000.heic",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250523185000.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/120s",
+      "iso": "160"
+    }
+  },
+  {
+    "id": "6ab2a420ead997d09a866879",
+    "title": "Frame 2026-05-05 18:57",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Haridwar",
+    "date": "2026-05-05",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260505185758.heic.heif",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20260505185758.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/50s",
+      "iso": "2000"
+    }
+  },
+  {
+    "id": "6ab2a420ead997d09a866a4d",
+    "title": "Frame 2025-05-23 19:21",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Haridwar",
+    "date": "2025-05-23",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250523192156.heic",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250523192156.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/25s",
+      "iso": "4000"
+    }
+  },
+  {
+    "id": "6ab2a420ead997d09a866a7b",
+    "title": "Frame 2025-05-30 09:53",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Haridwar",
+    "date": "2025-05-30",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250530095349.heic",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250530095349.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/265s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a420ead997d09a866adf",
+    "title": "Frame 2026-05-05 18:36",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Haridwar",
+    "date": "2026-05-05",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260505183613.heic.heif",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20260505183613.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/100s",
+      "iso": "320"
+    }
+  },
+  {
+    "id": "6ab2a420ead997d09a866b9e",
+    "title": "Frame 2025-05-23 19:29",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Haridwar",
+    "date": "2025-05-23",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250523192958.heic",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250523192958.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/25s",
+      "iso": "2000"
+    }
+  },
+  {
+    "id": "6ab2a420ead997d09a866baa",
+    "title": "Frame 2025-05-23 18:49",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Haridwar",
+    "date": "2025-05-23",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250523184946.heic",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250523184946.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/120s",
+      "iso": "125"
+    }
+  },
+  {
+    "id": "6ab2a421ead997d09a866c15",
+    "title": "Frame 2026-05-05 18:36",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Haridwar",
+    "date": "2026-05-05",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260505183606.heic.heif",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20260505183606.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/100s",
+      "iso": "500"
+    }
+  },
+  {
+    "id": "6ab2a421ead997d09a866c25",
+    "title": "Frame 2025-05-30 17:30",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Haridwar",
+    "date": "2025-05-30",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250530173011.heic",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250530173011.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/379s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a421ead997d09a866cbb",
+    "title": "Frame 2026-05-02 20:50",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Haridwar",
+    "date": "2026-05-02",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260502205002.heic.heif",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20260502205002.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/17s",
+      "iso": "5000"
+    }
+  },
+  {
+    "id": "6ab2a421ead997d09a866ce0",
+    "title": "Frame 2025-05-30 09:53",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Haridwar",
+    "date": "2025-05-30",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250530095318.heic",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250530095318.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/216s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a421ead997d09a866d2c",
+    "title": "Frame 2026-05-05 18:36",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Haridwar",
+    "date": "2026-05-05",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260505183647.heic.heif",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20260505183647.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/100s",
+      "iso": "400"
+    }
+  },
+  {
+    "id": "6ab2a421ead997d09a866d30",
+    "title": "Frame 2025-05-30 09:53",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Haridwar",
+    "date": "2025-05-30",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250530095312.heic",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250530095312.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/214s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a421ead997d09a866d5f",
+    "title": "Frame 2026-05-05 18:42",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Haridwar",
+    "date": "2026-05-05",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260505184239.heic.heif",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20260505184239.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/50s",
+      "iso": "400"
+    }
+  },
+  {
+    "id": "6ab2a421ead997d09a866d9a",
+    "title": "Frame 2026-05-05 18:58",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Haridwar",
+    "date": "2026-05-05",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260505185822.heic.heif",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20260505185822.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/50s",
+      "iso": "1250"
+    }
+  },
+  {
+    "id": "6ab2a421ead997d09a866da8",
+    "title": "Frame 2026-05-02 20:28",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Haridwar",
+    "date": "2026-05-02",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260502202830.heic.heif",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20260502202830.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/17s",
+      "iso": "10000"
+    }
+  },
+  {
+    "id": "6ab2a421ead997d09a866db9",
+    "title": "Frame 2026-05-06 10:39",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Haridwar",
+    "date": "2026-05-06",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260506103958.heic.heif",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20260506103958.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/734s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a421ead997d09a866dd1",
+    "title": "Frame 2025-05-30 09:53",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Haridwar",
+    "date": "2025-05-30",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250530095307.heic",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250530095307.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/365s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a421ead997d09a866e81",
+    "title": "Frame 2025-05-30 09:53",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Haridwar",
+    "date": "2025-05-30",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250530095352.heic",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250530095352.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/427s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a421ead997d09a866e97",
+    "title": "Frame 2026-05-02 20:28",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Haridwar",
+    "date": "2026-05-02",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260502202838.heic.heif",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20260502202838.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/17s",
+      "iso": "12800"
+    }
+  },
+  {
+    "id": "6ab2a421ead997d09a866eb4",
+    "title": "Frame 2026-05-06 09:58",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Haridwar",
+    "date": "2026-05-06",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260506095808.heic.heif",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20260506095808.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/602s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a421ead997d09a866ede",
+    "title": "Frame 2026-05-06 09:11",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Haridwar",
+    "date": "2026-05-06",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260506091103.heic.heif",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20260506091103.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/571s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a421ead997d09a866f38",
+    "title": "Frame 2025-05-30 17:33",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heic",
+    "location": "ImageKit /Haridwar",
+    "date": "2025-05-30",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20250530173320.heic",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20250530173320.heic",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/200s",
+      "iso": "80"
+    }
+  },
+  {
+    "id": "6ab2a421ead997d09a866f43",
+    "title": "Frame 2026-05-06 09:01",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Haridwar",
+    "date": "2026-05-06",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260506090136.heic.heif",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20260506090136.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/608s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a421ead997d09a866f4b",
+    "title": "Frame 2026-05-06 10:21",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Haridwar",
+    "date": "2026-05-06",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260506102121.heic.heif",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20260506102121.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/659s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6ab2a422ead997d09a8671b2",
+    "title": "Frame 2026-05-02 20:41",
+    "category": "Haridwar",
+    "folder": "Haridwar",
+    "folderPath": "/Haridwar",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Haridwar",
+    "date": "2026-05-02",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260502204113.heic.heif",
+    "tags": [
+      "haridwar",
+      "photo",
+      "realme 10 pro+ 5g",
+      "imagekit"
+    ],
+    "src": "/IMG20260502204113.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/25s",
+      "iso": "3200"
     }
   }
 ];

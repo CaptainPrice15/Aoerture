@@ -13,7 +13,10 @@ export default async function handler(req, res) {
       folders: [
         { name: 'Pics', path: '/Pics' },
         { name: 'Darjeeling', path: '/Darjeeling' },
-        { name: 'Sikkim', path: '/Sikkim' }
+        { name: 'Sikkim', path: '/Sikkim' },
+        { name: 'Kedarnath', path: '/Kedarnath' },
+        { name: 'Badrinath', path: '/Badrinath' },
+        { name: 'Haridwar', path: '/Haridwar' }
       ]
     });
   }
@@ -71,23 +74,72 @@ export default async function handler(req, res) {
         }
       }
 
-      // If at root without a subfolder, intelligently assign to Darjeeling or Sikkim based on shot date
+      // If at root without a subfolder, intelligently assign folder
       if (folderPath === '/') {
+        const nameLower = (file.name || '').toLowerCase();
+        const created = file.createdAt || '';
         const dateMatch = file.name.match(/^(?:IMG|VID)(\d{8})/);
-        const dateKey = dateMatch ? dateMatch[1] : (file.embeddedMetadata?.DateTimeOriginal?.replace(/-/g, '').slice(0, 8) || '');
-        if (dateKey >= '20231028' && dateKey <= '20231030') {
-          folderName = 'Darjeeling';
-          folderPath = '/Darjeeling';
-        } else if (dateKey >= '20231031' && dateKey <= '20231103') {
-          folderName = 'Sikkim';
-          folderPath = '/Sikkim';
+        const dateKey = dateMatch ? dateMatch[1] : (file.embeddedMetadata?.DateTimeOriginal?.replace(/[-:T ]/g, '').slice(0, 8) || '');
+
+        // 1. Check if filename contains a known folder name
+        for (const f of ['Kedarnath', 'Badrinath', 'Haridwar', 'Darjeeling', 'Sikkim', 'Pics']) {
+          if (nameLower.includes(f.toLowerCase())) {
+            folderName = f;
+            folderPath = `/${f}`;
+            break;
+          }
+        }
+
+        // 2. Check tags for known folder
+        if (folderPath === '/' && Array.isArray(file.tags)) {
+          for (const f of ['Kedarnath', 'Badrinath', 'Haridwar', 'Darjeeling', 'Sikkim', 'Pics']) {
+            if (file.tags.some((t) => t.toLowerCase() === f.toLowerCase())) {
+              folderName = f;
+              folderPath = `/${f}`;
+              break;
+            }
+          }
+        }
+
+        // 3. Known ImageKit upload batches
+        if (folderPath === '/') {
+          if (created.startsWith('2026-09-22T15:3')) {
+            folderName = 'Kedarnath';
+            folderPath = '/Kedarnath';
+          } else if (created.startsWith('2026-09-22T15:4')) {
+            folderName = 'Badrinath';
+            folderPath = '/Badrinath';
+          } else if (created.startsWith('2026-09-22T15:5')) {
+            folderName = 'Haridwar';
+            folderPath = '/Haridwar';
+          }
+        }
+
+        // 4. Fallback based on shot date
+        if (folderPath === '/') {
+          if (dateKey >= '20231028' && dateKey <= '20231030') {
+            folderName = 'Darjeeling';
+            folderPath = '/Darjeeling';
+          } else if (dateKey >= '20231031' && dateKey <= '20231103') {
+            folderName = 'Sikkim';
+            folderPath = '/Sikkim';
+          } else if (dateKey >= '20250524' && dateKey <= '20250527') {
+            folderName = 'Kedarnath';
+            folderPath = '/Kedarnath';
+          } else if (dateKey >= '20250528' && dateKey <= '20250529') {
+            folderName = 'Badrinath';
+            folderPath = '/Badrinath';
+          } else if (dateKey === '20250530' || (dateKey >= '20260501' && dateKey <= '20260531')) {
+            folderName = 'Haridwar';
+            folderPath = '/Haridwar';
+          }
         }
       }
 
       const category = (folderName !== 'Root Library' ? folderName : '') || (isVideo ? 'Videos' : 'Pics');
 
       const meta = file.embeddedMetadata || {};
-      const cameraModel = [meta.Make, meta.Model].filter(Boolean).join(' ');
+      const cameraModel = [meta.Make, meta.Model].filter(Boolean).join(' ').replace(/realme\s+realme/i, 'realme');
       const shotDate = meta.DateTimeOriginal
         ? meta.DateTimeOriginal.slice(0, 10)
         : (file.createdAt ? file.createdAt.slice(0, 10) : new Date().toISOString().slice(0, 10));
@@ -158,7 +210,7 @@ export default async function handler(req, res) {
     // Merge API folders with folders found in file paths
     const foldersMap = new Map();
     // Default known folders
-    ['Pics', 'Darjeeling', 'Sikkim'].forEach((name) => {
+    ['Pics', 'Darjeeling', 'Sikkim', 'Kedarnath', 'Badrinath', 'Haridwar'].forEach((name) => {
       foldersMap.set(`/${name}`, { name, path: `/${name}` });
     });
     ikFolders.forEach((f) => {
@@ -192,7 +244,10 @@ export default async function handler(req, res) {
       folders: [
         { name: 'Pics', path: '/Pics' },
         { name: 'Darjeeling', path: '/Darjeeling' },
-        { name: 'Sikkim', path: '/Sikkim' }
+        { name: 'Sikkim', path: '/Sikkim' },
+        { name: 'Kedarnath', path: '/Kedarnath' },
+        { name: 'Badrinath', path: '/Badrinath' },
+        { name: 'Haridwar', path: '/Haridwar' }
       ]
     });
   }
