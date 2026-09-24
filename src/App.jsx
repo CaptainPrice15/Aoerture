@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Sparkles, X, ArrowLeft, Folder } from 'lucide-react';
+import { Sparkles, X, ArrowLeft, Folder, ShieldAlert } from 'lucide-react';
 import { useTheme } from './hooks/useTheme';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { FilterBar } from './components/FilterBar';
@@ -11,11 +12,16 @@ import { ExifDrawer } from './components/ExifDrawer';
 import { AboutModal } from './components/AboutModal';
 import { ImageKitGuideModal } from './components/ImageKitGuideModal';
 import { AddMediaModal } from './components/AddMediaModal';
+import { LoginModal } from './components/LoginModal';
 import { Footer } from './components/Footer';
+import { useImageProtection } from './hooks/useImageProtection';
 import { photos as initialPhotos, INITIAL_FOLDERS } from './data/photos';
 
-export default function App() {
+function GalleryApp() {
   const { theme, toggleTheme } = useTheme();
+  const { isAuthenticated } = useAuth();
+  const { toastMessage } = useImageProtection(isAuthenticated);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   // State
   const [photosList, setPhotosList] = useState(() => {
@@ -233,6 +239,7 @@ export default function App() {
         onOpenAbout={() => setIsAboutOpen(true)}
         onOpenCloudGuide={() => setIsGuideOpen(true)}
         onOpenAddMedia={() => setIsAddMediaOpen(true)}
+        onOpenLogin={() => setIsLoginOpen(true)}
         totalPhotos={photosList.length}
       />
 
@@ -439,6 +446,29 @@ export default function App() {
         categories={availableCategories}
         folders={availableFolders}
       />
+
+      {/* Admin Sign In / Bypass Modal */}
+      <LoginModal
+        isOpen={isLoginOpen}
+        onClose={() => setIsLoginOpen(false)}
+      />
+
+      {/* Floating Image Protection Toast for Non-Logged-in Visitors */}
+      {toastMessage && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-2xl bg-zinc-950/90 text-white text-xs font-medium shadow-2xl border border-white/10 backdrop-blur-md flex items-center gap-2 animate-in fade-in slide-in-from-bottom-3 duration-200 pointer-events-none">
+          <ShieldAlert className="w-4 h-4 text-purple-400 shrink-0" />
+          <span>{toastMessage}</span>
+        </div>
+      )}
     </div>
   );
 }
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <GalleryApp />
+    </AuthProvider>
+  );
+}
+

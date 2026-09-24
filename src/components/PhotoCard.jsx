@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Maximize2, MapPin, Sparkles, Aperture, Play, Download, Loader2, Check } from 'lucide-react';
 import { getThumbnailUrl, getLqipUrl, isVideoSource, downloadMedia } from '../utils/imagekit';
+import { useAuth } from '../context/AuthContext';
 
 export const PhotoCard = ({ photo, onClick, onOpenExif }) => {
+  const { isAuthenticated } = useAuth();
   const [isLoaded, setIsLoaded] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const [isDownloaded, setIsDownloaded] = useState(false);
@@ -13,7 +15,7 @@ export const PhotoCard = ({ photo, onClick, onOpenExif }) => {
 
   const handleDownload = async (e) => {
     e.stopPropagation();
-    if (isDownloading) return;
+    if (!isAuthenticated || isDownloading) return;
     setIsDownloading(true);
     try {
       await downloadMedia(photo);
@@ -46,17 +48,28 @@ export const PhotoCard = ({ photo, onClick, onOpenExif }) => {
 
   return (
     <div
-      className="group relative mb-4 sm:mb-6 break-inside-avoid rounded-xl sm:rounded-2xl overflow-hidden bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 shadow-md hover:shadow-xl hover:shadow-purple-500/10 dark:hover:shadow-purple-950/20 transition-all duration-300 transform hover:-translate-y-1 active:scale-[0.99] touch-manipulation transform-gpu cursor-pointer"
+      className="group relative mb-4 sm:mb-6 break-inside-avoid rounded-xl sm:rounded-2xl overflow-hidden bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 shadow-md hover:shadow-xl hover:shadow-purple-500/10 dark:hover:shadow-purple-950/20 transition-all duration-300 transform hover:-translate-y-1 active:scale-[0.99] touch-manipulation transform-gpu cursor-pointer select-none"
       onClick={onClick}
     >
       {/* Aspect Ratio Container */}
       <div className={`relative w-full overflow-hidden ${getAspectClass(photo.aspectRatio)}`}>
+        {/* Anti-Press-and-Hold & Inspect Security Shield Overlay for Guest Visitors */}
+        {!isAuthenticated && (
+          <div
+            className="absolute inset-0 z-[6] select-none pointer-events-none"
+            style={{ WebkitTouchCallout: 'none', userSelect: 'none' }}
+            onContextMenu={(e) => e.preventDefault()}
+            aria-hidden="true"
+          />
+        )}
+
         {/* 1. Low Quality Image Placeholder (Blur-up) */}
         <img
           src={lqipUrl}
           alt={photo.title}
           aria-hidden="true"
-          className={`absolute inset-0 w-full h-full object-cover filter blur-xl scale-110 transition-opacity duration-700 pointer-events-none ${
+          draggable="false"
+          className={`protected-media absolute inset-0 w-full h-full object-cover filter blur-xl scale-110 transition-opacity duration-700 pointer-events-none select-none ${
             isLoaded ? 'opacity-0' : 'opacity-100'
           }`}
         />
@@ -66,8 +79,9 @@ export const PhotoCard = ({ photo, onClick, onOpenExif }) => {
           src={thumbUrl}
           alt={photo.title}
           loading="lazy"
+          draggable="false"
           onLoad={() => setIsLoaded(true)}
-          className={`w-full h-full object-cover transition-all duration-500 group-hover:scale-105 ${
+          className={`protected-media w-full h-full object-cover transition-all duration-500 group-hover:scale-105 select-none pointer-events-none ${
             isLoaded ? 'opacity-100' : 'opacity-0'
           }`}
         />
@@ -94,7 +108,7 @@ export const PhotoCard = ({ photo, onClick, onOpenExif }) => {
           </div>
         )}
 
-        {/* Top-Right Badges & Quick Download Button (Always Visible) */}
+        {/* Top-Right Badges & Admin-Only Download Button */}
         <div className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-10 flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
           {photo.featured && (
             <span className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-semibold bg-amber-500/90 text-zinc-950 shadow-md">
@@ -102,22 +116,24 @@ export const PhotoCard = ({ photo, onClick, onOpenExif }) => {
               <span>Featured</span>
             </span>
           )}
-          <button
-            type="button"
-            onClick={handleDownload}
-            disabled={isDownloading}
-            title={isVideo ? "Download video" : "Download photo"}
-            aria-label={isVideo ? "Download video" : "Download photo"}
-            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-zinc-950/75 hover:bg-purple-600 active:bg-purple-700 text-white backdrop-blur-md border border-white/15 shadow-md flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 group/dl cursor-pointer"
-          >
-            {isDownloading ? (
-              <Loader2 className="w-3.5 h-3.5 animate-spin text-purple-300" />
-            ) : isDownloaded ? (
-              <Check className="w-3.5 h-3.5 text-emerald-400" />
-            ) : (
-              <Download className="w-3.5 h-3.5 transition-transform group-hover/dl:-translate-y-0.5" />
-            )}
-          </button>
+          {isAuthenticated && (
+            <button
+              type="button"
+              onClick={handleDownload}
+              disabled={isDownloading}
+              title={isVideo ? "Download video" : "Download photo"}
+              aria-label={isVideo ? "Download video" : "Download photo"}
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-zinc-950/75 hover:bg-purple-600 active:bg-purple-700 text-white backdrop-blur-md border border-white/15 shadow-md flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 group/dl cursor-pointer"
+            >
+              {isDownloading ? (
+                <Loader2 className="w-3.5 h-3.5 animate-spin text-purple-300" />
+              ) : isDownloaded ? (
+                <Check className="w-3.5 h-3.5 text-emerald-400" />
+              ) : (
+                <Download className="w-3.5 h-3.5 transition-transform group-hover/dl:-translate-y-0.5" />
+              )}
+            </button>
+          )}
         </div>
 
         {/* Mobile Persistent Info Strip (Touchscreen optimized, md:hidden) */}
@@ -145,29 +161,31 @@ export const PhotoCard = ({ photo, onClick, onOpenExif }) => {
             >
               <Aperture className="w-3.5 h-3.5" />
             </button>
-            <button
-              type="button"
-              onClick={handleDownload}
-              disabled={isDownloading}
-              aria-label={isVideo ? "Download video" : "Download photo"}
-              title={isVideo ? "Download video" : "Download photo"}
-              className="w-7 h-7 rounded-full bg-zinc-900/80 active:bg-purple-600 text-zinc-200 active:text-white backdrop-blur-md border border-white/10 flex items-center justify-center shadow-lg transition-transform active:scale-90"
-            >
-              {isDownloading ? (
-                <Loader2 className="w-3 h-3 animate-spin text-purple-300" />
-              ) : isDownloaded ? (
-                <Check className="w-3 h-3 text-emerald-400" />
-              ) : (
-                <Download className="w-3 h-3" />
-              )}
-            </button>
+            {isAuthenticated && (
+              <button
+                type="button"
+                onClick={handleDownload}
+                disabled={isDownloading}
+                aria-label={isVideo ? "Download video" : "Download photo"}
+                title={isVideo ? "Download video" : "Download photo"}
+                className="w-7 h-7 rounded-full bg-zinc-900/80 active:bg-purple-600 text-zinc-200 active:text-white backdrop-blur-md border border-white/10 flex items-center justify-center shadow-lg transition-transform active:scale-90"
+              >
+                {isDownloading ? (
+                  <Loader2 className="w-3.5 h-3.5 animate-spin text-purple-300" />
+                ) : isDownloaded ? (
+                  <Check className="w-3.5 h-3.5 text-emerald-400" />
+                ) : (
+                  <Download className="w-3.5 h-3.5" />
+                )}
+              </button>
+            )}
             <button
               type="button"
               onClick={onClick}
               aria-label={isVideo ? "Play fullscreen" : "Fullscreen preview"}
               className="w-7 h-7 rounded-full bg-zinc-900/80 active:bg-purple-600 text-zinc-200 active:text-white backdrop-blur-md border border-white/10 flex items-center justify-center shadow-lg transition-transform active:scale-90"
             >
-              {isVideo ? <Play className="w-3 h-3 fill-current ml-0.5" /> : <Maximize2 className="w-3 h-3" />}
+              {isVideo ? <Play className="w-3.5 h-3.5 fill-current ml-0.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
             </button>
           </div>
         </div>
@@ -200,21 +218,23 @@ export const PhotoCard = ({ photo, onClick, onOpenExif }) => {
                   <Aperture className="w-3.5 h-3.5" />
                 </button>
 
-                {/* Download Button */}
-                <button
-                  onClick={handleDownload}
-                  disabled={isDownloading}
-                  title={isVideo ? "Download Video" : "Download Photo"}
-                  className="p-2 rounded-full bg-zinc-900/80 hover:bg-purple-600 text-zinc-200 hover:text-white backdrop-blur-md border border-white/10 transition-colors shadow-lg"
-                >
-                  {isDownloading ? (
-                    <Loader2 className="w-3.5 h-3.5 animate-spin text-purple-300" />
-                  ) : isDownloaded ? (
-                    <Check className="w-3.5 h-3.5 text-emerald-400" />
-                  ) : (
-                    <Download className="w-3.5 h-3.5" />
-                  )}
-                </button>
+                {/* Download Button (Admin only) */}
+                {isAuthenticated && (
+                  <button
+                    onClick={handleDownload}
+                    disabled={isDownloading}
+                    title={isVideo ? "Download Video" : "Download Photo"}
+                    className="p-2 rounded-full bg-zinc-900/80 hover:bg-purple-600 text-zinc-200 hover:text-white backdrop-blur-md border border-white/10 transition-colors shadow-lg"
+                  >
+                    {isDownloading ? (
+                      <Loader2 className="w-3.5 h-3.5 animate-spin text-purple-300" />
+                    ) : isDownloaded ? (
+                      <Check className="w-3.5 h-3.5 text-emerald-400" />
+                    ) : (
+                      <Download className="w-3.5 h-3.5" />
+                    )}
+                  </button>
+                )}
 
                 {/* Lightbox Expand / Play Button */}
                 <button

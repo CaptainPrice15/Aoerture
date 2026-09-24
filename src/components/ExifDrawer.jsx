@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { X, Camera, Aperture, Clock, Zap, MapPin, Calendar, Tag, Layers, Share2, Check, Play, Download, Loader2 } from 'lucide-react';
 import { getThumbnailUrl, isVideoSource, downloadMedia } from '../utils/imagekit';
+import { useAuth } from '../context/AuthContext';
 
 export const ExifDrawer = ({ photo, isOpen, onClose, onOpenLightbox }) => {
+  const { isAuthenticated } = useAuth();
   const [copied, setCopied] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const [isDownloaded, setIsDownloaded] = useState(false);
@@ -18,7 +20,7 @@ export const ExifDrawer = ({ photo, isOpen, onClose, onOpenLightbox }) => {
   };
 
   const handleDownload = async () => {
-    if (isDownloading) return;
+    if (!isAuthenticated || isDownloading) return;
     setIsDownloading(true);
     try {
       await downloadMedia(photo);
@@ -41,7 +43,7 @@ export const ExifDrawer = ({ photo, isOpen, onClose, onOpenLightbox }) => {
 
       {/* Slide-over panel (Desktop: right drawer, Mobile: bottom sheet) */}
       <div className="fixed inset-x-0 bottom-0 sm:inset-x-auto sm:inset-y-0 sm:right-0 max-w-full flex sm:pl-10 z-50">
-        <div className="w-full sm:w-screen sm:max-w-md max-h-[88vh] sm:max-h-full rounded-t-3xl sm:rounded-none bg-white dark:bg-zinc-950 border-t sm:border-t-0 sm:border-l border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-2xl flex flex-col justify-between overflow-hidden transition-all duration-300">
+        <div className="w-full sm:w-screen sm:max-w-md max-h-[88vh] sm:max-h-full rounded-t-3xl sm:rounded-none bg-white dark:bg-zinc-950 border-t sm:border-t-0 sm:border-l border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-2xl flex flex-col justify-between overflow-hidden transition-all duration-300 select-none">
           {/* Mobile Bottom Sheet Pill Handle */}
           <div className="sm:hidden w-full pt-3 pb-1 flex justify-center shrink-0">
             <div className="w-12 h-1.5 rounded-full bg-zinc-300 dark:bg-zinc-700" />
@@ -66,11 +68,17 @@ export const ExifDrawer = ({ photo, isOpen, onClose, onOpenLightbox }) => {
           {/* Body Content */}
           <div className="p-4 sm:p-6 space-y-5 sm:space-y-6 flex-1 overflow-y-auto">
             {/* Image/Video Preview Thumbnail */}
-            <div className="relative rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 group aspect-[3/2] bg-zinc-100 dark:bg-zinc-900">
+            <div
+              className="relative rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 group aspect-[3/2] bg-zinc-100 dark:bg-zinc-900"
+              onContextMenu={(e) => {
+                if (!isAuthenticated) e.preventDefault();
+              }}
+            >
               <img
                 src={getThumbnailUrl(photo)}
                 alt={photo.title}
-                className="w-full h-full object-cover"
+                draggable="false"
+                className="protected-media w-full h-full object-cover select-none pointer-events-none"
               />
               {isVideo && (
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -208,21 +216,23 @@ export const ExifDrawer = ({ photo, isOpen, onClose, onOpenLightbox }) => {
             >
               {isVideo ? 'Play Fullscreen' : 'Open Fullscreen'}
             </button>
-            <button
-              onClick={handleDownload}
-              disabled={isDownloading}
-              title={isVideo ? 'Download Video' : 'Download Photo'}
-              className="py-3 sm:py-2.5 px-3 sm:px-4 rounded-xl text-xs font-medium bg-zinc-100 dark:bg-zinc-900 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-600 dark:hover:text-white active:scale-[0.98] border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
-            >
-              {isDownloading ? (
-                <Loader2 className="w-3.5 h-3.5 animate-spin text-purple-400" />
-              ) : isDownloaded ? (
-                <Check className="w-3.5 h-3.5 text-emerald-500" />
-              ) : (
-                <Download className="w-3.5 h-3.5" />
-              )}
-              <span>{isDownloading ? 'Downloading...' : isDownloaded ? 'Saved' : 'Download'}</span>
-            </button>
+            {isAuthenticated && (
+              <button
+                onClick={handleDownload}
+                disabled={isDownloading}
+                title={isVideo ? 'Download Video' : 'Download Photo'}
+                className="py-3 sm:py-2.5 px-3 sm:px-4 rounded-xl text-xs font-medium bg-zinc-100 dark:bg-zinc-900 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-600 dark:hover:text-white active:scale-[0.98] border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+              >
+                {isDownloading ? (
+                  <Loader2 className="w-3.5 h-3.5 animate-spin text-purple-400" />
+                ) : isDownloaded ? (
+                  <Check className="w-3.5 h-3.5 text-emerald-500" />
+                ) : (
+                  <Download className="w-3.5 h-3.5" />
+                )}
+                <span>{isDownloading ? 'Downloading...' : isDownloaded ? 'Saved' : 'Download'}</span>
+              </button>
+            )}
             <button
               onClick={handleCopyLink}
               className="py-3 sm:py-2.5 px-3 sm:px-4 rounded-xl text-xs font-medium bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 active:scale-[0.98] border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-all flex items-center justify-center gap-1.5"
