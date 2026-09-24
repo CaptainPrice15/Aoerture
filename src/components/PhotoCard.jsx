@@ -1,13 +1,30 @@
 import React, { useState } from 'react';
-import { Maximize2, MapPin, Camera, Sparkles, Aperture, Play } from 'lucide-react';
-import { getThumbnailUrl, getLqipUrl, isVideoSource } from '../utils/imagekit';
+import { Maximize2, MapPin, Sparkles, Aperture, Play, Download, Loader2, Check } from 'lucide-react';
+import { getThumbnailUrl, getLqipUrl, isVideoSource, downloadMedia } from '../utils/imagekit';
 
 export const PhotoCard = ({ photo, onClick, onOpenExif }) => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
+  const [isDownloaded, setIsDownloaded] = useState(false);
 
   const isVideo = photo.mediaType === 'video' || isVideoSource(photo.src);
   const thumbUrl = getThumbnailUrl(photo);
   const lqipUrl = getLqipUrl(photo);
+
+  const handleDownload = async (e) => {
+    e.stopPropagation();
+    if (isDownloading) return;
+    setIsDownloading(true);
+    try {
+      await downloadMedia(photo);
+      setIsDownloaded(true);
+      setTimeout(() => setIsDownloaded(false), 2000);
+    } catch (err) {
+      console.error('Download error:', err);
+    } finally {
+      setIsDownloading(false);
+    }
+  };
 
   // Map aspect ratio string to CSS classes or style
   const getAspectClass = (ratio) => {
@@ -77,15 +94,31 @@ export const PhotoCard = ({ photo, onClick, onOpenExif }) => {
           </div>
         )}
 
-        {/* Featured Star (top-right) */}
-        {photo.featured && (
-          <div className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-10">
+        {/* Top-Right Badges & Quick Download Button (Always Visible) */}
+        <div className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-10 flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
+          {photo.featured && (
             <span className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-semibold bg-amber-500/90 text-zinc-950 shadow-md">
               <Sparkles className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
               <span>Featured</span>
             </span>
-          </div>
-        )}
+          )}
+          <button
+            type="button"
+            onClick={handleDownload}
+            disabled={isDownloading}
+            title={isVideo ? "Download video" : "Download photo"}
+            aria-label={isVideo ? "Download video" : "Download photo"}
+            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-zinc-950/75 hover:bg-purple-600 active:bg-purple-700 text-white backdrop-blur-md border border-white/15 shadow-md flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 group/dl cursor-pointer"
+          >
+            {isDownloading ? (
+              <Loader2 className="w-3.5 h-3.5 animate-spin text-purple-300" />
+            ) : isDownloaded ? (
+              <Check className="w-3.5 h-3.5 text-emerald-400" />
+            ) : (
+              <Download className="w-3.5 h-3.5 transition-transform group-hover/dl:-translate-y-0.5" />
+            )}
+          </button>
+        </div>
 
         {/* Mobile Persistent Info Strip (Touchscreen optimized, md:hidden) */}
         <div className="md:hidden absolute inset-x-0 bottom-0 bg-gradient-to-t from-zinc-950/95 via-zinc-950/50 to-transparent p-2.5 pt-7 flex items-end justify-between gap-2">
@@ -111,6 +144,22 @@ export const PhotoCard = ({ photo, onClick, onOpenExif }) => {
               className="w-7 h-7 rounded-full bg-zinc-900/80 active:bg-purple-600 text-zinc-200 active:text-white backdrop-blur-md border border-white/10 flex items-center justify-center shadow-lg transition-transform active:scale-90"
             >
               <Aperture className="w-3.5 h-3.5" />
+            </button>
+            <button
+              type="button"
+              onClick={handleDownload}
+              disabled={isDownloading}
+              aria-label={isVideo ? "Download video" : "Download photo"}
+              title={isVideo ? "Download video" : "Download photo"}
+              className="w-7 h-7 rounded-full bg-zinc-900/80 active:bg-purple-600 text-zinc-200 active:text-white backdrop-blur-md border border-white/10 flex items-center justify-center shadow-lg transition-transform active:scale-90"
+            >
+              {isDownloading ? (
+                <Loader2 className="w-3 h-3 animate-spin text-purple-300" />
+              ) : isDownloaded ? (
+                <Check className="w-3 h-3 text-emerald-400" />
+              ) : (
+                <Download className="w-3 h-3" />
+              )}
             </button>
             <button
               type="button"
@@ -149,6 +198,22 @@ export const PhotoCard = ({ photo, onClick, onOpenExif }) => {
                   className="p-2 rounded-full bg-zinc-900/80 hover:bg-purple-600 text-zinc-200 hover:text-white backdrop-blur-md border border-white/10 transition-colors shadow-lg"
                 >
                   <Aperture className="w-3.5 h-3.5" />
+                </button>
+
+                {/* Download Button */}
+                <button
+                  onClick={handleDownload}
+                  disabled={isDownloading}
+                  title={isVideo ? "Download Video" : "Download Photo"}
+                  className="p-2 rounded-full bg-zinc-900/80 hover:bg-purple-600 text-zinc-200 hover:text-white backdrop-blur-md border border-white/10 transition-colors shadow-lg"
+                >
+                  {isDownloading ? (
+                    <Loader2 className="w-3.5 h-3.5 animate-spin text-purple-300" />
+                  ) : isDownloaded ? (
+                    <Check className="w-3.5 h-3.5 text-emerald-400" />
+                  ) : (
+                    <Download className="w-3.5 h-3.5" />
+                  )}
                 </button>
 
                 {/* Lightbox Expand / Play Button */}

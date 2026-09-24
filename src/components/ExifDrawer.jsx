@@ -1,9 +1,11 @@
-import React from 'react';
-import { X, Camera, Aperture, Clock, Zap, MapPin, Calendar, Tag, Layers, Share2, Check, Play } from 'lucide-react';
-import { getThumbnailUrl, isVideoSource } from '../utils/imagekit';
+import React, { useState } from 'react';
+import { X, Camera, Aperture, Clock, Zap, MapPin, Calendar, Tag, Layers, Share2, Check, Play, Download, Loader2 } from 'lucide-react';
+import { getThumbnailUrl, isVideoSource, downloadMedia } from '../utils/imagekit';
 
 export const ExifDrawer = ({ photo, isOpen, onClose, onOpenLightbox }) => {
-  const [copied, setCopied] = React.useState(false);
+  const [copied, setCopied] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
+  const [isDownloaded, setIsDownloaded] = useState(false);
 
   if (!isOpen || !photo) return null;
 
@@ -13,6 +15,20 @@ export const ExifDrawer = ({ photo, isOpen, onClose, onOpenLightbox }) => {
     navigator.clipboard.writeText(window.location.href);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleDownload = async () => {
+    if (isDownloading) return;
+    setIsDownloading(true);
+    try {
+      await downloadMedia(photo);
+      setIsDownloaded(true);
+      setTimeout(() => setIsDownloaded(false), 2000);
+    } catch (err) {
+      console.error('Download error:', err);
+    } finally {
+      setIsDownloading(false);
+    }
   };
 
   return (
@@ -185,16 +201,31 @@ export const ExifDrawer = ({ photo, isOpen, onClose, onOpenLightbox }) => {
           </div>
 
           {/* Footer Actions */}
-          <div className="p-4 sm:p-6 border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 flex gap-3 shrink-0">
+          <div className="p-4 sm:p-6 border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 flex flex-wrap sm:flex-nowrap gap-2.5 sm:gap-3 shrink-0">
             <button
               onClick={onOpenLightbox}
-              className="flex-1 py-3 sm:py-2.5 px-4 rounded-xl text-xs font-semibold bg-purple-600 hover:bg-purple-500 active:scale-[0.98] text-white shadow-lg shadow-purple-600/30 transition-all text-center"
+              className="flex-1 min-w-[140px] py-3 sm:py-2.5 px-3 sm:px-4 rounded-xl text-xs font-semibold bg-purple-600 hover:bg-purple-500 active:scale-[0.98] text-white shadow-lg shadow-purple-600/30 transition-all text-center"
             >
-              {isVideo ? 'Play Video Fullscreen' : 'Open Fullscreen'}
+              {isVideo ? 'Play Fullscreen' : 'Open Fullscreen'}
+            </button>
+            <button
+              onClick={handleDownload}
+              disabled={isDownloading}
+              title={isVideo ? 'Download Video' : 'Download Photo'}
+              className="py-3 sm:py-2.5 px-3 sm:px-4 rounded-xl text-xs font-medium bg-zinc-100 dark:bg-zinc-900 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-600 dark:hover:text-white active:scale-[0.98] border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+            >
+              {isDownloading ? (
+                <Loader2 className="w-3.5 h-3.5 animate-spin text-purple-400" />
+              ) : isDownloaded ? (
+                <Check className="w-3.5 h-3.5 text-emerald-500" />
+              ) : (
+                <Download className="w-3.5 h-3.5" />
+              )}
+              <span>{isDownloading ? 'Downloading...' : isDownloaded ? 'Saved' : 'Download'}</span>
             </button>
             <button
               onClick={handleCopyLink}
-              className="py-3 sm:py-2.5 px-4 rounded-xl text-xs font-medium bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 active:scale-[0.98] border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-all flex items-center gap-1.5"
+              className="py-3 sm:py-2.5 px-3 sm:px-4 rounded-xl text-xs font-medium bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 active:scale-[0.98] border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-all flex items-center justify-center gap-1.5"
             >
               {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Share2 className="w-3.5 h-3.5" />}
               <span>{copied ? 'Copied' : 'Share'}</span>

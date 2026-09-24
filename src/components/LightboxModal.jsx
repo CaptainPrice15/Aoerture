@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Lightbox from 'yet-another-react-lightbox';
 import Zoom from 'yet-another-react-lightbox/plugins/zoom';
 import Fullscreen from 'yet-another-react-lightbox/plugins/fullscreen';
+import Download from 'yet-another-react-lightbox/plugins/download';
 import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails';
 import Captions from 'yet-another-react-lightbox/plugins/captions';
 import Video from 'yet-another-react-lightbox/plugins/video';
-import { getFullUrl, getThumbnailUrl, isVideoSource } from '../utils/imagekit';
+import { getFullUrl, getThumbnailUrl, isVideoSource, getDownloadUrl, getDownloadFilename, downloadMedia } from '../utils/imagekit';
 
 export const LightboxModal = ({ photos, currentIndex, isOpen, onClose, onIndexChange, onOpenExif }) => {
   const [isMobile, setIsMobile] = useState(() => (typeof window !== 'undefined' ? window.innerWidth < 640 : false));
@@ -26,6 +27,8 @@ export const LightboxModal = ({ photos, currentIndex, isOpen, onClose, onIndexCh
     const exifSummary = photo.exif
       ? `${photo.exif.camera} • ${photo.exif.focalLength} • ${photo.exif.aperture} • ${photo.exif.shutterSpeed} • ISO ${photo.exif.iso}`
       : '';
+    const filename = getDownloadFilename(photo);
+    const downloadUrl = getDownloadUrl(photo);
 
     if (isVideo) {
       const mediaUrl = getFullUrl(photo);
@@ -43,8 +46,8 @@ export const LightboxModal = ({ photos, currentIndex, isOpen, onClose, onIndexCh
           }
         ],
         download: {
-          url: mediaUrl,
-          filename: `${photo.id}.mp4`
+          url: downloadUrl || mediaUrl,
+          filename: filename
         }
       };
     }
@@ -55,8 +58,8 @@ export const LightboxModal = ({ photos, currentIndex, isOpen, onClose, onIndexCh
       description: `${photo.location || photo.category} ${exifSummary ? ` | ${exifSummary}` : ''}`,
       thumbnail: getThumbnailUrl(photo),
       download: {
-        url: getFullUrl(photo),
-        filename: `${photo.id}.jpg`
+        url: downloadUrl || getFullUrl(photo),
+        filename: filename
       }
     };
   });
@@ -67,7 +70,33 @@ export const LightboxModal = ({ photos, currentIndex, isOpen, onClose, onIndexCh
       close={onClose}
       index={currentIndex}
       slides={slides}
-      plugins={[Zoom, Fullscreen, Thumbnails, Captions, Video]}
+      plugins={[Zoom, Fullscreen, Download, Thumbnails, Captions, Video]}
+      download={{
+        download: ({ slide }) => {
+          const photo = photos.find((p) => {
+            const dUrl = typeof slide.download === 'object' ? slide.download.url : slide.download;
+            return (
+              slide.src === getFullUrl(p) ||
+              dUrl === getDownloadUrl(p) ||
+              slide.title === p.title
+            );
+          });
+          if (photo) {
+            downloadMedia(photo);
+          } else if (slide.download) {
+            const url = typeof slide.download === 'object' ? slide.download.url : slide.download;
+            const filename = typeof slide.download === 'object' ? slide.download.filename : undefined;
+            const a = document.createElement('a');
+            a.href = url;
+            if (filename) a.download = filename;
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+          }
+        }
+      }}
       video={{
         autoPlay: true,
         controls: true,
