@@ -6,7 +6,7 @@ export const FolderGrid = ({ folders = [], onSelectFolder }) => {
   if (folders.length === 0) {
     return (
       <div className="py-24 text-center">
-        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 flex items-center justify-center text-zinc-400 dark:text-zinc-500">
+        <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 flex items-center justify-center text-zinc-400 dark:text-zinc-500 shadow-xs">
           <Folder className="w-8 h-8" />
         </div>
         <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">No folders found</h3>
@@ -22,15 +22,15 @@ export const FolderGrid = ({ folders = [], onSelectFolder }) => {
       {/* Section Header */}
       <div className="mb-5 sm:mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-0">
         <div>
-          <h2 className="text-lg sm:text-xl font-bold tracking-tight text-zinc-900 dark:text-white flex items-center gap-2">
+          <h2 className="text-lg sm:text-xl font-bold tracking-tight text-zinc-950 dark:text-white flex items-center gap-2">
             <FolderOpen className="w-5 h-5 text-purple-600 dark:text-purple-400" />
             <span>ImageKit Folders & Albums</span>
           </h2>
           <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5 sm:mt-1">
-            Browse your media organized by their cloud directory in ImageKit
+            Browse your media organized by cloud directory
           </p>
         </div>
-        <span className="self-start sm:self-auto text-xs font-mono font-medium px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-800">
+        <span className="self-start sm:self-auto text-xs font-mono font-medium px-3 py-1 rounded-full bg-white dark:bg-zinc-900 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-800 shadow-xs">
           {folders.length} {folders.length === 1 ? 'Folder' : 'Folders'}
         </span>
       </div>
@@ -46,12 +46,12 @@ export const FolderGrid = ({ folders = [], onSelectFolder }) => {
             <div
               key={folder.path}
               onClick={() => onSelectFolder(folder.path)}
-              className="group relative rounded-2xl sm:rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 p-4 sm:p-5 shadow-sm hover:shadow-xl hover:shadow-purple-500/10 dark:hover:shadow-purple-950/20 active:scale-[0.98] touch-manipulation transform-gpu transition-all duration-200 cursor-pointer overflow-hidden flex flex-col justify-between"
+              className="group relative rounded-3xl bg-white dark:bg-zinc-900 border border-slate-200/90 dark:border-zinc-800/80 p-4 sm:p-5 shadow-[0_2px_14px_-2px_rgba(0,0,0,0.05),0_1px_3px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_36px_-6px_rgba(139,92,246,0.16)] hover:border-purple-300 dark:hover:border-purple-500/40 active:scale-[0.98] touch-manipulation transform-gpu transition-all duration-300 cursor-pointer overflow-hidden flex flex-col justify-between"
             >
               {/* Preview Image Stack */}
-              <div className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-950 border border-zinc-200/60 dark:border-zinc-800/60 mb-4">
+              <div className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden bg-slate-100 dark:bg-zinc-950 border border-slate-200/80 dark:border-zinc-800/60 mb-4">
                 {previewPhotos.length > 0 ? (
-                  <div className="w-full h-full grid grid-cols-3 gap-1 p-1 bg-zinc-200 dark:bg-zinc-950">
+                  <div className="w-full h-full grid grid-cols-3 gap-1 p-1 bg-slate-200/60 dark:bg-zinc-950">
                     {previewPhotos.map((photo, i) => (
                       <div
                         key={photo.id}
@@ -60,66 +60,51 @@ export const FolderGrid = ({ folders = [], onSelectFolder }) => {
                             ? 'col-span-3 h-full'
                             : previewPhotos.length === 2 && i === 0
                             ? 'col-span-2 h-full'
-                            : i === 0
-                            ? 'col-span-2 h-full'
-                            : 'col-span-1 h-full'
+                            : 'h-full'
                         }`}
                       >
                         <img
                           src={getThumbnailUrl(photo)}
                           alt={photo.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                         />
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <div className="w-full h-full flex flex-col items-center justify-center text-zinc-400 bg-zinc-100/60 dark:bg-zinc-950/60">
-                    <Folder className="w-10 h-10 stroke-1 text-purple-400/70 mb-1" />
-                    <span className="text-[11px] font-mono text-zinc-400">Cloud Folder</span>
+                  <div className="w-full h-full flex flex-col items-center justify-center gap-2 text-zinc-400">
+                    <Folder className="w-10 h-10 opacity-30" />
+                    <span className="text-xs">No media preview</span>
                   </div>
                 )}
-
-                {/* Folder Path Badge (top-left) */}
-                <div className="absolute top-3 left-3 z-10">
-                  <span className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium tracking-wide bg-zinc-950/75 backdrop-blur-md text-white border border-white/10 shadow-sm">
-                    <Folder className="w-3.5 h-3.5 text-purple-400" />
-                    <span>{folder.path}</span>
-                  </span>
-                </div>
               </div>
 
               {/* Folder Details */}
-              <div>
-                <div className="flex items-center justify-between gap-2">
-                  <h3 className="font-bold text-base text-zinc-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
-                    {folder.name}
+              <div className="flex items-center justify-between gap-2">
+                <div className="min-w-0">
+                  <h3 className="font-bold text-sm text-zinc-950 dark:text-zinc-100 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors truncate flex items-center gap-1.5">
+                    <Folder className="w-4 h-4 text-purple-600 dark:text-purple-400 shrink-0" />
+                    <span className="truncate">{folder.name}</span>
                   </h3>
-                  <div className="p-1.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-500 group-hover:bg-purple-600 group-hover:text-white transition-colors">
-                    <ChevronRight className="w-4 h-4" />
+                  <div className="flex items-center gap-2 text-[11px] text-zinc-500 dark:text-zinc-400 mt-1">
+                    {photoCount > 0 && (
+                      <span className="flex items-center gap-1">
+                        <ImageIcon className="w-3 h-3 text-purple-500" />
+                        <span>{photoCount} {photoCount === 1 ? 'photo' : 'photos'}</span>
+                      </span>
+                    )}
+                    {videoCount > 0 && (
+                      <span className="flex items-center gap-1">
+                        <Video className="w-3 h-3 text-purple-500" />
+                        <span>{videoCount} {videoCount === 1 ? 'video' : 'videos'}</span>
+                      </span>
+                    )}
+                    {photoCount === 0 && videoCount === 0 && <span>Empty folder</span>}
                   </div>
                 </div>
 
-                {/* Media Counts */}
-                <div className="flex items-center gap-3 mt-3 pt-3 border-t border-zinc-100 dark:border-zinc-800/80 text-xs text-zinc-500 dark:text-zinc-400">
-                  {photoCount > 0 && (
-                    <span className="flex items-center gap-1.5">
-                      <ImageIcon className="w-3.5 h-3.5 text-purple-500" />
-                      <span>{photoCount} {photoCount === 1 ? 'photo' : 'photos'}</span>
-                    </span>
-                  )}
-                  {videoCount > 0 && (
-                    <span className="flex items-center gap-1.5">
-                      <Video className="w-3.5 h-3.5 text-indigo-500" />
-                      <span>{videoCount} {videoCount === 1 ? 'video' : 'videos'}</span>
-                    </span>
-                  )}
-                  {photoCount === 0 && videoCount === 0 && (
-                    <span className="text-zinc-400 italic text-[11px]">0 items</span>
-                  )}
-                  <span className="ml-auto font-mono text-[11px] text-zinc-400">
-                    {folder.photos.length} total
-                  </span>
+                <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-zinc-800 text-zinc-400 group-hover:text-white group-hover:bg-purple-600 flex items-center justify-center shrink-0 transition-all shadow-xs">
+                  <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
                 </div>
               </div>
             </div>

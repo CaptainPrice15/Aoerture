@@ -66,7 +66,6 @@ export const PhotoCard = ({ photo, onClick, onOpenExif, onShare, onEdit, onDelet
     }
   };
 
-  // Determine aspect ratio class depending on layout mode
   const getAspectClass = () => {
     if (layoutMode === 'grid') {
       return 'aspect-square';
@@ -93,7 +92,7 @@ export const PhotoCard = ({ photo, onClick, onOpenExif, onShare, onEdit, onDelet
   // EDITORIAL LAYOUT PRESENTATION
   if (layoutMode === 'editorial') {
     return (
-      <article className="group mb-12 sm:mb-16 bg-white dark:bg-zinc-900 rounded-3xl overflow-hidden border border-zinc-200/80 dark:border-zinc-800/80 shadow-lg hover:shadow-2xl transition-all duration-300">
+      <article className="group mb-12 sm:mb-16 bg-white dark:bg-zinc-900 rounded-3xl overflow-hidden border border-slate-200/90 dark:border-zinc-800/80 shadow-[0_4px_24px_-4px_rgba(0,0,0,0.06)] hover:shadow-[0_20px_40px_-8px_rgba(139,92,246,0.18)] hover:border-purple-300 dark:hover:border-purple-500/40 transition-all duration-300">
         <div
           className={`relative w-full overflow-hidden cursor-pointer ${getAspectClass()}`}
           onClick={onClick}
@@ -168,19 +167,19 @@ export const PhotoCard = ({ photo, onClick, onOpenExif, onShare, onEdit, onDelet
               {photo.title}
             </h3>
             {photo.description && (
-              <p className="mt-2 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+              <p className="mt-2 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal">
                 {photo.description}
               </p>
             )}
             <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-zinc-500 dark:text-zinc-400">
               {photo.location && (
-                <span className="flex items-center gap-1 font-medium text-purple-600 dark:text-purple-400">
+                <span className="flex items-center gap-1 font-semibold text-purple-700 dark:text-purple-400">
                   <MapPin className="w-3.5 h-3.5" />
                   <span>{photo.location}</span>
                 </span>
               )}
               {photo.exif?.camera && (
-                <span className="font-mono text-[11px] bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded-md">
+                <span className="font-mono text-[11px] bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 px-2.5 py-0.5 rounded-md border border-slate-200/60 dark:border-zinc-700/60">
                   {photo.exif.camera} • {photo.exif.aperture} • {photo.exif.shutterSpeed}
                 </span>
               )}
@@ -191,31 +190,31 @@ export const PhotoCard = ({ photo, onClick, onOpenExif, onShare, onEdit, onDelet
           <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={() => onOpenExif(photo)}
-              className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 flex items-center gap-1.5 transition-all"
+              className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-zinc-800 hover:bg-slate-50 dark:hover:bg-zinc-700 text-slate-800 dark:text-zinc-200 border border-slate-200 dark:border-zinc-700 shadow-xs flex items-center gap-1.5 transition-all cursor-pointer"
             >
-              <Aperture className="w-3.5 h-3.5" />
+              <Aperture className="w-3.5 h-3.5 text-purple-600" />
               <span>Details</span>
             </button>
             <button
               onClick={onClick}
-              className="px-4 py-2 rounded-xl text-xs font-semibold bg-purple-600 hover:bg-purple-500 text-white flex items-center gap-1.5 shadow-md shadow-purple-600/20 transition-all"
+              className="px-4 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white flex items-center gap-1.5 shadow-md shadow-purple-600/25 transition-all cursor-pointer"
             >
               <Maximize2 className="w-3.5 h-3.5" />
               <span>Fullscreen</span>
             </button>
             {user?.role === 'admin' && (
-              <div className="flex items-center gap-1.5 pl-2 border-l border-zinc-200 dark:border-zinc-800">
+              <div className="flex items-center gap-1.5 pl-2 border-l border-slate-200 dark:border-zinc-800">
                 <button
                   onClick={handleEditClick}
                   title="Edit details (Admin)"
-                  className="p-2 rounded-xl bg-purple-50 dark:bg-purple-950/40 text-purple-600 hover:bg-purple-100 transition-colors"
+                  className="p-2 rounded-xl bg-purple-50 dark:bg-purple-950/40 text-purple-600 hover:bg-purple-100 transition-colors cursor-pointer"
                 >
                   <Edit3 className="w-3.5 h-3.5" />
                 </button>
                 <button
                   onClick={handleDeleteClick}
                   title="Delete media (Admin)"
-                  className="p-2 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-rose-600 hover:bg-rose-100 transition-colors"
+                  className="p-2 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-rose-600 hover:bg-rose-100 transition-colors cursor-pointer"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                 </button>
@@ -230,7 +229,7 @@ export const PhotoCard = ({ photo, onClick, onOpenExif, onShare, onEdit, onDelet
   // STANDARD MASONRY & UNIFORM GRID PRESENTATION
   return (
     <div
-      className={`group relative mb-4 sm:mb-6 break-inside-avoid rounded-xl sm:rounded-2xl overflow-hidden bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 shadow-md hover:shadow-xl hover:shadow-purple-500/10 dark:hover:shadow-purple-950/20 transition-all duration-300 transform hover:-translate-y-1 active:scale-[0.99] touch-manipulation transform-gpu cursor-pointer select-none`}
+      className="group relative mb-4 sm:mb-6 break-inside-avoid rounded-2xl overflow-hidden bg-white dark:bg-zinc-900 border border-slate-200/90 dark:border-zinc-800/80 shadow-[0_2px_14px_-2px_rgba(0,0,0,0.06),0_1px_3px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_36px_-6px_rgba(139,92,246,0.18),0_4px_12px_rgba(0,0,0,0.04)] hover:border-purple-300 dark:hover:border-purple-500/40 transition-all duration-300 transform hover:-translate-y-1 active:scale-[0.99] touch-manipulation transform-gpu cursor-pointer select-none"
       onClick={onClick}
     >
       {/* Aspect Ratio Container */}
@@ -270,11 +269,11 @@ export const PhotoCard = ({ photo, onClick, onOpenExif, onShare, onEdit, onDelet
 
         {/* Category & Video Pill Tag (top-left) */}
         <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 z-10 flex items-center gap-1.5">
-          <span className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-[11px] font-medium tracking-wide bg-zinc-950/75 backdrop-blur-md text-white border border-white/10 shadow-sm">
+          <span className="px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-semibold tracking-wide bg-zinc-950/75 backdrop-blur-md text-white border border-white/15 shadow-sm">
             {photo.category}
           </span>
           {isVideo && (
-            <span className="flex items-center gap-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-[11px] font-medium tracking-wide bg-purple-600/90 backdrop-blur-md text-white border border-purple-400/30 shadow-sm">
+            <span className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-semibold tracking-wide bg-purple-600/90 backdrop-blur-md text-white border border-purple-400/30 shadow-sm">
               <Play className="w-2.5 h-2.5 fill-white" />
               <span>Video</span>
             </span>
@@ -296,7 +295,7 @@ export const PhotoCard = ({ photo, onClick, onOpenExif, onShare, onEdit, onDelet
           onClick={(e) => e.stopPropagation()}
         >
           {photo.featured && (
-            <span className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-semibold bg-amber-500/90 text-zinc-950 shadow-md">
+            <span className="flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-bold bg-amber-500 text-zinc-950 shadow-md">
               <Sparkles className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
               <span>Featured</span>
             </span>
@@ -322,7 +321,7 @@ export const PhotoCard = ({ photo, onClick, onOpenExif, onShare, onEdit, onDelet
             <Share2 className="w-3.5 h-3.5" />
           </button>
 
-          {/* Admin Download Button */}
+          {/* Download Button */}
           {isAuthenticated && (
             <button
               type="button"
@@ -401,7 +400,7 @@ export const PhotoCard = ({ photo, onClick, onOpenExif, onShare, onEdit, onDelet
         </div>
 
         {/* Desktop Hover Gradient Overlay & Info Bar */}
-        <div className="hidden md:flex absolute inset-0 bg-gradient-to-t from-zinc-950/90 via-zinc-950/30 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex-col justify-end p-4">
+        <div className="hidden md:flex absolute inset-0 bg-gradient-to-t from-zinc-950/95 via-zinc-950/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex-col justify-end p-4">
           <div className="transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
             <div className="flex items-center justify-between gap-2">
               <div>
