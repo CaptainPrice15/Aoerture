@@ -13,13 +13,15 @@ import { AboutModal } from './components/AboutModal';
 import { ImageKitGuideModal } from './components/ImageKitGuideModal';
 import { AddMediaModal } from './components/AddMediaModal';
 import { LoginModal } from './components/LoginModal';
+import { ShareModal } from './components/ShareModal';
+import { EditPhotoModal } from './components/EditPhotoModal';
 import { Footer } from './components/Footer';
 import { useImageProtection } from './hooks/useImageProtection';
 import { photos as initialPhotos, INITIAL_FOLDERS } from './data/photos';
 
 function GalleryApp() {
   const { theme, toggleTheme } = useTheme();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user, favorites } = useAuth();
   const { toastMessage } = useImageProtection(isAuthenticated);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [authMode, setAuthMode] = useState('signin');
@@ -44,11 +46,31 @@ function GalleryApp() {
   const [selectedFolderPath, setSelectedFolderPath] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('featured');
+  const [layoutMode, setLayoutMode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        return localStorage.getItem('gallery_layout_mode') || 'masonry';
+      } catch (e) {}
+    }
+    return 'masonry';
+  });
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(-1);
   const [selectedExifPhoto, setSelectedExifPhoto] = useState(null);
+  const [sharePhoto, setSharePhoto] = useState(null);
+  const [editingPhoto, setEditingPhoto] = useState(null);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isGuideOpen, setIsGuideOpen] = useState(false);
   const [isAddMediaOpen, setIsAddMediaOpen] = useState(false);
+
+  const handleLayoutChange = (mode) => {
+    setLayoutMode(mode);
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('gallery_layout_mode', mode);
+      } catch (e) {}
+    }
+  };
 
   const handleAddMedia = (newMedia) => {
     setPhotosList((prev) => {
@@ -63,7 +85,60 @@ function GalleryApp() {
     });
   };
 
-  // Attempt to fetch live photos and folders from ImageKit if /api/photos is available
+  const handleSaveEditedPhoto = (updatedPhoto) => {
+    setPhotosList((prev) => {
+      const updated = prev.map((p) => (p.id === updatedPhoto.id ? updatedPhoto : p));
+      if (typeof window !== 'undefined') {
+        try {
+          localStorage.setItem('user_gallery_photos', JSON.stringify(updated));
+        } catch (e) {}
+      }
+      return updated;
+    });
+  };
+
+  const handleDeletePhoto = (photoId) => {
+    setPhotosList((prev) => {
+      const updated = prev.filter((p) => p.id !== photoId);
+      if (typeof window !== 'undefined') {
+        try {
+          localStorage.setItem('user_gallery_photos', JSON.stringify(updated));
+        } catch (e) {}
+      }
+      return updated;
+    });
+  };
+
+  // 1. Initial Deep-linking check on page mount
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const photoParam = params.get('photo');
+      const catParam = params.get('category');
+      const folderParam = params.get('folder');
+      const layoutParam = params.get('layout');
+
+      if (layoutParam && ['masonry', 'grid', 'editorial'].includes(layoutParam)) {
+        setLayoutMode(layoutParam);
+      }
+      if (catParam) {
+        setActiveCategory(catParam);
+      }
+      if (folderParam) {
+        setActiveCategory('Folders');
+        setSelectedFolderPath(folderParam);
+      }
+      if (photoParam) {
+        const foundIdx = photosList.findIndex((p) => p.id === photoParam);
+        if (foundIdx >= 0) {
+          setLightboxIndex(foundIdx);
+        }
+      }
+    } catch (e) {}
+  }, []);
+
+  // 2. Fetch live photos and folders from ImageKit if /api/photos is available
   useEffect(() => {
     let isMounted = true;
     fetch('/api/photos')
@@ -101,9 +176,7 @@ function GalleryApp() {
           }
         }
       })
-      .catch(() => {
-        // Fall back gracefully to initialPhotos
-      });
+      .catch(() => {});
 
     return () => {
       isMounted = false;
@@ -123,7 +196,6 @@ function GalleryApp() {
   const availableFolders = useMemo(() => {
     const foldersMap = new Map();
 
-    // 1. Seed with known / fetched cloud folders so empty folders are kept
     cloudFolders.forEach((f) => {
       foldersMap.set(f.path, {
         name: f.name,
@@ -132,7 +204,6 @@ function GalleryApp() {
       });
     });
 
-    // 2. Attach photos to corresponding folders
     photosList.forEach((photo) => {
       const path = photo.folderPath || (photo.src?.startsWith('/Pics') ? '/Pics' : '/');
       const name = photo.folder || (path === '/' ? 'Root Library' : path.replace(/^\/+/, ''));
@@ -168,6 +239,11 @@ function GalleryApp() {
   const filteredPhotos = useMemo(() => {
     return photosList
       .filter((photo) => {
+        // Favorites filter
+        if (showFavoritesOnly) {
+          if (!favorites || !favorites.includes(photo.id)) return false;
+        }
+
         // Folder match
         if (activeCategory === 'Folders') {
           if (selectedFolderPath) {
@@ -215,12 +291,41 @@ function GalleryApp() {
         }
         return 0;
       });
-  }, [photosList, activeCategory, searchQuery, sortBy]);
+  }, [photosList, activeCategory, searchQuery, sortBy, showFavoritesOnly, favorites, selectedFolderPath]);
+
+  // Sync state to URL for deep-linking
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      const url = new URL(window.location.href);
+
+      if (lightboxIndex >= 0 && filteredPhotos[lightboxIndex]) {
+        url.searchParams.set('photo', filteredPhotos[lightboxIndex].id);
+      } else {
+        url.searchParams.delete('photo');
+      }
+
+      if (activeCategory && activeCategory !== 'All') {
+        url.searchParams.set('category', activeCategory);
+      } else {
+        url.searchParams.delete('category');
+      }
+
+      if (selectedFolderPath) {
+        url.searchParams.set('folder', selectedFolderPath);
+      } else {
+        url.searchParams.delete('folder');
+      }
+
+      window.history.replaceState({}, '', url.toString());
+    } catch (e) {}
+  }, [lightboxIndex, activeCategory, selectedFolderPath, filteredPhotos]);
 
   const handleResetFilters = () => {
     setActiveCategory('All');
     setSearchQuery('');
     setSortBy('featured');
+    setShowFavoritesOnly(false);
   };
 
   const handleOpenLightbox = (index) => {
@@ -266,13 +371,13 @@ function GalleryApp() {
               <div className="flex items-center gap-2 shrink-0">
                 <button
                   onClick={() => setIsGuideOpen(true)}
-                  className="px-3 py-1 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-medium transition-colors shadow-sm"
+                  className="px-3 py-1 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-medium transition-colors shadow-sm cursor-pointer"
                 >
                   Quick Setup
                 </button>
                 <button
                   onClick={() => setShowSyncBanner(false)}
-                  className="p-1 rounded-md text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors"
+                  className="p-1 rounded-md text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors cursor-pointer"
                   title="Dismiss notification"
                 >
                   <X className="w-4 h-4" />
@@ -295,7 +400,7 @@ function GalleryApp() {
               <div className="flex items-center gap-2 shrink-0">
                 <button
                   onClick={() => setShowSyncBanner(false)}
-                  className="p-1 rounded-md hover:bg-white/20 transition-colors"
+                  className="p-1 rounded-md hover:bg-white/20 transition-colors cursor-pointer"
                   aria-label="Dismiss banner"
                 >
                   <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -305,7 +410,7 @@ function GalleryApp() {
           </div>
         )}
 
-        {/* Filter, Search & Sort Bar */}
+        {/* Filter, Search, Layout & Sort Bar */}
         <FilterBar
           categories={availableCategories}
           activeCategory={activeCategory}
@@ -329,6 +434,11 @@ function GalleryApp() {
           onSortChange={setSortBy}
           matchingCount={filteredPhotos.length}
           categoryCounts={categoryCounts}
+          layoutMode={layoutMode}
+          onLayoutChange={handleLayoutChange}
+          showFavoritesOnly={showFavoritesOnly}
+          onToggleFavoritesOnly={setShowFavoritesOnly}
+          favoritesCount={favorites?.length || 0}
         />
 
         {/* If in Folders view with no specific folder selected: show Folders Grid */}
@@ -344,7 +454,7 @@ function GalleryApp() {
               <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <button
                   onClick={() => setSelectedFolderPath(null)}
-                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-zinc-100 dark:bg-zinc-900 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-600 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-800 transition-all shadow-sm w-fit active:scale-95"
+                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-zinc-100 dark:bg-zinc-900 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-600 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-800 transition-all shadow-sm w-fit active:scale-95 cursor-pointer"
                 >
                   <ArrowLeft className="w-3.5 h-3.5" />
                   <span>All Folders</span>
@@ -359,7 +469,7 @@ function GalleryApp() {
               </div>
             )}
 
-            {/* Masonry Image Gallery or Empty Folder State */}
+            {/* Gallery Grid or Empty State */}
             {activeCategory === 'Folders' && selectedFolderPath && filteredPhotos.length === 0 ? (
               <div className="py-24 text-center max-w-md mx-auto px-4">
                 <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-purple-50 dark:bg-purple-950/50 border border-purple-200 dark:border-purple-800/60 flex items-center justify-center text-purple-600 dark:text-purple-400">
@@ -374,14 +484,14 @@ function GalleryApp() {
                 <div className="mt-6 flex flex-wrap items-center justify-center gap-2.5">
                   <button
                     onClick={() => setSelectedFolderPath(null)}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-800 transition-all shadow-sm"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-800 transition-all shadow-sm cursor-pointer"
                   >
                     <ArrowLeft className="w-3.5 h-3.5" />
                     <span>Back to All Folders</span>
                   </button>
                   <button
                     onClick={() => setIsAddMediaOpen(true)}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-purple-600 hover:bg-purple-500 text-white shadow-md shadow-purple-600/20 transition-all"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-purple-600 hover:bg-purple-500 text-white shadow-md shadow-purple-600/20 transition-all cursor-pointer"
                   >
                     <span>Add Media</span>
                   </button>
@@ -390,9 +500,13 @@ function GalleryApp() {
             ) : (
               <GalleryGrid
                 photos={filteredPhotos}
+                layoutMode={layoutMode}
                 onSelectPhoto={handleOpenLightbox}
                 onOpenExif={handleOpenExif}
                 onResetFilters={handleResetFilters}
+                onShare={(photo) => setSharePhoto(photo)}
+                onEdit={(photo) => setEditingPhoto(photo)}
+                onDelete={handleDeletePhoto}
               />
             )}
           </>
@@ -428,6 +542,26 @@ function GalleryApp() {
             setLightboxIndex(idx >= 0 ? idx : 0);
           }
         }}
+        onShare={(photo) => setSharePhoto(photo)}
+        onEdit={(photo) => setEditingPhoto(photo)}
+        onDelete={handleDeletePhoto}
+      />
+
+      {/* Social Share & Deep Link Modal */}
+      <ShareModal
+        isOpen={!!sharePhoto}
+        photo={sharePhoto}
+        onClose={() => setSharePhoto(null)}
+      />
+
+      {/* Admin Edit Photo Modal */}
+      <EditPhotoModal
+        isOpen={!!editingPhoto}
+        photo={editingPhoto}
+        onClose={() => setEditingPhoto(null)}
+        onSave={handleSaveEditedPhoto}
+        categories={availableCategories}
+        folders={availableFolders}
       />
 
       {/* Photographer Gear & Bio Modal */}
@@ -442,7 +576,7 @@ function GalleryApp() {
         onClose={() => setIsGuideOpen(false)}
       />
 
-      {/* Add Media (Picture/Video) Modal */}
+      {/* Add Media (Picture/Video) Modal with Direct Drag & Drop */}
       <AddMediaModal
         isOpen={isAddMediaOpen}
         onClose={() => setIsAddMediaOpen(false)}
@@ -476,4 +610,3 @@ export default function App() {
     </AuthProvider>
   );
 }
-

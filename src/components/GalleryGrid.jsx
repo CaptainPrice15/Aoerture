@@ -2,7 +2,16 @@ import React from 'react';
 import { PhotoCard } from './PhotoCard';
 import { ImageOff, RotateCcw } from 'lucide-react';
 
-export const GalleryGrid = ({ photos, onSelectPhoto, onOpenExif, onResetFilters }) => {
+export const GalleryGrid = ({
+  photos,
+  onSelectPhoto,
+  onOpenExif,
+  onResetFilters,
+  onShare,
+  onEdit,
+  onDelete,
+  layoutMode = 'masonry'
+}) => {
   if (photos.length === 0) {
     return (
       <div className="py-24 text-center">
@@ -11,11 +20,11 @@ export const GalleryGrid = ({ photos, onSelectPhoto, onOpenExif, onResetFilters 
         </div>
         <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">No photos found</h3>
         <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400 max-w-sm mx-auto">
-          We couldn't find any photos matching your current search or category filter.
+          We couldn't find any photos matching your current search, favorites, or category filter.
         </p>
         <button
           onClick={onResetFilters}
-          className="mt-5 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-medium bg-purple-600 hover:bg-purple-700 text-white shadow-lg shadow-purple-600/20 transition-all"
+          className="mt-5 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-medium bg-purple-600 hover:bg-purple-700 text-white shadow-lg shadow-purple-600/20 transition-all cursor-pointer"
         >
           <RotateCcw className="w-3.5 h-3.5" />
           <span>Reset all filters</span>
@@ -24,14 +33,31 @@ export const GalleryGrid = ({ photos, onSelectPhoto, onOpenExif, onResetFilters 
     );
   }
 
+  // Render container based on layout mode
+  const getContainerClass = () => {
+    switch (layoutMode) {
+      case 'grid':
+        return 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5 px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto py-4 sm:py-8';
+      case 'editorial':
+        return 'max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10';
+      case 'masonry':
+      default:
+        return 'columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 sm:gap-6 px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto py-4 sm:py-8';
+    }
+  };
+
   return (
-    <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 sm:gap-6 px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto py-4 sm:py-8">
+    <div className={getContainerClass()}>
       {photos.map((photo, index) => (
         <PhotoCard
           key={photo.id}
           photo={photo}
+          layoutMode={layoutMode}
           onClick={() => onSelectPhoto(index)}
           onOpenExif={onOpenExif}
+          onShare={onShare}
+          onEdit={onEdit}
+          onDelete={onDelete}
         />
       ))}
     </div>

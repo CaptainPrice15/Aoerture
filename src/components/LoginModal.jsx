@@ -46,7 +46,7 @@ export const LoginModal = ({ isOpen, onClose, initialMode = 'signin' }) => {
 
   if (!isOpen) return null;
 
-  const handleSignInSubmit = (e) => {
+  const handleSignInSubmit = async (e) => {
     e.preventDefault();
     if (!signInPassword.trim()) {
       setError('Please enter your password.');
@@ -56,8 +56,8 @@ export const LoginModal = ({ isOpen, onClose, initialMode = 'signin' }) => {
     setIsSubmitting(true);
     setError('');
 
-    setTimeout(() => {
-      const result = login(signInIdentifier.trim(), signInPassword.trim());
+    try {
+      const result = await login(signInIdentifier.trim(), signInPassword.trim());
       setIsSubmitting(false);
       if (result.success) {
         setSuccessMsg(`Welcome back, ${result.user?.name || 'User'}!`);
@@ -67,10 +67,13 @@ export const LoginModal = ({ isOpen, onClose, initialMode = 'signin' }) => {
       } else {
         setError(result.error || 'Failed to sign in.');
       }
-    }, 200);
+    } catch (err) {
+      setIsSubmitting(false);
+      setError('An unexpected error occurred. Please try again.');
+    }
   };
 
-  const handleSignUpSubmit = (e) => {
+  const handleSignUpSubmit = async (e) => {
     e.preventDefault();
     if (!signUpName.trim()) {
       setError('Please enter your name.');
@@ -101,8 +104,8 @@ export const LoginModal = ({ isOpen, onClose, initialMode = 'signin' }) => {
     setIsSubmitting(true);
     setError('');
 
-    setTimeout(() => {
-      const result = signup({
+    try {
+      const result = await signup({
         name: signUpName.trim(),
         email: signUpEmail.trim(),
         password: signUpPassword
@@ -117,7 +120,10 @@ export const LoginModal = ({ isOpen, onClose, initialMode = 'signin' }) => {
       } else {
         setError(result.error || 'Registration failed.');
       }
-    }, 250);
+    } catch (err) {
+      setIsSubmitting(false);
+      setError('An unexpected error occurred. Please try again.');
+    }
   };
 
   const switchMode = (newMode) => {
