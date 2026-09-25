@@ -12,7 +12,7 @@ export const useImageProtection = (isAuthenticated) => {
   const [toastMessage, setToastMessage] = useState(null);
   const toastTimeoutRef = useRef(null);
 
-  const triggerToast = useCallback((msg = 'Protected media • Sign in as Admin to download') => {
+  const triggerToast = useCallback((msg = 'Protected media • Sign in to download') => {
     if (toastTimeoutRef.current) {
       clearTimeout(toastTimeoutRef.current);
     }

@@ -22,6 +22,7 @@ function GalleryApp() {
   const { isAuthenticated } = useAuth();
   const { toastMessage } = useImageProtection(isAuthenticated);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [authMode, setAuthMode] = useState('signin');
 
   // State
   const [photosList, setPhotosList] = useState(() => {
@@ -239,7 +240,10 @@ function GalleryApp() {
         onOpenAbout={() => setIsAboutOpen(true)}
         onOpenCloudGuide={() => setIsGuideOpen(true)}
         onOpenAddMedia={() => setIsAddMediaOpen(true)}
-        onOpenLogin={() => setIsLoginOpen(true)}
+        onOpenLogin={(mode = 'signin') => {
+          setAuthMode(mode);
+          setIsLoginOpen(true);
+        }}
         totalPhotos={photosList.length}
       />
 
@@ -447,9 +451,10 @@ function GalleryApp() {
         folders={availableFolders}
       />
 
-      {/* Admin Sign In / Bypass Modal */}
+      {/* Sign In / Sign Up Modal */}
       <LoginModal
         isOpen={isLoginOpen}
+        initialMode={authMode}
         onClose={() => setIsLoginOpen(false)}
       />
 
