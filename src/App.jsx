@@ -337,7 +337,14 @@ function GalleryApp() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 flex flex-col transition-colors duration-300 selection:bg-purple-500/30 selection:text-purple-300">
+    <div className="min-h-screen text-zinc-900 dark:text-zinc-100 flex flex-col selection:bg-purple-500/30 selection:text-purple-300 relative">
+      {/* High-Performance Fixed Ambient Light Mesh (GPU accelerated, zero repaint on scroll) */}
+      <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden transform-gpu" aria-hidden="true">
+        <div className="absolute -top-32 -left-32 w-[550px] h-[550px] bg-purple-200/35 rounded-full blur-[100px] transform-gpu dark:opacity-0 transition-opacity duration-300" />
+        <div className="absolute top-1/3 -right-32 w-[450px] h-[450px] bg-indigo-200/30 rounded-full blur-[100px] transform-gpu dark:opacity-0 transition-opacity duration-300" />
+        <div className="absolute -bottom-32 left-1/3 w-[550px] h-[550px] bg-pink-200/20 rounded-full blur-[100px] transform-gpu dark:opacity-0 transition-opacity duration-300" />
+      </div>
+
       {/* Top Navigation */}
       <Navbar
         theme={theme}
