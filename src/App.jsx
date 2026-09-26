@@ -1,5 +1,18 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Sparkles, X, ArrowLeft, Folder, ShieldAlert } from 'lucide-react';
+import {
+  Sparkles,
+  X,
+  ArrowLeft,
+  Folder,
+  ShieldAlert,
+  Check,
+  Share2,
+  Download,
+  Loader2,
+  Eye,
+  EyeOff,
+  CheckSquare
+} from 'lucide-react';
 import { useTheme } from './hooks/useTheme';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { Navbar } from './components/Navbar';
@@ -18,6 +31,7 @@ import { EditPhotoModal } from './components/EditPhotoModal';
 import { Footer } from './components/Footer';
 import { useImageProtection } from './hooks/useImageProtection';
 import { photos as initialPhotos, INITIAL_FOLDERS } from './data/photos';
+import { downloadMedia } from './utils/imagekit';
 
 function GalleryApp() {
   const { theme, toggleTheme } = useTheme();
@@ -46,6 +60,14 @@ function GalleryApp() {
   const [selectedFolderPath, setSelectedFolderPath] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('featured');
+  const [colorFilter, setColorFilter] = useState('All');
+  const [visibleCount, setVisibleCount] = useState(20);
+  const [isSelectMode, setIsSelectMode] = useState(false);
+  const [selectedPhotoIds, setSelectedPhotoIds] = useState(() => new Set());
+  const [isDownloadingCollection, setIsDownloadingCollection] = useState(false);
+  const [collectionToast, setCollectionToast] = useState('');
+  const [isFocusMode, setIsFocusMode] = useState(false);
+
   const [layoutMode, setLayoutMode] = useState(() => {
     if (typeof window !== 'undefined') {
       try {
@@ -118,6 +140,7 @@ function GalleryApp() {
       const catParam = params.get('category');
       const folderParam = params.get('folder');
       const layoutParam = params.get('layout');
+      const collectionParam = params.get('collection');
 
       if (layoutParam && ['masonry', 'grid', 'editorial'].includes(layoutParam)) {
         setLayoutMode(layoutParam);
@@ -135,8 +158,22 @@ function GalleryApp() {
           setLightboxIndex(foundIdx);
         }
       }
+      if (collectionParam) {
+        const ids = collectionParam.split(',').filter(Boolean);
+        if (ids.length > 0) {
+          setSelectedPhotoIds(new Set(ids));
+          setIsSelectMode(true);
+          setCollectionToast(`Loaded shared collection (${ids.length} photos)`);
+          setTimeout(() => setCollectionToast(''), 4000);
+        }
+      }
     } catch (e) {}
   }, []);
+
+  // Reset progressive visibleCount when any filter changes
+  useEffect(() => {
+    setVisibleCount(20);
+  }, [activeCategory, selectedFolderPath, searchQuery, sortBy, showFavoritesOnly, colorFilter]);
 
   // 2. Fetch live photos and folders from ImageKit if /api/photos is available
   useEffect(() => {
@@ -258,6 +295,37 @@ function GalleryApp() {
           if (!matchCategory && !matchFolder) return false;
         }
 
+        // Chromatic Color Filter match
+        if (colorFilter && colorFilter !== 'All') {
+          const text = `${photo.title || ''} ${photo.category || ''} ${photo.description || ''} ${(photo.tags || []).join(' ')}`.toLowerCase();
+          if (colorFilter === 'warm') {
+            const isWarm =
+              ['darjeeling', 'kedarnath', 'badrinath'].includes(photo.category?.toLowerCase()) ||
+              ['warm', 'gold', 'sunset', 'orange', 'yellow', 'sun', 'autumn', 'red'].some((w) => text.includes(w));
+            if (!isWarm) return false;
+          } else if (colorFilter === 'emerald') {
+            const isEmerald =
+              ['sikkim', 'nature'].includes(photo.category?.toLowerCase()) ||
+              ['green', 'forest', 'trees', 'nature', 'tea', 'valley', 'leaf', 'mountain'].some((w) => text.includes(w));
+            if (!isEmerald) return false;
+          } else if (colorFilter === 'blue') {
+            const isBlue =
+              ['haridwar'].includes(photo.category?.toLowerCase()) ||
+              ['water', 'river', 'sky', 'blue', 'ganga', 'ice', 'snow', 'glacier', 'lake'].some((w) => text.includes(w));
+            if (!isBlue) return false;
+          } else if (colorFilter === 'purple') {
+            const isPurple =
+              ['pics', 'videos'].includes(photo.category?.toLowerCase()) ||
+              ['purple', 'neon', 'violet', 'fuchsia', 'night', 'vibrant', 'pink'].some((w) => text.includes(w));
+            if (!isPurple) return false;
+          } else if (colorFilter === 'mono') {
+            const isMono = ['mono', 'black', 'white', 'b&w', 'shadow', 'contrast', 'dark', 'monochrome'].some((w) =>
+              text.includes(w)
+            );
+            if (!isMono) return false;
+          }
+        }
+
         // Search match
         if (searchQuery.trim()) {
           const query = searchQuery.toLowerCase().trim();
@@ -291,7 +359,7 @@ function GalleryApp() {
         }
         return 0;
       });
-  }, [photosList, activeCategory, searchQuery, sortBy, showFavoritesOnly, favorites, selectedFolderPath]);
+  }, [photosList, activeCategory, searchQuery, sortBy, showFavoritesOnly, favorites, selectedFolderPath, colorFilter]);
 
   // Sync state to URL for deep-linking
   useEffect(() => {
@@ -326,6 +394,8 @@ function GalleryApp() {
     setSearchQuery('');
     setSortBy('featured');
     setShowFavoritesOnly(false);
+    setColorFilter('All');
+    setVisibleCount(20);
   };
 
   const handleOpenLightbox = (index) => {
@@ -336,14 +406,67 @@ function GalleryApp() {
     setSelectedExifPhoto(photo);
   };
 
+  // Multi-Select Operations
+  const handleToggleSelect = (id) => {
+    setSelectedPhotoIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const handleSelectAll = () => {
+    setSelectedPhotoIds(new Set(filteredPhotos.map((p) => p.id)));
+  };
+
+  const handleClearSelect = () => {
+    setSelectedPhotoIds(new Set());
+  };
+
+  const handleDownloadSelected = async () => {
+    if (selectedPhotoIds.size === 0 || isDownloadingCollection) return;
+    setIsDownloadingCollection(true);
+    try {
+      const toDownload = photosList.filter((p) => selectedPhotoIds.has(p.id));
+      for (const photo of toDownload) {
+        await downloadMedia(photo);
+        await new Promise((r) => setTimeout(r, 350));
+      }
+      setCollectionToast(`Downloaded ${toDownload.length} items successfully`);
+      setTimeout(() => setCollectionToast(''), 3500);
+    } catch (err) {
+      console.error('Download collection error:', err);
+    } finally {
+      setIsDownloadingCollection(false);
+    }
+  };
+
+  const handleCopyCollectionLink = () => {
+    if (selectedPhotoIds.size === 0) return;
+    try {
+      const url = new URL(window.location.origin + window.location.pathname);
+      url.searchParams.set('collection', Array.from(selectedPhotoIds).join(','));
+      navigator.clipboard.writeText(url.toString());
+      setCollectionToast('Curated collection link copied to clipboard!');
+      setTimeout(() => setCollectionToast(''), 3500);
+    } catch (e) {}
+  };
+
   return (
-    <div className="min-h-screen text-zinc-900 dark:text-zinc-100 flex flex-col selection:bg-purple-500/30 selection:text-purple-300 relative">
-      {/* High-Performance Fixed Ambient Light Mesh (GPU accelerated, zero repaint on scroll) */}
-      <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden transform-gpu" aria-hidden="true">
-        <div className="absolute -top-32 -left-32 w-[550px] h-[550px] bg-purple-200/35 rounded-full blur-[100px] transform-gpu dark:opacity-0 transition-opacity duration-300" />
-        <div className="absolute top-1/3 -right-32 w-[450px] h-[450px] bg-indigo-200/30 rounded-full blur-[100px] transform-gpu dark:opacity-0 transition-opacity duration-300" />
-        <div className="absolute -bottom-32 left-1/3 w-[550px] h-[550px] bg-pink-200/20 rounded-full blur-[100px] transform-gpu dark:opacity-0 transition-opacity duration-300" />
-      </div>
+    <div
+      className={`min-h-screen text-zinc-900 dark:text-zinc-100 flex flex-col selection:bg-purple-500/30 selection:text-purple-300 relative transition-colors duration-500 ${
+        isFocusMode ? 'bg-zinc-950 text-white' : ''
+      }`}
+    >
+      {/* High-Performance Fixed Ambient Light Mesh (hidden in Focus Mode) */}
+      {!isFocusMode && (
+        <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden transform-gpu" aria-hidden="true">
+          <div className="absolute -top-32 -left-32 w-[550px] h-[550px] bg-purple-200/35 rounded-full blur-[100px] transform-gpu dark:opacity-0 transition-opacity duration-300" />
+          <div className="absolute top-1/3 -right-32 w-[450px] h-[450px] bg-indigo-200/30 rounded-full blur-[100px] transform-gpu dark:opacity-0 transition-opacity duration-300" />
+          <div className="absolute -bottom-32 left-1/3 w-[550px] h-[550px] bg-pink-200/20 rounded-full blur-[100px] transform-gpu dark:opacity-0 transition-opacity duration-300" />
+        </div>
+      )}
 
       {/* Top Navigation */}
       <Navbar
@@ -360,11 +483,11 @@ function GalleryApp() {
       />
 
       <main className="flex-1">
-        {/* Photographer Intro & Stats */}
-        <HeroSection totalPhotos={photosList.length} />
+        {/* Photographer Intro & Stats (Hidden in Cinema Focus Mode) */}
+        {!isFocusMode && <HeroSection totalPhotos={photosList.length} />}
 
         {/* Sync Notice Banner if in Static Mode */}
-        {!isLiveSync && showSyncBanner && (
+        {!isFocusMode && !isLiveSync && showSyncBanner && (
           <div className="bg-purple-50 dark:bg-purple-950/40 border-y border-purple-200/80 dark:border-purple-800/40 py-2.5 px-3 sm:px-6 transition-colors">
             <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2.5 sm:gap-3 text-[11px] sm:text-xs">
               <div className="flex items-center gap-2.5 text-purple-950 dark:text-purple-200 text-center sm:text-left">
@@ -395,7 +518,7 @@ function GalleryApp() {
         )}
 
         {/* ImageKit Live Sync Notification Banner */}
-        {isLiveSync && showSyncBanner && (
+        {!isFocusMode && isLiveSync && showSyncBanner && (
           <div className="bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-800 text-white text-[11px] sm:text-xs py-2 px-3 sm:px-4 shadow-sm">
             <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-4">
               <div className="flex items-center gap-2 min-w-0">
@@ -417,7 +540,7 @@ function GalleryApp() {
           </div>
         )}
 
-        {/* Filter, Search, Layout & Sort Bar */}
+        {/* Filter, Search, Layout, Color Palette & Sort Bar */}
         <FilterBar
           categories={availableCategories}
           activeCategory={activeCategory}
@@ -446,6 +569,16 @@ function GalleryApp() {
           showFavoritesOnly={showFavoritesOnly}
           onToggleFavoritesOnly={setShowFavoritesOnly}
           favoritesCount={favorites?.length || 0}
+          colorFilter={colorFilter}
+          onColorFilterChange={setColorFilter}
+          isSelectMode={isSelectMode}
+          onToggleSelectMode={(mode) => {
+            setIsSelectMode(mode);
+            if (!mode) setSelectedPhotoIds(new Set());
+          }}
+          selectedCount={selectedPhotoIds.size}
+          isFocusMode={isFocusMode}
+          onToggleFocusMode={setIsFocusMode}
         />
 
         {/* If in Folders view with no specific folder selected: show Folders Grid */}
@@ -507,6 +640,9 @@ function GalleryApp() {
             ) : (
               <GalleryGrid
                 photos={filteredPhotos}
+                visibleCount={visibleCount}
+                onLoadMore={() => setVisibleCount((prev) => prev + 16)}
+                onLoadAll={() => setVisibleCount(filteredPhotos.length)}
                 layoutMode={layoutMode}
                 onSelectPhoto={handleOpenLightbox}
                 onOpenExif={handleOpenExif}
@@ -514,39 +650,125 @@ function GalleryApp() {
                 onShare={(photo) => setSharePhoto(photo)}
                 onEdit={(photo) => setEditingPhoto(photo)}
                 onDelete={handleDeletePhoto}
+                isSelectMode={isSelectMode}
+                selectedPhotoIds={selectedPhotoIds}
+                onToggleSelect={handleToggleSelect}
               />
             )}
           </>
         )}
       </main>
 
-      {/* Footer */}
-      <Footer />
+      {/* Floating Multi-Select Action Dock */}
+      {isSelectMode && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 max-w-[calc(100vw-2rem)] w-auto bg-zinc-950/95 text-white rounded-2xl p-2 sm:px-4 shadow-2xl border border-white/15 backdrop-blur-xl flex items-center gap-2 sm:gap-3 animate-fade-in">
+          <span className="px-2.5 py-1 rounded-xl bg-purple-600 text-xs font-mono font-bold whitespace-nowrap">
+            {selectedPhotoIds.size} Selected
+          </span>
 
-      {/* Fullscreen Lightbox Modal */}
+          <button
+            onClick={handleSelectAll}
+            className="px-2.5 py-1 rounded-xl text-xs hover:bg-white/10 text-zinc-300 hover:text-white transition-colors cursor-pointer"
+          >
+            Select All
+          </button>
+
+          {selectedPhotoIds.size > 0 && (
+            <button
+              onClick={handleClearSelect}
+              className="px-2 py-1 rounded-xl text-xs hover:bg-white/10 text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer"
+            >
+              Clear
+            </button>
+          )}
+
+          <div className="h-4 w-px bg-white/20" />
+
+          {/* Copy Share Link */}
+          <button
+            onClick={handleCopyCollectionLink}
+            disabled={selectedPhotoIds.size === 0}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/20 disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
+            title="Share this curated collection"
+          >
+            <Share2 className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Share Link</span>
+          </button>
+
+          {/* Download Selected */}
+          <button
+            onClick={handleDownloadSelected}
+            disabled={selectedPhotoIds.size === 0 || isDownloadingCollection}
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-md shadow-purple-600/30 cursor-pointer"
+          >
+            {isDownloadingCollection ? (
+              <Loader2 className="w-3.5 h-3.5 animate-spin" />
+            ) : (
+              <Download className="w-3.5 h-3.5" />
+            )}
+            <span>Download ({selectedPhotoIds.size})</span>
+          </button>
+
+          {/* Close Select Mode */}
+          <button
+            onClick={() => {
+              setIsSelectMode(false);
+              setSelectedPhotoIds(new Set());
+            }}
+            className="p-1 rounded-xl hover:bg-white/10 text-zinc-400 hover:text-white transition-colors cursor-pointer"
+            title="Exit select mode"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
+
+      {/* Cinema Focus Mode Exit Pill */}
+      {isFocusMode && (
+        <div className="fixed bottom-6 right-6 z-40 animate-fade-in">
+          <button
+            onClick={() => setIsFocusMode(false)}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-zinc-950/90 text-amber-400 border border-amber-500/40 shadow-2xl backdrop-blur-xl hover:bg-zinc-900 transition-all text-xs font-semibold cursor-pointer active:scale-95"
+          >
+            <EyeOff className="w-3.5 h-3.5" />
+            <span>Exit Cinema Mode</span>
+          </button>
+        </div>
+      )}
+
+      {/* Toast Notification */}
+      {collectionToast && (
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-2xl bg-zinc-950 text-white border border-purple-500/50 shadow-2xl flex items-center gap-2 text-xs font-semibold animate-fade-in">
+          <Check className="w-4 h-4 text-emerald-400" />
+          <span>{collectionToast}</span>
+        </div>
+      )}
+
+      {/* Footer */}
+      {!isFocusMode && <Footer />}
+
+      {/* Lightbox Modal */}
       <LightboxModal
         photos={filteredPhotos}
         currentIndex={lightboxIndex}
         isOpen={lightboxIndex >= 0}
         onClose={() => setLightboxIndex(-1)}
         onIndexChange={(idx) => setLightboxIndex(idx)}
-        onOpenExif={() => {
-          if (lightboxIndex >= 0 && filteredPhotos[lightboxIndex]) {
-            setSelectedExifPhoto(filteredPhotos[lightboxIndex]);
-          }
+        onOpenExif={(photo) => {
+          setSelectedExifPhoto(photo);
         }}
       />
 
-      {/* Camera & Shot Details Drawer */}
+      {/* EXIF Metadata Drawer */}
       <ExifDrawer
         photo={selectedExifPhoto}
         isOpen={!!selectedExifPhoto}
         onClose={() => setSelectedExifPhoto(null)}
-        onOpenLightbox={() => {
-          if (selectedExifPhoto) {
-            const idx = filteredPhotos.findIndex((p) => p.id === selectedExifPhoto.id);
+        onOpenLightbox={(photo) => {
+          const idx = filteredPhotos.findIndex((p) => p.id === photo.id);
+          if (idx >= 0) {
             setSelectedExifPhoto(null);
-            setLightboxIndex(idx >= 0 ? idx : 0);
+            setLightboxIndex(idx);
           }
         }}
         onShare={(photo) => setSharePhoto(photo)}

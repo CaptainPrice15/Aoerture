@@ -8,9 +8,22 @@ import {
   Columns3,
   LayoutGrid,
   Rows3,
-  Heart
+  Heart,
+  Palette,
+  CheckSquare,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 import { CATEGORIES } from '../data/photos';
+
+export const COLOR_PALETTES = [
+  { id: 'All', name: 'All Tones', dotClass: 'bg-gradient-to-tr from-purple-500 via-amber-400 to-emerald-400' },
+  { id: 'warm', name: 'Warm / Golden', dotClass: 'bg-amber-500' },
+  { id: 'emerald', name: 'Emerald / Green', dotClass: 'bg-emerald-500' },
+  { id: 'blue', name: 'Ocean / Blue', dotClass: 'bg-sky-500' },
+  { id: 'purple', name: 'Vibrant / Purple', dotClass: 'bg-purple-500' },
+  { id: 'mono', name: 'Monochrome', dotClass: 'bg-zinc-800 dark:bg-zinc-200' }
+];
 
 export const FilterBar = ({
   categories = CATEGORIES,
@@ -29,15 +42,27 @@ export const FilterBar = ({
   onLayoutChange,
   showFavoritesOnly = false,
   onToggleFavoritesOnly,
-  favoritesCount = 0
+  favoritesCount = 0,
+  colorFilter = 'All',
+  onColorFilterChange,
+  isSelectMode = false,
+  onToggleSelectMode,
+  selectedCount = 0,
+  isFocusMode = false,
+  onToggleFocusMode
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isPaletteOpen, setIsPaletteOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const paletteRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setIsDropdownOpen(false);
+      }
+      if (paletteRef.current && !paletteRef.current.contains(e.target)) {
+        setIsPaletteOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -46,6 +71,7 @@ export const FilterBar = ({
 
   const isFoldersActive = activeCategory === 'Folders';
   const activeFolderObj = activeFolder ? folders.find((f) => f.path === activeFolder) : null;
+  const activeColorObj = COLOR_PALETTES.find((c) => c.id === colorFilter) || COLOR_PALETTES[0];
 
   return (
     <div className="sticky top-16 z-30 w-full backdrop-blur-xl bg-white/90 dark:bg-zinc-950/90 border-b border-slate-200/80 dark:border-zinc-800/40 py-2 sm:py-3 shadow-[0_2px_12px_rgba(0,0,0,0.02)] transition-colors duration-300">
@@ -212,13 +238,13 @@ export const FilterBar = ({
           </div>
         </div>
 
-        {/* Controls Row: Layout Switcher + Search + Sort (Single non-wrapping row on mobile) */}
+        {/* Controls Row: Layout Switcher + Color Palette + Multi-Select + Search + Sort */}
         <div className="flex items-center gap-1.5 sm:gap-2 w-full md:w-auto">
           {/* Gallery Layout Switcher */}
           <div className="flex items-center p-1 rounded-xl bg-slate-100 dark:bg-zinc-900 border border-slate-200/90 dark:border-zinc-800 shadow-inner shrink-0">
             <button
               onClick={() => onLayoutChange && onLayoutChange('masonry')}
-              title="Masonry Layout (Pinterest style)"
+              title="Masonry Layout"
               className={`p-1.5 rounded-lg transition-all cursor-pointer ${
                 layoutMode === 'masonry'
                   ? 'bg-white dark:bg-zinc-800 text-purple-600 dark:text-purple-400 shadow-xs font-semibold'
@@ -251,8 +277,83 @@ export const FilterBar = ({
             </button>
           </div>
 
+          {/* Chromatic Color Palette Filter Trigger */}
+          <div className="relative shrink-0" ref={paletteRef}>
+            <button
+              onClick={() => setIsPaletteOpen((prev) => !prev)}
+              title={`Filter by color: ${activeColorObj.name}`}
+              className={`p-1.5 sm:px-2.5 sm:py-1.5 rounded-xl border flex items-center gap-1.5 text-xs transition-all cursor-pointer ${
+                colorFilter !== 'All'
+                  ? 'bg-purple-50 dark:bg-purple-950/50 text-purple-700 dark:text-purple-300 border-purple-300 dark:border-purple-800 shadow-xs font-semibold'
+                  : 'bg-white dark:bg-zinc-900 text-slate-600 dark:text-zinc-400 border-slate-200/90 dark:border-zinc-800 shadow-xs hover:text-zinc-900'
+              }`}
+            >
+              <Palette className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
+              <span className={`w-2.5 h-2.5 rounded-full ${activeColorObj.dotClass} shrink-0 ring-1 ring-black/10`} />
+              <span className="hidden lg:inline text-[11px]">{activeColorObj.name}</span>
+            </button>
+
+            {/* Color Swatches Popover */}
+            {isPaletteOpen && (
+              <div className="absolute right-0 sm:left-0 mt-2 p-2 w-48 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 shadow-2xl z-50 animate-fade-in flex flex-col gap-1">
+                <span className="px-2 py-1 text-[10px] font-bold text-slate-400 dark:text-zinc-500 uppercase tracking-wider">
+                  Chromatic Tone
+                </span>
+                {COLOR_PALETTES.map((pal) => (
+                  <button
+                    key={pal.id}
+                    onClick={() => {
+                      if (onColorFilterChange) onColorFilterChange(pal.id);
+                      setIsPaletteOpen(false);
+                    }}
+                    className={`flex items-center justify-between px-2.5 py-1.5 rounded-xl text-xs transition-colors cursor-pointer ${
+                      colorFilter === pal.id
+                        ? 'bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 font-semibold'
+                        : 'text-slate-700 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800'
+                    }`}
+                  >
+                    <span className="flex items-center gap-2">
+                      <span className={`w-3 h-3 rounded-full ${pal.dotClass} shadow-xs ring-1 ring-black/10`} />
+                      <span>{pal.name}</span>
+                    </span>
+                    {colorFilter === pal.id && <span className="text-[10px] font-bold text-purple-600">✓</span>}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Multi-Select Mode Toggle */}
+          <button
+            onClick={() => onToggleSelectMode && onToggleSelectMode(!isSelectMode)}
+            title={isSelectMode ? 'Exit select mode' : 'Select multiple photos to download or share'}
+            className={`p-1.5 sm:px-2.5 sm:py-1.5 rounded-xl border flex items-center gap-1.5 text-xs transition-all shrink-0 cursor-pointer ${
+              isSelectMode
+                ? 'bg-purple-600 text-white border-purple-500 shadow-md shadow-purple-600/25 font-semibold'
+                : 'bg-white dark:bg-zinc-900 text-slate-600 dark:text-zinc-400 border-slate-200/90 dark:border-zinc-800 shadow-xs hover:text-zinc-900'
+            }`}
+          >
+            <CheckSquare className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">
+              {isSelectMode ? `Selected (${selectedCount})` : 'Select'}
+            </span>
+          </button>
+
+          {/* Focus / Cinema Mode Toggle */}
+          <button
+            onClick={() => onToggleFocusMode && onToggleFocusMode(!isFocusMode)}
+            title={isFocusMode ? 'Exit Cinema Focus mode' : 'Enter Cinema Focus mode'}
+            className={`p-1.5 rounded-xl border flex items-center justify-center transition-all shrink-0 cursor-pointer ${
+              isFocusMode
+                ? 'bg-amber-500 text-zinc-950 border-amber-400 shadow-sm font-semibold'
+                : 'bg-white dark:bg-zinc-900 text-slate-600 dark:text-zinc-400 border-slate-200/90 dark:border-zinc-800 shadow-xs hover:text-zinc-900'
+            }`}
+          >
+            {isFocusMode ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+          </button>
+
           {/* Search Input (Fluid min-w-0 for mobile screens) */}
-          <div className="relative flex-1 min-w-0 sm:w-48 md:w-56">
+          <div className="relative flex-1 min-w-0 sm:w-44 md:w-52">
             <Search className="w-3.5 h-3.5 absolute left-2.5 sm:left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               type="text"

@@ -153,28 +153,49 @@ export const ExifDrawer = ({
             </div>
 
             {/* Location & Date */}
-            <div className="grid grid-cols-2 gap-3 p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800/80 text-xs">
-              <div className="flex items-center gap-2 text-zinc-700 dark:text-zinc-300 min-w-0">
-                <MapPin className="w-4 h-4 text-purple-500 shrink-0" />
-                {mapsUrl ? (
-                  <a
-                    href={mapsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="truncate hover:text-purple-600 dark:hover:text-purple-400 hover:underline flex items-center gap-1"
-                    title="View on Google Maps"
-                  >
-                    <span className="truncate">{photo.location}</span>
-                    <ExternalLink className="w-3 h-3 shrink-0 opacity-70" />
-                  </a>
-                ) : (
-                  <span className="truncate">Undisclosed</span>
-                )}
+            <div className="space-y-2.5">
+              <div className="grid grid-cols-2 gap-3 p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800/80 text-xs">
+                <div className="flex items-center gap-2 text-zinc-700 dark:text-zinc-300 min-w-0">
+                  <MapPin className="w-4 h-4 text-purple-500 shrink-0" />
+                  <span className="truncate font-medium">{photo.location || 'Undisclosed'}</span>
+                </div>
+                <div className="flex items-center gap-2 text-zinc-700 dark:text-zinc-300">
+                  <Calendar className="w-4 h-4 text-purple-500 shrink-0" />
+                  <span>{photo.date || 'Unknown'}</span>
+                </div>
               </div>
-              <div className="flex items-center gap-2 text-zinc-700 dark:text-zinc-300">
-                <Calendar className="w-4 h-4 text-purple-500 shrink-0" />
-                <span>{photo.date || 'Unknown'}</span>
-              </div>
+
+              {/* Interactive Visual Map Preview Card */}
+              {mapsUrl && (
+                <a
+                  href={mapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative block rounded-2xl overflow-hidden border border-slate-200/90 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/60 p-3 hover:border-purple-400 dark:hover:border-purple-600 transition-all shadow-xs"
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-1.5 text-xs font-semibold text-zinc-900 dark:text-zinc-100">
+                      <MapPin className="w-3.5 h-3.5 text-rose-500" />
+                      <span>GPS Geographic Location</span>
+                    </div>
+                    <span className="text-[11px] text-purple-600 dark:text-purple-400 font-medium flex items-center gap-1 group-hover:underline">
+                      Open in Maps <ExternalLink className="w-3 h-3" />
+                    </span>
+                  </div>
+                  <div className="h-20 w-full rounded-xl bg-gradient-to-tr from-slate-200 via-purple-100/60 to-indigo-100/80 dark:from-zinc-900 dark:via-purple-950/40 dark:to-zinc-850 flex items-center justify-center relative overflow-hidden">
+                    <div className="absolute inset-0 opacity-25 bg-[radial-gradient(#9333ea_1px,transparent_1px)] [background-size:10px_10px]" />
+                    <div className="relative flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md shadow-sm border border-slate-200/80 dark:border-zinc-800">
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75" />
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500" />
+                      </span>
+                      <span className="text-xs font-bold text-zinc-900 dark:text-zinc-100 truncate max-w-[200px]">
+                        {photo.location}
+                      </span>
+                    </div>
+                  </div>
+                </a>
+              )}
             </div>
 
             {/* Technical EXIF Grid */}

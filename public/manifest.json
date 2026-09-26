@@ -1,0 +1,18 @@
+{
+  "name": "Aperture & Light — Photography Portfolio",
+  "short_name": "Aperture",
+  "description": "Visual photography collection streamed directly from ImageKit cloud media storage.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#09090b",
+  "theme_color": "#9333ea",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
