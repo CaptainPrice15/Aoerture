@@ -48,45 +48,49 @@ export const FilterBar = ({
   const activeFolderObj = activeFolder ? folders.find((f) => f.path === activeFolder) : null;
 
   return (
-    <div className="sticky top-16 z-30 w-full backdrop-blur-xl bg-white/90 dark:bg-zinc-950/90 border-b border-slate-200/80 dark:border-zinc-800/40 py-2.5 sm:py-3.5 shadow-[0_2px_12px_rgba(0,0,0,0.02)] transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center justify-between gap-2.5 sm:gap-3">
+    <div className="sticky top-16 z-30 w-full backdrop-blur-xl bg-white/90 dark:bg-zinc-950/90 border-b border-slate-200/80 dark:border-zinc-800/40 py-2 sm:py-3 shadow-[0_2px_12px_rgba(0,0,0,0.02)] transition-colors duration-300">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center justify-between gap-2 sm:gap-3">
         {/* Category Pills & Folders Dropdown */}
-        <div className="flex items-center gap-2 overflow-visible min-w-0">
-          {/* Scrollable Category Pills */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 no-scrollbar touch-scroll">
-            {categories.map((cat) => {
-              const isActive = !showFavoritesOnly && !isFoldersActive && activeCategory === cat;
-              const count = categoryCounts[cat] ?? 0;
+        <div className="flex items-center gap-1.5 sm:gap-2 overflow-visible min-w-0">
+          {/* Scrollable Category Pills with edge-fade indicator */}
+          <div className="relative flex-1 min-w-0">
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 no-scrollbar touch-scroll pr-5 sm:pr-0">
+              {categories.map((cat) => {
+                const isActive = !showFavoritesOnly && !isFoldersActive && activeCategory === cat;
+                const count = categoryCounts[cat] ?? 0;
 
-              return (
-                <button
-                  key={cat}
-                  onClick={() => {
-                    if (showFavoritesOnly && onToggleFavoritesOnly) {
-                      onToggleFavoritesOnly(false);
-                    }
-                    onSelectCategory(cat);
-                    setIsDropdownOpen(false);
-                  }}
-                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap active:scale-95 transition-all duration-200 touch-manipulation cursor-pointer ${
-                    isActive
-                      ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-600/30 font-semibold border border-purple-500'
-                      : 'bg-white/90 dark:bg-zinc-900/80 text-slate-700 dark:text-zinc-400 hover:text-purple-700 dark:hover:text-white hover:bg-purple-50/60 dark:hover:bg-zinc-800 border border-slate-200/90 dark:border-zinc-800/80 shadow-xs hover:border-purple-300'
-                  }`}
-                >
-                  <span>{cat}</span>
-                  <span
-                    className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
+                return (
+                  <button
+                    key={cat}
+                    onClick={() => {
+                      if (showFavoritesOnly && onToggleFavoritesOnly) {
+                        onToggleFavoritesOnly(false);
+                      }
+                      onSelectCategory(cat);
+                      setIsDropdownOpen(false);
+                    }}
+                    className={`flex items-center gap-1 sm:gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap active:scale-95 transition-all duration-200 touch-manipulation cursor-pointer ${
                       isActive
-                        ? 'bg-purple-700/80 text-white'
-                        : 'bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400'
+                        ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-600/30 font-semibold border border-purple-500'
+                        : 'bg-white/90 dark:bg-zinc-900/80 text-slate-700 dark:text-zinc-400 hover:text-purple-700 dark:hover:text-white hover:bg-purple-50/60 dark:hover:bg-zinc-800 border border-slate-200/90 dark:border-zinc-800/80 shadow-xs hover:border-purple-300'
                     }`}
                   >
-                    {count}
-                  </span>
-                </button>
-              );
-            })}
+                    <span>{cat}</span>
+                    <span
+                      className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
+                        isActive
+                          ? 'bg-purple-700/80 text-white'
+                          : 'bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400'
+                      }`}
+                    >
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+            {/* Edge fade hint on mobile */}
+            <div className="pointer-events-none absolute right-0 top-0 bottom-1 md:bottom-0 w-5 bg-gradient-to-l from-white dark:from-zinc-950 to-transparent sm:hidden" />
           </div>
 
           {/* Divider */}
@@ -96,7 +100,7 @@ export const FilterBar = ({
           <button
             onClick={() => onToggleFavoritesOnly && onToggleFavoritesOnly(!showFavoritesOnly)}
             title={showFavoritesOnly ? 'Show all photos' : 'Show favorited photos only'}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap active:scale-95 transition-all duration-200 shrink-0 cursor-pointer ${
+            className={`flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap active:scale-95 transition-all duration-200 shrink-0 cursor-pointer ${
               showFavoritesOnly
                 ? 'bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-md shadow-rose-500/25 font-semibold border border-rose-400'
                 : 'bg-white dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 hover:bg-rose-50/80 dark:hover:bg-rose-900/40 border border-rose-200 dark:border-rose-800/40 shadow-xs'
@@ -129,14 +133,14 @@ export const FilterBar = ({
                     onSelectFolder(null);
                   }
                 }}
-                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap active:scale-95 transition-all duration-200 touch-manipulation cursor-pointer ${
+                className={`flex items-center gap-1 sm:gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap active:scale-95 transition-all duration-200 touch-manipulation cursor-pointer ${
                   !showFavoritesOnly && isFoldersActive
                     ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-600/30 font-semibold border border-purple-500'
                     : 'bg-white/90 dark:bg-zinc-900/80 text-slate-700 dark:text-zinc-400 hover:text-purple-700 dark:hover:text-white hover:bg-purple-50/60 dark:hover:bg-zinc-800 border border-slate-200/90 dark:border-zinc-800/80 shadow-xs hover:border-purple-300'
                 }`}
               >
                 <Folder className="w-3.5 h-3.5 text-inherit" />
-                <span>{activeFolderObj ? activeFolderObj.name : 'Folders'}</span>
+                <span className="max-w-[70px] sm:max-w-none truncate">{activeFolderObj ? activeFolderObj.name : 'Folders'}</span>
                 <span
                   className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
                     !showFavoritesOnly && isFoldersActive
@@ -208,16 +212,16 @@ export const FilterBar = ({
           </div>
         </div>
 
-        {/* Controls Row: Layout Switcher + Search + Sort */}
-        <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
+        {/* Controls Row: Layout Switcher + Search + Sort (Single non-wrapping row on mobile) */}
+        <div className="flex items-center gap-1.5 sm:gap-2 w-full md:w-auto">
           {/* Gallery Layout Switcher */}
-          <div className="flex items-center p-1 rounded-2xl bg-slate-100 dark:bg-zinc-900 border border-slate-200/90 dark:border-zinc-800 shadow-inner shrink-0">
+          <div className="flex items-center p-1 rounded-xl bg-slate-100 dark:bg-zinc-900 border border-slate-200/90 dark:border-zinc-800 shadow-inner shrink-0">
             <button
               onClick={() => onLayoutChange && onLayoutChange('masonry')}
               title="Masonry Layout (Pinterest style)"
-              className={`p-1.5 rounded-xl transition-all cursor-pointer ${
+              className={`p-1.5 rounded-lg transition-all cursor-pointer ${
                 layoutMode === 'masonry'
-                  ? 'bg-white dark:bg-zinc-800 text-purple-600 dark:text-purple-400 shadow-sm font-semibold'
+                  ? 'bg-white dark:bg-zinc-800 text-purple-600 dark:text-purple-400 shadow-xs font-semibold'
                   : 'text-slate-500 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white'
               }`}
             >
@@ -226,9 +230,9 @@ export const FilterBar = ({
             <button
               onClick={() => onLayoutChange && onLayoutChange('grid')}
               title="Uniform Grid Layout"
-              className={`p-1.5 rounded-xl transition-all cursor-pointer ${
+              className={`p-1.5 rounded-lg transition-all cursor-pointer ${
                 layoutMode === 'grid'
-                  ? 'bg-white dark:bg-zinc-800 text-purple-600 dark:text-purple-400 shadow-sm font-semibold'
+                  ? 'bg-white dark:bg-zinc-800 text-purple-600 dark:text-purple-400 shadow-xs font-semibold'
                   : 'text-slate-500 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white'
               }`}
             >
@@ -237,9 +241,9 @@ export const FilterBar = ({
             <button
               onClick={() => onLayoutChange && onLayoutChange('editorial')}
               title="Editorial Storytelling Layout"
-              className={`p-1.5 rounded-xl transition-all cursor-pointer ${
+              className={`p-1.5 rounded-lg transition-all cursor-pointer ${
                 layoutMode === 'editorial'
-                  ? 'bg-white dark:bg-zinc-800 text-purple-600 dark:text-purple-400 shadow-sm font-semibold'
+                  ? 'bg-white dark:bg-zinc-800 text-purple-600 dark:text-purple-400 shadow-xs font-semibold'
                   : 'text-slate-500 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white'
               }`}
             >
@@ -247,20 +251,21 @@ export const FilterBar = ({
             </button>
           </div>
 
-          {/* Search Input */}
-          <div className="relative flex-1 sm:w-48 md:w-56">
-            <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+          {/* Search Input (Fluid min-w-0 for mobile screens) */}
+          <div className="relative flex-1 min-w-0 sm:w-48 md:w-56">
+            <Search className="w-3.5 h-3.5 absolute left-2.5 sm:left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
-              placeholder="Search gear, place, tag..."
-              className="w-full pl-8 pr-8 py-1.5 text-xs rounded-xl bg-white dark:bg-zinc-900 border border-slate-200/90 dark:border-zinc-800 text-slate-900 dark:text-zinc-100 placeholder-slate-400 shadow-xs focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all"
+              placeholder="Search..."
+              className="w-full pl-7 sm:pl-8 pr-7 sm:pr-8 py-1.5 text-xs rounded-xl bg-white dark:bg-zinc-900 border border-slate-200/90 dark:border-zinc-800 text-slate-900 dark:text-zinc-100 placeholder-slate-400 shadow-xs focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all"
             />
             {searchQuery && (
               <button
                 onClick={() => onSearchChange('')}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200 p-0.5 cursor-pointer"
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200 p-0.5 cursor-pointer"
+                title="Clear search"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -272,14 +277,14 @@ export const FilterBar = ({
             <select
               value={sortBy}
               onChange={(e) => onSortChange(e.target.value)}
-              className="appearance-none pl-3 pr-7 py-1.5 text-xs rounded-xl bg-white dark:bg-zinc-900 border border-slate-200/90 dark:border-zinc-800 text-slate-800 dark:text-zinc-200 shadow-xs focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 cursor-pointer transition-all font-medium"
+              className="appearance-none pl-2.5 sm:pl-3 pr-6 sm:pr-7 py-1.5 text-xs rounded-xl bg-white dark:bg-zinc-900 border border-slate-200/90 dark:border-zinc-800 text-slate-800 dark:text-zinc-200 shadow-xs focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 cursor-pointer transition-all font-medium"
             >
               <option value="featured">✨ Featured</option>
               <option value="newest">📅 Newest</option>
               <option value="oldest">⏳ Oldest</option>
               <option value="title">🔤 Title</option>
             </select>
-            <div className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-[10px]">
+            <div className="pointer-events-none absolute right-2 sm:right-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-[10px]">
               ▼
             </div>
           </div>
