@@ -174,32 +174,6 @@ function GalleryApp() {
     } catch (e) {}
   }, []);
 
-  // 1b. Reliably resolve deep-linked photo across categories, filters, and async ImageKit sync
-  useEffect(() => {
-    if (!pendingPhotoId || photosList.length === 0) return;
-
-    // Check if photo is in current filteredPhotos
-    const targetIdx = filteredPhotos.findIndex((p) => p.id === pendingPhotoId);
-    if (targetIdx >= 0) {
-      setLightboxIndex(targetIdx);
-      setPendingPhotoId(null);
-      return;
-    }
-
-    // If not in filteredPhotos, check if it exists in photosList
-    const inTotal = photosList.find((p) => p.id === pendingPhotoId);
-    if (inTotal) {
-      // Clear restrictive filters so photo becomes visible in filtered list
-      setActiveCategory('All');
-      setSearchQuery('');
-      setShowFavoritesOnly(false);
-      setColorFilter('All');
-      setSelectedFolderPath(null);
-    } else {
-      setPendingPhotoId(null);
-    }
-  }, [pendingPhotoId, filteredPhotos, photosList]);
-
   // Reset progressive visibleCount when any filter changes
   useEffect(() => {
     setVisibleCount(20);
@@ -408,6 +382,32 @@ function GalleryApp() {
         return 0;
       });
   }, [photosList, activeCategory, searchQuery, sortBy, showFavoritesOnly, favorites, selectedFolderPath, colorFilter]);
+
+  // 1b. Reliably resolve deep-linked photo across categories, filters, and async ImageKit sync
+  useEffect(() => {
+    if (!pendingPhotoId || photosList.length === 0) return;
+
+    // Check if photo is in current filteredPhotos
+    const targetIdx = filteredPhotos.findIndex((p) => p.id === pendingPhotoId);
+    if (targetIdx >= 0) {
+      setLightboxIndex(targetIdx);
+      setPendingPhotoId(null);
+      return;
+    }
+
+    // If not in filteredPhotos, check if it exists in photosList
+    const inTotal = photosList.find((p) => p.id === pendingPhotoId);
+    if (inTotal) {
+      // Clear restrictive filters so photo becomes visible in filtered list
+      setActiveCategory('All');
+      setSearchQuery('');
+      setShowFavoritesOnly(false);
+      setColorFilter('All');
+      setSelectedFolderPath(null);
+    } else {
+      setPendingPhotoId(null);
+    }
+  }, [pendingPhotoId, filteredPhotos, photosList]);
 
   // Sync state to URL for deep-linking
   useEffect(() => {
