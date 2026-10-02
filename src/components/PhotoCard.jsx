@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Maximize2,
   MapPin,
@@ -13,7 +13,7 @@ import {
   Edit3,
   Trash2
 } from 'lucide-react';
-import { getThumbnailUrl, getLqipUrl, isVideoSource, downloadMedia } from '../utils/imagekit';
+import { getThumbnailUrl, getThumbnailSrcSet, getLqipUrl, isVideoSource, downloadMedia } from '../utils/imagekit';
 import { useAuth } from '../context/AuthContext';
 
 // Computes dynamic ambient glow color gradient based on category & tags
@@ -52,6 +52,15 @@ export const PhotoCard = ({
   const [isDownloaded, setIsDownloaded] = useState(false);
   const [showHeartPop, setShowHeartPop] = useState(false);
   const lastTapRef = useRef(0);
+  const tapTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (tapTimeoutRef.current) {
+        clearTimeout(tapTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const isVideo = photo.mediaType === 'video' || isVideoSource(photo.src);
   const thumbUrl = getThumbnailUrl(photo);
@@ -66,16 +75,27 @@ export const PhotoCard = ({
     }
 
     const now = Date.now();
-    if (now - lastTapRef.current < 320) {
-      // Double tap/click detected: toggle favorite and trigger heart pop animation
+    if (now - lastTapRef.current < 280) {
+      // Double tap detected: cancel single-tap timer, toggle favorite and pop heart
+      if (tapTimeoutRef.current) {
+        clearTimeout(tapTimeoutRef.current);
+        tapTimeoutRef.current = null;
+      }
+      lastTapRef.current = 0;
       if (toggleFavorite) toggleFavorite(photo.id);
       setShowHeartPop(true);
       setTimeout(() => setShowHeartPop(false), 800);
-      lastTapRef.current = 0;
       return;
     }
+
     lastTapRef.current = now;
-    if (onClick) onClick();
+    if (tapTimeoutRef.current) {
+      clearTimeout(tapTimeoutRef.current);
+    }
+    tapTimeoutRef.current = setTimeout(() => {
+      tapTimeoutRef.current = null;
+      if (onClick) onClick();
+    }, 280);
   };
 
   const handleDownload = async (e) => {
@@ -175,8 +195,11 @@ export const PhotoCard = ({
             )}
             <img
               src={thumbUrl}
+              srcSet={getThumbnailSrcSet(photo)}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 75vw, 60vw"
               alt={photo.title}
               loading="lazy"
+              decoding="async"
               onLoad={() => setIsLoaded(true)}
               className={`protected-media w-full h-full object-cover transition-opacity duration-300 ${
                 isLoaded ? 'opacity-100' : 'opacity-0'
@@ -347,8 +370,11 @@ export const PhotoCard = ({
           {/* 2. Optimized Thumbnail */}
           <img
             src={thumbUrl}
+            srcSet={getThumbnailSrcSet(photo)}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
             alt={photo.title}
             loading="lazy"
+            decoding="async"
             draggable="false"
             onLoad={() => setIsLoaded(true)}
             className={`protected-media w-full h-full object-cover transition-all duration-300 group-hover:scale-105 select-none pointer-events-none ${

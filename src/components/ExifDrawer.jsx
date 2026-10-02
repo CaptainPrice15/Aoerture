@@ -41,7 +41,20 @@ export const ExifDrawer = ({
   const isVideo = photo.mediaType === 'video' || isVideoSource(photo.src);
   const favorited = isFavorite ? isFavorite(photo.id) : false;
 
-  const handleShareClick = () => {
+  const handleShareClick = async () => {
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      try {
+        await navigator.share({
+          title: photo.title,
+          text: `Check out "${photo.title}" on Aperture Photography!`,
+          url: `${window.location.origin}${window.location.pathname}?photo=${encodeURIComponent(photo.id)}`
+        });
+        return;
+      } catch (e) {
+        // Fall back to modal if user didn't cancel
+        if (e.name === 'AbortError') return;
+      }
+    }
     if (onShare) {
       onShare(photo);
     } else {
@@ -83,8 +96,11 @@ export const ExifDrawer = ({
         onClick={onClose}
       />
 
-      <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
+      <div className="fixed inset-y-0 right-0 max-w-full flex pl-0 sm:pl-10">
         <div className="w-screen max-w-md bg-white dark:bg-zinc-950 border-l border-zinc-200 dark:border-zinc-800 shadow-2xl flex flex-col z-10 transition-colors duration-300">
+          {/* Mobile Drag Indicator Handle */}
+          <div className="w-10 h-1 bg-zinc-300 dark:bg-zinc-700 rounded-full mx-auto mt-2 sm:hidden shrink-0" />
+
           {/* Header */}
           <div className="p-4 sm:p-6 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
             <div className="flex items-center gap-2.5">
@@ -106,7 +122,8 @@ export const ExifDrawer = ({
               </button>
               <button
                 onClick={onClose}
-                className="p-2 rounded-xl text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors"
+                className="p-2 rounded-xl text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors cursor-pointer"
+                aria-label="Close details"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -114,7 +131,7 @@ export const ExifDrawer = ({
           </div>
 
           {/* Drawer Body */}
-          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
+          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 touch-scroll">
             {/* Visual Thumbnail */}
             <div className="relative aspect-[3/2] rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 group shadow-inner">
               <img
@@ -123,8 +140,8 @@ export const ExifDrawer = ({
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <button
-                onClick={onOpenLightbox}
-                className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-xs font-medium text-white gap-2 backdrop-blur-xs cursor-pointer"
+                onClick={() => onOpenLightbox && onOpenLightbox(photo)}
+                className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 sm:opacity-0 active:opacity-100 transition-opacity flex items-center justify-center text-xs font-medium text-white gap-2 backdrop-blur-xs cursor-pointer"
               >
                 <span>{isVideo ? 'Click to Play Video' : 'Click for Fullscreen'}</span>
               </button>
@@ -327,9 +344,9 @@ export const ExifDrawer = ({
           </div>
 
           {/* Footer Actions */}
-          <div className="p-4 sm:p-6 border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 flex flex-wrap sm:flex-nowrap gap-2.5 sm:gap-3 shrink-0">
+          <div className="p-4 sm:p-6 border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 flex flex-wrap sm:flex-nowrap gap-2.5 sm:gap-3 shrink-0 pb-safe">
             <button
-              onClick={onOpenLightbox}
+              onClick={() => onOpenLightbox && onOpenLightbox(photo)}
               className="flex-1 min-w-[140px] py-3 sm:py-2.5 px-3 sm:px-4 rounded-xl text-xs font-semibold bg-purple-600 hover:bg-purple-500 active:scale-[0.98] text-white shadow-lg shadow-purple-600/30 transition-all text-center cursor-pointer"
             >
               {isVideo ? 'Play Fullscreen' : 'Open Fullscreen'}

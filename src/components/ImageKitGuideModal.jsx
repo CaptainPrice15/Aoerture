@@ -23,7 +23,7 @@ export const ImageKitGuideModal = ({ isOpen, onClose }) => {
       />
 
       {/* Modal Card */}
-      <div className="relative w-full max-w-2xl max-h-[92vh] bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl sm:rounded-3xl text-zinc-900 dark:text-zinc-100 shadow-2xl overflow-hidden flex flex-col z-10 my-4 sm:my-8 transition-colors duration-300">
+      <div className="relative w-full max-w-2xl max-h-[92dvh] bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl sm:rounded-3xl text-zinc-900 dark:text-zinc-100 shadow-2xl overflow-hidden flex flex-col z-10 my-2 sm:my-8 transition-colors duration-300 pb-safe">
         {/* Header */}
         <div className="p-4 sm:p-6 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
@@ -37,7 +37,8 @@ export const ImageKitGuideModal = ({ isOpen, onClose }) => {
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+            className="p-1.5 rounded-lg text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+            aria-label="Close guide"
           >
             <X className="w-5 h-5" />
           </button>

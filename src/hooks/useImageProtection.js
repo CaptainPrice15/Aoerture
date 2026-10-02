@@ -26,8 +26,17 @@ export const useImageProtection = (isAuthenticated) => {
     // If admin is logged in, do not restrict inspection or right-click
     if (isAuthenticated) return;
 
-    // 1. Prevent right-click / context menu
+    // 1. Prevent right-click / context menu on media elements
     const handleContextMenu = (e) => {
+      // Allow regular input interactions (paste, select all, spellcheck)
+      if (
+        e.target.tagName === 'INPUT' ||
+        e.target.tagName === 'TEXTAREA' ||
+        e.target.isContentEditable
+      ) {
+        return;
+      }
+
       const isMediaTarget =
         e.target.tagName === 'IMG' ||
         e.target.tagName === 'VIDEO' ||

@@ -16,12 +16,13 @@ export const AboutModal = ({ isOpen, onClose }) => {
       />
 
       {/* Modal Card */}
-      <div className="relative w-full max-w-2xl max-h-[92vh] bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl sm:rounded-3xl text-zinc-900 dark:text-zinc-100 shadow-2xl overflow-hidden flex flex-col z-10 my-4 sm:my-8 transition-colors duration-300">
+      <div className="relative w-full max-w-2xl max-h-[92dvh] bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl sm:rounded-3xl text-zinc-900 dark:text-zinc-100 shadow-2xl overflow-hidden flex flex-col z-10 my-2 sm:my-8 transition-colors duration-300 pb-safe">
         {/* Header background banner */}
         <div className="h-24 sm:h-32 bg-gradient-to-r from-purple-600/30 via-indigo-600/20 to-purple-800/30 dark:from-purple-900/60 dark:via-indigo-900/40 dark:to-zinc-900 border-b border-zinc-200 dark:border-zinc-800/80 relative shrink-0">
           <button
             onClick={onClose}
-            className="absolute top-3 right-3 sm:top-4 sm:right-4 p-2 rounded-full bg-black/20 hover:bg-black/40 dark:bg-black/40 dark:hover:bg-black/70 text-zinc-800 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-colors backdrop-blur-md"
+            className="absolute top-3 right-3 sm:top-4 sm:right-4 p-2 rounded-full bg-black/20 hover:bg-black/40 dark:bg-black/40 dark:hover:bg-black/70 text-zinc-800 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-colors backdrop-blur-md cursor-pointer"
+            aria-label="Close modal"
           >
             <X className="w-5 h-5" />
           </button>

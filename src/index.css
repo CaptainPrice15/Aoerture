@@ -33,6 +33,29 @@
   -webkit-overflow-scrolling: touch;
 }
 
+/* Hide scrollbar for clean mobile & filter overflow */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Safe area padding utilities for mobile devices (iPhone notch & home indicator) */
+.pb-safe {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom, 1rem));
+}
+.pt-safe {
+  padding-top: max(0.5rem, env(safe-area-inset-top, 0.5rem));
+}
+.bottom-safe {
+  bottom: max(1.5rem, calc(0.75rem + env(safe-area-inset-bottom, 0px)));
+}
+.top-safe {
+  top: max(5rem, calc(4rem + env(safe-area-inset-top, 0px)));
+}
+
 /* Custom smooth scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

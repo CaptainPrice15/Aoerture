@@ -144,7 +144,7 @@ export const LoginModal = ({ isOpen, onClose, initialMode = 'signin' }) => {
 
       {/* Modal Dialog */}
       <div
-        className="relative w-full max-w-md bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-2xl z-10 overflow-hidden text-zinc-900 dark:text-zinc-100 animate-in fade-in zoom-in-95 duration-200"
+        className="relative w-full max-w-md max-h-[92dvh] overflow-y-auto bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-5 sm:p-8 shadow-2xl z-10 text-zinc-900 dark:text-zinc-100 animate-in fade-in zoom-in-95 duration-200"
         role="dialog"
         aria-modal="true"
       >
@@ -234,7 +234,7 @@ export const LoginModal = ({ isOpen, onClose, initialMode = 'signin' }) => {
                     if (error) setError('');
                   }}
                   placeholder="admin or user@example.com"
-                  className="w-full pl-4 pr-4 py-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 text-sm font-medium transition-all"
+                  className="w-full pl-4 pr-4 py-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 text-base sm:text-sm font-medium transition-all"
                 />
               </div>
             </div>
@@ -252,7 +252,7 @@ export const LoginModal = ({ isOpen, onClose, initialMode = 'signin' }) => {
                     if (error) setError('');
                   }}
                   placeholder="Enter password..."
-                  className="w-full pl-4 pr-11 py-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 text-sm font-medium transition-all"
+                  className="w-full pl-4 pr-11 py-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 text-base sm:text-sm font-medium transition-all"
                 />
                 <button
                   type="button"
@@ -304,7 +304,7 @@ export const LoginModal = ({ isOpen, onClose, initialMode = 'signin' }) => {
                     if (error) setError('');
                   }}
                   placeholder="e.g. John Doe"
-                  className="w-full pl-4 pr-4 py-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 text-sm font-medium transition-all"
+                  className="w-full pl-4 pr-4 py-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 text-base sm:text-sm font-medium transition-all"
                 />
               </div>
             </div>
@@ -322,7 +322,7 @@ export const LoginModal = ({ isOpen, onClose, initialMode = 'signin' }) => {
                     if (error) setError('');
                   }}
                   placeholder="you@example.com"
-                  className="w-full pl-4 pr-4 py-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 text-sm font-medium transition-all"
+                  className="w-full pl-4 pr-4 py-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 text-base sm:text-sm font-medium transition-all"
                 />
               </div>
             </div>
@@ -340,7 +340,7 @@ export const LoginModal = ({ isOpen, onClose, initialMode = 'signin' }) => {
                     if (error) setError('');
                   }}
                   placeholder="Minimum 6 characters"
-                  className="w-full pl-4 pr-11 py-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 text-sm font-medium transition-all"
+                  className="w-full pl-4 pr-11 py-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 text-base sm:text-sm font-medium transition-all"
                 />
                 <button
                   type="button"
@@ -366,7 +366,7 @@ export const LoginModal = ({ isOpen, onClose, initialMode = 'signin' }) => {
                     if (error) setError('');
                   }}
                   placeholder="Repeat your password"
-                  className="w-full pl-4 pr-11 py-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 text-sm font-medium transition-all"
+                  className="w-full pl-4 pr-11 py-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 text-base sm:text-sm font-medium transition-all"
                 />
                 <button
                   type="button"

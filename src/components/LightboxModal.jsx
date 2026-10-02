@@ -21,6 +21,30 @@ export const LightboxModal = ({ photos, currentIndex, isOpen, onClose, onIndexCh
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Mobile Back Button / History Interception: closing lightbox with browser back gesture
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const stateId = { lightboxModalOpen: true };
+    window.history.pushState(stateId, '');
+
+    const handlePopState = () => {
+      if (onClose) onClose();
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [isOpen, onClose]);
+
+  const handleModalClose = () => {
+    if (typeof window !== 'undefined' && window.history.state?.lightboxModalOpen) {
+      window.history.back();
+    }
+    if (onClose) onClose();
+  };
+
   if (!isOpen) return null;
 
   // Prepare slide objects for Yet Another React Lightbox
@@ -91,7 +115,7 @@ export const LightboxModal = ({ photos, currentIndex, isOpen, onClose, onIndexCh
     >
       <Lightbox
         open={isOpen}
-        close={onClose}
+        close={handleModalClose}
         index={currentIndex}
         slides={slides}
         plugins={activePlugins}

@@ -62,8 +62,24 @@ export const ShareModal = ({ isOpen, onClose, photo }) => {
     }
   ];
 
+  const handleNativeShare = async () => {
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      try {
+        await navigator.share({
+          title: photo.title,
+          text: shareText,
+          url: currentUrl
+        });
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          console.error('Native share error:', err);
+        }
+      }
+    }
+  };
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4">
       {/* Backdrop */}
       <div
         className="fixed inset-0 bg-black/75 backdrop-blur-sm transition-opacity"
@@ -72,7 +88,7 @@ export const ShareModal = ({ isOpen, onClose, photo }) => {
 
       {/* Dialog */}
       <div
-        className="relative w-full max-w-md bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-2xl z-10 overflow-hidden text-zinc-900 dark:text-zinc-100 animate-in fade-in zoom-in-95 duration-200"
+        className="relative w-full max-w-md max-h-[92dvh] overflow-y-auto bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-5 sm:p-8 shadow-2xl z-10 text-zinc-900 dark:text-zinc-100 animate-in fade-in zoom-in-95 duration-200 pb-safe"
         role="dialog"
         aria-modal="true"
       >
@@ -83,7 +99,7 @@ export const ShareModal = ({ isOpen, onClose, photo }) => {
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 sm:top-5 sm:right-5 p-2 rounded-xl text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+          className="absolute top-4 right-4 sm:top-5 sm:right-5 p-2 rounded-xl text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
           aria-label="Close dialog"
         >
           <X className="w-5 h-5" />
@@ -103,7 +119,7 @@ export const ShareModal = ({ isOpen, onClose, photo }) => {
         </p>
 
         {/* Media Preview Card */}
-        <div className="mt-5 p-3 rounded-2xl bg-zinc-50 dark:bg-zinc-950/60 border border-zinc-200/80 dark:border-zinc-800/80 flex items-center gap-3">
+        <div className="mt-4 sm:mt-5 p-3 rounded-2xl bg-zinc-50 dark:bg-zinc-950/60 border border-zinc-200/80 dark:border-zinc-800/80 flex items-center gap-3">
           <img
             src={thumbUrl}
             alt={photo.title}
@@ -119,8 +135,19 @@ export const ShareModal = ({ isOpen, onClose, photo }) => {
           </div>
         </div>
 
+        {/* Native Mobile Share Button (if supported on iOS/Android) */}
+        {typeof navigator !== 'undefined' && typeof navigator.share === 'function' && (
+          <button
+            onClick={handleNativeShare}
+            className="mt-4 w-full py-2.5 px-4 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-semibold shadow-md shadow-purple-600/25 flex items-center justify-center gap-2 active:scale-95 transition-all cursor-pointer"
+          >
+            <Share2 className="w-4 h-4" />
+            <span>Share via Device System Apps</span>
+          </button>
+        )}
+
         {/* Social Share Grid */}
-        <div className="mt-5 grid grid-cols-2 sm:grid-cols-4 gap-2">
+        <div className="mt-4 sm:mt-5 grid grid-cols-2 sm:grid-cols-4 gap-2">
           {shareOptions.map((opt) => {
             const Icon = opt.icon;
             return (
@@ -139,7 +166,7 @@ export const ShareModal = ({ isOpen, onClose, photo }) => {
         </div>
 
         {/* Copy Link Input */}
-        <div className="mt-5">
+        <div className="mt-4 sm:mt-5">
           <label className="block text-[11px] font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5 uppercase tracking-wider">
             Direct Share Link
           </label>
@@ -148,7 +175,7 @@ export const ShareModal = ({ isOpen, onClose, photo }) => {
               type="text"
               readOnly
               value={currentUrl}
-              className="flex-1 px-3 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 text-xs text-zinc-600 dark:text-zinc-300 font-mono truncate focus:outline-none"
+              className="flex-1 px-3 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 text-base sm:text-xs text-zinc-600 dark:text-zinc-300 font-mono truncate focus:outline-none"
             />
             <button
               onClick={handleCopyLink}

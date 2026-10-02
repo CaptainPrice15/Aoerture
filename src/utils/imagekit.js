@@ -98,14 +98,28 @@ export const buildOptimizedUrl = (
 /**
  * Helper to get standard thumbnail for masonry grid
  */
-export const getThumbnailUrl = (photo) => {
-  if (photo.thumbnail) return photo.thumbnail;
+export const getThumbnailUrl = (photo, options = {}) => {
+  if (photo?.thumbnail) return photo.thumbnail;
+  if (!photo?.src) return '';
   const isVideo = photo.mediaType === 'video' || isVideoSource(photo.src);
+  const width = options.width || 720;
   return buildOptimizedUrl(photo.src, {
-    width: 800,
+    width,
     quality: 82,
     asThumbnail: isVideo,
   });
+};
+
+/**
+ * Generates an HTML srcSet string for responsive loading across mobile, tablet, and retina screens
+ */
+export const getThumbnailSrcSet = (photo) => {
+  if (!photo?.src || photo.thumbnail) return undefined;
+  const isVideo = photo.mediaType === 'video' || isVideoSource(photo.src);
+  const w360 = buildOptimizedUrl(photo.src, { width: 360, quality: 78, asThumbnail: isVideo });
+  const w720 = buildOptimizedUrl(photo.src, { width: 720, quality: 82, asThumbnail: isVideo });
+  const w1200 = buildOptimizedUrl(photo.src, { width: 1200, quality: 84, asThumbnail: isVideo });
+  return `${w360} 360w, ${w720} 720w, ${w1200} 1200w`;
 };
 
 /**

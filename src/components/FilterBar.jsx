@@ -239,12 +239,13 @@ export const FilterBar = ({
         </div>
 
         {/* Controls Row: Layout Switcher + Color Palette + Multi-Select + Search + Sort */}
-        <div className="flex items-center gap-1.5 sm:gap-2 w-full md:w-auto">
+        <div className="flex items-center gap-1.5 sm:gap-2 w-full md:w-auto overflow-x-auto no-scrollbar touch-scroll py-0.5">
           {/* Gallery Layout Switcher */}
           <div className="flex items-center p-1 rounded-xl bg-slate-100 dark:bg-zinc-900 border border-slate-200/90 dark:border-zinc-800 shadow-inner shrink-0">
             <button
               onClick={() => onLayoutChange && onLayoutChange('masonry')}
               title="Masonry Layout"
+              aria-label="Masonry Layout"
               className={`p-1.5 rounded-lg transition-all cursor-pointer ${
                 layoutMode === 'masonry'
                   ? 'bg-white dark:bg-zinc-800 text-purple-600 dark:text-purple-400 shadow-xs font-semibold'
@@ -256,6 +257,7 @@ export const FilterBar = ({
             <button
               onClick={() => onLayoutChange && onLayoutChange('grid')}
               title="Uniform Grid Layout"
+              aria-label="Uniform Grid Layout"
               className={`p-1.5 rounded-lg transition-all cursor-pointer ${
                 layoutMode === 'grid'
                   ? 'bg-white dark:bg-zinc-800 text-purple-600 dark:text-purple-400 shadow-xs font-semibold'
@@ -267,6 +269,7 @@ export const FilterBar = ({
             <button
               onClick={() => onLayoutChange && onLayoutChange('editorial')}
               title="Editorial Storytelling Layout"
+              aria-label="Editorial Storytelling Layout"
               className={`p-1.5 rounded-lg transition-all cursor-pointer ${
                 layoutMode === 'editorial'
                   ? 'bg-white dark:bg-zinc-800 text-purple-600 dark:text-purple-400 shadow-xs font-semibold'
@@ -352,15 +355,15 @@ export const FilterBar = ({
             {isFocusMode ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
           </button>
 
-          {/* Search Input (Fluid min-w-0 for mobile screens) */}
-          <div className="relative flex-1 min-w-0 sm:w-44 md:w-52">
+          {/* Search Input (Fluid min-w-0 for mobile screens, with text-base on mobile to avoid iOS Safari zoom) */}
+          <div className="relative min-w-[130px] flex-1 sm:w-44 md:w-52 shrink-0 sm:shrink">
             <Search className="w-3.5 h-3.5 absolute left-2.5 sm:left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder="Search..."
-              className="w-full pl-7 sm:pl-8 pr-7 sm:pr-8 py-1.5 text-xs rounded-xl bg-white dark:bg-zinc-900 border border-slate-200/90 dark:border-zinc-800 text-slate-900 dark:text-zinc-100 placeholder-slate-400 shadow-xs focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all"
+              className="w-full pl-7 sm:pl-8 pr-7 sm:pr-8 py-1.5 text-base sm:text-xs rounded-xl bg-white dark:bg-zinc-900 border border-slate-200/90 dark:border-zinc-800 text-slate-900 dark:text-zinc-100 placeholder-slate-400 shadow-xs focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all"
             />
             {searchQuery && (
               <button
@@ -378,7 +381,7 @@ export const FilterBar = ({
             <select
               value={sortBy}
               onChange={(e) => onSortChange(e.target.value)}
-              className="appearance-none pl-2.5 sm:pl-3 pr-6 sm:pr-7 py-1.5 text-xs rounded-xl bg-white dark:bg-zinc-900 border border-slate-200/90 dark:border-zinc-800 text-slate-800 dark:text-zinc-200 shadow-xs focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 cursor-pointer transition-all font-medium"
+              className="appearance-none pl-2.5 sm:pl-3 pr-6 sm:pr-7 py-1.5 text-base sm:text-xs rounded-xl bg-white dark:bg-zinc-900 border border-slate-200/90 dark:border-zinc-800 text-slate-800 dark:text-zinc-200 shadow-xs focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 cursor-pointer transition-all font-medium"
             >
               <option value="featured">✨ Featured</option>
               <option value="newest">📅 Newest</option>

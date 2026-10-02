@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useCallback, lazy, Suspense } from 'react';
 import {
   Sparkles,
   X,
@@ -20,18 +20,20 @@ import { HeroSection } from './components/HeroSection';
 import { FilterBar } from './components/FilterBar';
 import { GalleryGrid } from './components/GalleryGrid';
 import { FolderGrid } from './components/FolderGrid';
-import { LightboxModal } from './components/LightboxModal';
 import { ExifDrawer } from './components/ExifDrawer';
-import { AboutModal } from './components/AboutModal';
-import { ImageKitGuideModal } from './components/ImageKitGuideModal';
-import { AddMediaModal } from './components/AddMediaModal';
-import { LoginModal } from './components/LoginModal';
-import { ShareModal } from './components/ShareModal';
-import { EditPhotoModal } from './components/EditPhotoModal';
 import { Footer } from './components/Footer';
 import { useImageProtection } from './hooks/useImageProtection';
 import { photos as initialPhotos, INITIAL_FOLDERS } from './data/photos';
 import { downloadMedia } from './utils/imagekit';
+
+// Code-split heavy modals and Lightbox to drastically reduce initial mobile load time
+const LightboxModal = lazy(() => import('./components/LightboxModal').then((m) => ({ default: m.LightboxModal })));
+const AboutModal = lazy(() => import('./components/AboutModal').then((m) => ({ default: m.AboutModal })));
+const ImageKitGuideModal = lazy(() => import('./components/ImageKitGuideModal').then((m) => ({ default: m.ImageKitGuideModal })));
+const AddMediaModal = lazy(() => import('./components/AddMediaModal').then((m) => ({ default: m.AddMediaModal })));
+const LoginModal = lazy(() => import('./components/LoginModal').then((m) => ({ default: m.LoginModal })));
+const ShareModal = lazy(() => import('./components/ShareModal').then((m) => ({ default: m.ShareModal })));
+const EditPhotoModal = lazy(() => import('./components/EditPhotoModal').then((m) => ({ default: m.EditPhotoModal })));
 
 function GalleryApp() {
   const { theme, toggleTheme } = useTheme();
@@ -84,17 +86,26 @@ function GalleryApp() {
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isGuideOpen, setIsGuideOpen] = useState(false);
   const [isAddMediaOpen, setIsAddMediaOpen] = useState(false);
+  const [pendingPhotoId, setPendingPhotoId] = useState(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('photo');
+      } catch (e) {}
+    }
+    return null;
+  });
 
-  const handleLayoutChange = (mode) => {
+  const handleLayoutChange = useCallback((mode) => {
     setLayoutMode(mode);
     if (typeof window !== 'undefined') {
       try {
         localStorage.setItem('gallery_layout_mode', mode);
       } catch (e) {}
     }
-  };
+  }, []);
 
-  const handleAddMedia = (newMedia) => {
+  const handleAddMedia = useCallback((newMedia) => {
     setPhotosList((prev) => {
       const filtered = prev.filter((p) => p.id !== newMedia.id);
       const updated = [newMedia, ...filtered];
@@ -105,9 +116,9 @@ function GalleryApp() {
       }
       return updated;
     });
-  };
+  }, []);
 
-  const handleSaveEditedPhoto = (updatedPhoto) => {
+  const handleSaveEditedPhoto = useCallback((updatedPhoto) => {
     setPhotosList((prev) => {
       const updated = prev.map((p) => (p.id === updatedPhoto.id ? updatedPhoto : p));
       if (typeof window !== 'undefined') {
@@ -117,9 +128,9 @@ function GalleryApp() {
       }
       return updated;
     });
-  };
+  }, []);
 
-  const handleDeletePhoto = (photoId) => {
+  const handleDeletePhoto = useCallback((photoId) => {
     setPhotosList((prev) => {
       const updated = prev.filter((p) => p.id !== photoId);
       if (typeof window !== 'undefined') {
@@ -129,14 +140,13 @@ function GalleryApp() {
       }
       return updated;
     });
-  };
+  }, []);
 
   // 1. Initial Deep-linking check on page mount
   useEffect(() => {
     if (typeof window === 'undefined') return;
     try {
       const params = new URLSearchParams(window.location.search);
-      const photoParam = params.get('photo');
       const catParam = params.get('category');
       const folderParam = params.get('folder');
       const layoutParam = params.get('layout');
@@ -152,12 +162,6 @@ function GalleryApp() {
         setActiveCategory('Folders');
         setSelectedFolderPath(folderParam);
       }
-      if (photoParam) {
-        const foundIdx = photosList.findIndex((p) => p.id === photoParam);
-        if (foundIdx >= 0) {
-          setLightboxIndex(foundIdx);
-        }
-      }
       if (collectionParam) {
         const ids = collectionParam.split(',').filter(Boolean);
         if (ids.length > 0) {
@@ -169,6 +173,32 @@ function GalleryApp() {
       }
     } catch (e) {}
   }, []);
+
+  // 1b. Reliably resolve deep-linked photo across categories, filters, and async ImageKit sync
+  useEffect(() => {
+    if (!pendingPhotoId || photosList.length === 0) return;
+
+    // Check if photo is in current filteredPhotos
+    const targetIdx = filteredPhotos.findIndex((p) => p.id === pendingPhotoId);
+    if (targetIdx >= 0) {
+      setLightboxIndex(targetIdx);
+      setPendingPhotoId(null);
+      return;
+    }
+
+    // If not in filteredPhotos, check if it exists in photosList
+    const inTotal = photosList.find((p) => p.id === pendingPhotoId);
+    if (inTotal) {
+      // Clear restrictive filters so photo becomes visible in filtered list
+      setActiveCategory('All');
+      setSearchQuery('');
+      setShowFavoritesOnly(false);
+      setColorFilter('All');
+      setSelectedFolderPath(null);
+    } else {
+      setPendingPhotoId(null);
+    }
+  }, [pendingPhotoId, filteredPhotos, photosList]);
 
   // Reset progressive visibleCount when any filter changes
   useEffect(() => {
@@ -407,42 +437,52 @@ function GalleryApp() {
     } catch (e) {}
   }, [lightboxIndex, activeCategory, selectedFolderPath, filteredPhotos]);
 
-  const handleResetFilters = () => {
+  const handleResetFilters = useCallback(() => {
     setActiveCategory('All');
     setSearchQuery('');
     setSortBy('featured');
     setShowFavoritesOnly(false);
     setColorFilter('All');
     setVisibleCount(20);
-  };
+  }, []);
 
-  const handleOpenLightbox = (index) => {
+  const handleOpenLightbox = useCallback((index) => {
     setLightboxIndex(index);
-  };
+  }, []);
 
-  const handleOpenExif = (photo) => {
+  const handleOpenExif = useCallback((photo) => {
     setSelectedExifPhoto(photo);
-  };
+  }, []);
+
+  const handleOpenExifLightbox = useCallback((photo) => {
+    const target = photo && photo.id ? photo : selectedExifPhoto;
+    if (!target) return;
+    const idx = filteredPhotos.findIndex((p) => p.id === target.id);
+    if (idx >= 0) {
+      setSelectedExifPhoto(null);
+      setLightboxIndex(idx);
+    }
+  }, [selectedExifPhoto, filteredPhotos]);
 
   // Multi-Select Operations
-  const handleToggleSelect = (id) => {
+  const handleToggleSelect = useCallback((id) => {
     setSelectedPhotoIds((prev) => {
       const next = new Set(prev);
       if (next.has(id)) next.delete(id);
       else next.add(id);
       return next;
     });
-  };
+  }, []);
 
-  const handleSelectAll = () => {
+  const handleSelectAll = useCallback(() => {
     setSelectedPhotoIds(new Set(filteredPhotos.map((p) => p.id)));
-  };
+  }, [filteredPhotos]);
 
-  const handleClearSelect = () => {
+  const handleClearSelect = useCallback(() => {
     setSelectedPhotoIds(new Set());
-  };
+  }, []);
 
-  const handleDownloadSelected = async () => {
+  const handleDownloadSelected = useCallback(async () => {
     if (selectedPhotoIds.size === 0 || isDownloadingCollection) return;
     setIsDownloadingCollection(true);
     try {
@@ -458,9 +498,9 @@ function GalleryApp() {
     } finally {
       setIsDownloadingCollection(false);
     }
-  };
+  }, [selectedPhotoIds, isDownloadingCollection, photosList]);
 
-  const handleCopyCollectionLink = () => {
+  const handleCopyCollectionLink = useCallback(() => {
     if (selectedPhotoIds.size === 0) return;
     try {
       const url = new URL(window.location.origin + window.location.pathname);
@@ -469,7 +509,23 @@ function GalleryApp() {
       setCollectionToast('Curated collection link copied to clipboard!');
       setTimeout(() => setCollectionToast(''), 3500);
     } catch (e) {}
-  };
+  }, [selectedPhotoIds]);
+
+  const handleLoadMore = useCallback(() => {
+    setVisibleCount((prev) => prev + 16);
+  }, []);
+
+  const handleLoadAll = useCallback(() => {
+    setVisibleCount(filteredPhotos.length);
+  }, [filteredPhotos.length]);
+
+  const handleShare = useCallback((photo) => {
+    setSharePhoto(photo);
+  }, []);
+
+  const handleEdit = useCallback((photo) => {
+    setEditingPhoto(photo);
+  }, []);
 
   return (
     <div
@@ -659,14 +715,14 @@ function GalleryApp() {
               <GalleryGrid
                 photos={filteredPhotos}
                 visibleCount={visibleCount}
-                onLoadMore={() => setVisibleCount((prev) => prev + 16)}
-                onLoadAll={() => setVisibleCount(filteredPhotos.length)}
+                onLoadMore={handleLoadMore}
+                onLoadAll={handleLoadAll}
                 layoutMode={layoutMode}
                 onSelectPhoto={handleOpenLightbox}
                 onOpenExif={handleOpenExif}
                 onResetFilters={handleResetFilters}
-                onShare={(photo) => setSharePhoto(photo)}
-                onEdit={(photo) => setEditingPhoto(photo)}
+                onShare={handleShare}
+                onEdit={handleEdit}
                 onDelete={handleDeletePhoto}
                 isSelectMode={isSelectMode}
                 selectedPhotoIds={selectedPhotoIds}
@@ -679,14 +735,14 @@ function GalleryApp() {
 
       {/* Floating Multi-Select Action Dock */}
       {isSelectMode && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 max-w-[calc(100vw-2rem)] w-auto bg-zinc-950/95 text-white rounded-2xl p-2 sm:px-4 shadow-2xl border border-white/15 backdrop-blur-xl flex items-center gap-2 sm:gap-3 animate-fade-in">
+        <div className="fixed bottom-safe bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-40 max-w-[calc(100vw-1.5rem)] w-auto bg-zinc-950/95 text-white rounded-2xl p-1.5 sm:p-2 sm:px-4 shadow-2xl border border-white/15 backdrop-blur-xl flex items-center gap-1.5 sm:gap-3 overflow-x-auto no-scrollbar animate-fade-in">
           <span className="px-2.5 py-1 rounded-xl bg-purple-600 text-xs font-mono font-bold whitespace-nowrap">
             {selectedPhotoIds.size} Selected
           </span>
 
           <button
             onClick={handleSelectAll}
-            className="px-2.5 py-1 rounded-xl text-xs hover:bg-white/10 text-zinc-300 hover:text-white transition-colors cursor-pointer"
+            className="px-2.5 py-1 rounded-xl text-xs hover:bg-white/10 text-zinc-300 hover:text-white transition-colors cursor-pointer whitespace-nowrap"
           >
             Select All
           </button>
@@ -694,22 +750,22 @@ function GalleryApp() {
           {selectedPhotoIds.size > 0 && (
             <button
               onClick={handleClearSelect}
-              className="px-2 py-1 rounded-xl text-xs hover:bg-white/10 text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer"
+              className="px-2 py-1 rounded-xl text-xs hover:bg-white/10 text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer whitespace-nowrap"
             >
               Clear
             </button>
           )}
 
-          <div className="h-4 w-px bg-white/20" />
+          <div className="h-4 w-px bg-white/20 shrink-0" />
 
           {/* Copy Share Link */}
           <button
             onClick={handleCopyCollectionLink}
             disabled={selectedPhotoIds.size === 0}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/20 disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/20 disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer whitespace-nowrap"
             title="Share this curated collection"
           >
-            <Share2 className="w-3.5 h-3.5" />
+            <Share2 className="w-3.5 h-3.5 shrink-0" />
             <span className="hidden sm:inline">Share Link</span>
           </button>
 
@@ -717,12 +773,12 @@ function GalleryApp() {
           <button
             onClick={handleDownloadSelected}
             disabled={selectedPhotoIds.size === 0 || isDownloadingCollection}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-md shadow-purple-600/30 cursor-pointer"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-md shadow-purple-600/30 cursor-pointer whitespace-nowrap"
           >
             {isDownloadingCollection ? (
-              <Loader2 className="w-3.5 h-3.5 animate-spin" />
+              <Loader2 className="w-3.5 h-3.5 animate-spin shrink-0" />
             ) : (
-              <Download className="w-3.5 h-3.5" />
+              <Download className="w-3.5 h-3.5 shrink-0" />
             )}
             <span>Download ({selectedPhotoIds.size})</span>
           </button>
@@ -733,7 +789,7 @@ function GalleryApp() {
               setIsSelectMode(false);
               setSelectedPhotoIds(new Set());
             }}
-            className="p-1 rounded-xl hover:bg-white/10 text-zinc-400 hover:text-white transition-colors cursor-pointer"
+            className="p-1 rounded-xl hover:bg-white/10 text-zinc-400 hover:text-white transition-colors cursor-pointer shrink-0"
             title="Exit select mode"
           >
             <X className="w-4 h-4" />
@@ -743,7 +799,7 @@ function GalleryApp() {
 
       {/* Cinema Focus Mode Exit Pill */}
       {isFocusMode && (
-        <div className="fixed bottom-6 right-6 z-40 animate-fade-in">
+        <div className="fixed bottom-safe bottom-4 sm:bottom-6 right-4 sm:right-6 z-40 animate-fade-in">
           <button
             onClick={() => setIsFocusMode(false)}
             className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-zinc-950/90 text-amber-400 border border-amber-500/40 shadow-2xl backdrop-blur-xl hover:bg-zinc-900 transition-all text-xs font-semibold cursor-pointer active:scale-95"
@@ -756,7 +812,7 @@ function GalleryApp() {
 
       {/* Toast Notification */}
       {collectionToast && (
-        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-2xl bg-zinc-950 text-white border border-purple-500/50 shadow-2xl flex items-center gap-2 text-xs font-semibold animate-fade-in">
+        <div className="fixed top-safe top-20 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-2xl bg-zinc-950 text-white border border-purple-500/50 shadow-2xl flex items-center gap-2 text-xs font-semibold animate-fade-in">
           <Check className="w-4 h-4 text-emerald-400" />
           <span>{collectionToast}</span>
         </div>
@@ -766,82 +822,102 @@ function GalleryApp() {
       {!isFocusMode && <Footer />}
 
       {/* Lightbox Modal */}
-      <LightboxModal
-        photos={filteredPhotos}
-        currentIndex={lightboxIndex}
-        isOpen={lightboxIndex >= 0}
-        onClose={() => setLightboxIndex(-1)}
-        onIndexChange={(idx) => setLightboxIndex(idx)}
-        onOpenExif={(photo) => {
-          setSelectedExifPhoto(photo);
-        }}
-      />
+      {lightboxIndex >= 0 && (
+        <Suspense fallback={null}>
+          <LightboxModal
+            photos={filteredPhotos}
+            currentIndex={lightboxIndex}
+            isOpen={lightboxIndex >= 0}
+            onClose={() => setLightboxIndex(-1)}
+            onIndexChange={setLightboxIndex}
+            onOpenExif={handleOpenExif}
+          />
+        </Suspense>
+      )}
 
       {/* EXIF Metadata Drawer */}
       <ExifDrawer
         photo={selectedExifPhoto}
         isOpen={!!selectedExifPhoto}
         onClose={() => setSelectedExifPhoto(null)}
-        onOpenLightbox={(photo) => {
-          const idx = filteredPhotos.findIndex((p) => p.id === photo.id);
-          if (idx >= 0) {
-            setSelectedExifPhoto(null);
-            setLightboxIndex(idx);
-          }
-        }}
-        onShare={(photo) => setSharePhoto(photo)}
-        onEdit={(photo) => setEditingPhoto(photo)}
+        onOpenLightbox={handleOpenExifLightbox}
+        onShare={handleShare}
+        onEdit={handleEdit}
         onDelete={handleDeletePhoto}
       />
 
       {/* Social Share & Deep Link Modal */}
-      <ShareModal
-        isOpen={!!sharePhoto}
-        photo={sharePhoto}
-        onClose={() => setSharePhoto(null)}
-      />
+      {sharePhoto && (
+        <Suspense fallback={null}>
+          <ShareModal
+            isOpen={!!sharePhoto}
+            photo={sharePhoto}
+            onClose={() => setSharePhoto(null)}
+          />
+        </Suspense>
+      )}
 
       {/* Admin Edit Photo Modal */}
-      <EditPhotoModal
-        isOpen={!!editingPhoto}
-        photo={editingPhoto}
-        onClose={() => setEditingPhoto(null)}
-        onSave={handleSaveEditedPhoto}
-        categories={availableCategories}
-        folders={availableFolders}
-      />
+      {editingPhoto && (
+        <Suspense fallback={null}>
+          <EditPhotoModal
+            isOpen={!!editingPhoto}
+            photo={editingPhoto}
+            onClose={() => setEditingPhoto(null)}
+            onSave={handleSaveEditedPhoto}
+            categories={availableCategories}
+            folders={availableFolders}
+          />
+        </Suspense>
+      )}
 
       {/* Photographer Gear & Bio Modal */}
-      <AboutModal
-        isOpen={isAboutOpen}
-        onClose={() => setIsAboutOpen(false)}
-      />
+      {isAboutOpen && (
+        <Suspense fallback={null}>
+          <AboutModal
+            isOpen={isAboutOpen}
+            onClose={() => setIsAboutOpen(false)}
+          />
+        </Suspense>
+      )}
 
       {/* ImageKit Free Cloud Storage Setup Walkthrough */}
-      <ImageKitGuideModal
-        isOpen={isGuideOpen}
-        onClose={() => setIsGuideOpen(false)}
-      />
+      {isGuideOpen && (
+        <Suspense fallback={null}>
+          <ImageKitGuideModal
+            isOpen={isGuideOpen}
+            onClose={() => setIsGuideOpen(false)}
+          />
+        </Suspense>
+      )}
 
       {/* Add Media (Picture/Video) Modal with Direct Drag & Drop */}
-      <AddMediaModal
-        isOpen={isAddMediaOpen}
-        onClose={() => setIsAddMediaOpen(false)}
-        onAddMedia={handleAddMedia}
-        categories={availableCategories}
-        folders={availableFolders}
-      />
+      {isAddMediaOpen && (
+        <Suspense fallback={null}>
+          <AddMediaModal
+            isOpen={isAddMediaOpen}
+            onClose={() => setIsAddMediaOpen(false)}
+            onAddMedia={handleAddMedia}
+            categories={availableCategories}
+            folders={availableFolders}
+          />
+        </Suspense>
+      )}
 
       {/* Sign In / Sign Up Modal */}
-      <LoginModal
-        isOpen={isLoginOpen}
-        initialMode={authMode}
-        onClose={() => setIsLoginOpen(false)}
-      />
+      {isLoginOpen && (
+        <Suspense fallback={null}>
+          <LoginModal
+            isOpen={isLoginOpen}
+            initialMode={authMode}
+            onClose={() => setIsLoginOpen(false)}
+          />
+        </Suspense>
+      )}
 
       {/* Floating Image Protection Toast for Non-Logged-in Visitors */}
       {toastMessage && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-2xl bg-zinc-950/90 text-white text-xs font-medium shadow-2xl border border-white/10 backdrop-blur-md flex items-center gap-2 animate-in fade-in slide-in-from-bottom-3 duration-200 pointer-events-none">
+        <div className="fixed bottom-safe bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-2xl bg-zinc-950/90 text-white text-xs font-medium shadow-2xl border border-white/10 backdrop-blur-md flex items-center gap-2 animate-in fade-in slide-in-from-bottom-3 duration-200 pointer-events-none">
           <ShieldAlert className="w-4 h-4 text-purple-400 shrink-0" />
           <span>{toastMessage}</span>
         </div>

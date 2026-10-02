@@ -210,7 +210,7 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [], fo
       />
 
       {/* Modal Card */}
-      <div className="relative w-full max-w-xl max-h-[92vh] bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl sm:rounded-3xl text-zinc-900 dark:text-zinc-100 shadow-2xl overflow-hidden flex flex-col z-10 my-4 sm:my-8 transition-colors duration-300">
+      <div className="relative w-full max-w-xl max-h-[92dvh] bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl sm:rounded-3xl text-zinc-900 dark:text-zinc-100 shadow-2xl overflow-hidden flex flex-col z-10 my-2 sm:my-8 transition-colors duration-300 pb-safe">
         {/* Header */}
         <div className="p-4 sm:p-6 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
@@ -380,7 +380,7 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [], fo
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g. Mountain Twilight"
-                className="w-full px-3 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                className="w-full px-3 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-1 focus:ring-purple-500 text-base sm:text-xs"
               />
             </div>
             <div>
@@ -390,7 +390,7 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [], fo
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                className="w-full px-3 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-purple-500 text-base sm:text-xs"
               >
                 {categories
                   .filter((c) => c !== 'All' && c !== 'Folders')
@@ -415,7 +415,7 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [], fo
                 value={customCategory}
                 onChange={(e) => setCustomCategory(e.target.value)}
                 placeholder="e.g. Wildlife or Street"
-                className="w-full px-3 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                className="w-full px-3 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-1 focus:ring-purple-500 text-base sm:text-xs"
               />
             </div>
           )}
@@ -429,7 +429,7 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [], fo
               <select
                 value={selectedFolder}
                 onChange={(e) => setSelectedFolder(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                className="w-full px-3 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-purple-500 text-base sm:text-xs"
               >
                 <option value="/">/ (Root Library)</option>
                 {folders.map((f) => (
@@ -447,7 +447,7 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [], fo
               <select
                 value={aspectRatio}
                 onChange={(e) => setAspectRatio(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                className="w-full px-3 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-purple-500 text-base sm:text-xs"
               >
                 <option value="3/2">3:2 (Standard Landscape)</option>
                 <option value="2/3">2:3 (Portrait)</option>
@@ -468,7 +468,7 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [], fo
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               placeholder="e.g. Darjeeling, West Bengal"
-              className="w-full px-3 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-1 focus:ring-purple-500"
+              className="w-full px-3 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-1 focus:ring-purple-500 text-base sm:text-xs"
             />
           </div>
 
@@ -481,7 +481,7 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [], fo
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Behind the scenes story or technical details..."
-              className="w-full px-3 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-1 focus:ring-purple-500"
+              className="w-full px-3 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-1 focus:ring-purple-500 text-base sm:text-xs"
             />
           </div>
 

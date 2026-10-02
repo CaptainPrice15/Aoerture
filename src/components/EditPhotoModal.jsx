@@ -82,7 +82,7 @@ export const EditPhotoModal = ({ isOpen, onClose, photo, onSave, categories = []
 
       {/* Modal Dialog */}
       <div
-        className="relative w-full max-w-lg bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-2xl z-10 overflow-hidden text-zinc-900 dark:text-zinc-100 max-h-[90vh] flex flex-col animate-in fade-in zoom-in-95 duration-200"
+        className="relative w-full max-w-lg max-h-[92dvh] overflow-y-auto bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-5 sm:p-8 shadow-2xl z-10 text-zinc-900 dark:text-zinc-100 flex flex-col animate-in fade-in zoom-in-95 duration-200 pb-safe"
         role="dialog"
         aria-modal="true"
       >
@@ -92,7 +92,7 @@ export const EditPhotoModal = ({ isOpen, onClose, photo, onSave, categories = []
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 sm:top-5 sm:right-5 p-2 rounded-xl text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+          className="absolute top-4 right-4 sm:top-5 sm:right-5 p-2 rounded-xl text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
           aria-label="Close dialog"
         >
           <X className="w-5 h-5" />
@@ -140,7 +140,7 @@ export const EditPhotoModal = ({ isOpen, onClose, photo, onSave, categories = []
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-3.5 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 text-xs font-medium focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+              className="w-full px-3.5 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 text-base sm:text-xs font-medium focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
               required
             />
           </div>
@@ -153,7 +153,7 @@ export const EditPhotoModal = ({ isOpen, onClose, photo, onSave, categories = []
               rows={2}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-3.5 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 text-xs font-medium focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+              className="w-full px-3.5 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 text-base sm:text-xs font-medium focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
             />
           </div>
 
@@ -167,7 +167,7 @@ export const EditPhotoModal = ({ isOpen, onClose, photo, onSave, categories = []
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 placeholder="e.g. Mountains"
-                className="w-full px-3.5 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 text-xs font-medium focus:outline-none focus:border-purple-500"
+                className="w-full px-3.5 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 text-base sm:text-xs font-medium focus:outline-none focus:border-purple-500"
               />
             </div>
 
@@ -180,7 +180,7 @@ export const EditPhotoModal = ({ isOpen, onClose, photo, onSave, categories = []
                 value={folder}
                 onChange={(e) => setFolder(e.target.value)}
                 placeholder="e.g. Kedarnath"
-                className="w-full px-3.5 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 text-xs font-medium focus:outline-none focus:border-purple-500"
+                className="w-full px-3.5 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 text-base sm:text-xs font-medium focus:outline-none focus:border-purple-500"
               />
             </div>
           </div>
@@ -194,7 +194,7 @@ export const EditPhotoModal = ({ isOpen, onClose, photo, onSave, categories = []
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               placeholder="e.g. Kedarnath, Uttarakhand"
-              className="w-full px-3.5 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 text-xs font-medium focus:outline-none focus:border-purple-500"
+              className="w-full px-3.5 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 text-base sm:text-xs font-medium focus:outline-none focus:border-purple-500"
             />
           </div>
 
@@ -207,7 +207,7 @@ export const EditPhotoModal = ({ isOpen, onClose, photo, onSave, categories = []
               value={tags}
               onChange={(e) => setTags(e.target.value)}
               placeholder="himalayas, temple, spiritual"
-              className="w-full px-3.5 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 text-xs font-medium focus:outline-none focus:border-purple-500"
+              className="w-full px-3.5 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 text-base sm:text-xs font-medium focus:outline-none focus:border-purple-500"
             />
           </div>
 
@@ -224,7 +224,7 @@ export const EditPhotoModal = ({ isOpen, onClose, photo, onSave, categories = []
                   value={camera}
                   onChange={(e) => setCamera(e.target.value)}
                   placeholder="Sony A7 IV"
-                  className="w-full px-3 py-1.5 rounded-lg bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 text-xs"
+                  className="w-full px-3 py-1.5 rounded-lg bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 text-base sm:text-xs"
                 />
               </div>
               <div>
@@ -234,7 +234,7 @@ export const EditPhotoModal = ({ isOpen, onClose, photo, onSave, categories = []
                   value={lens}
                   onChange={(e) => setLens(e.target.value)}
                   placeholder="FE 24-70mm GM II"
-                  className="w-full px-3 py-1.5 rounded-lg bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 text-xs"
+                  className="w-full px-3 py-1.5 rounded-lg bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 text-base sm:text-xs"
                 />
               </div>
               <div>
@@ -244,7 +244,7 @@ export const EditPhotoModal = ({ isOpen, onClose, photo, onSave, categories = []
                   value={aperture}
                   onChange={(e) => setAperture(e.target.value)}
                   placeholder="f/2.8"
-                  className="w-full px-3 py-1.5 rounded-lg bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 text-xs"
+                  className="w-full px-3 py-1.5 rounded-lg bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 text-base sm:text-xs"
                 />
               </div>
               <div>
@@ -254,7 +254,7 @@ export const EditPhotoModal = ({ isOpen, onClose, photo, onSave, categories = []
                   value={shutterSpeed}
                   onChange={(e) => setShutterSpeed(e.target.value)}
                   placeholder="1/1000s"
-                  className="w-full px-3 py-1.5 rounded-lg bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 text-xs"
+                  className="w-full px-3 py-1.5 rounded-lg bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 text-base sm:text-xs"
                 />
               </div>
             </div>
