@@ -197,7 +197,11 @@ function GalleryApp() {
                   const liveIds = new Set(data.photos.map((p) => p.id));
                   const extra = customOnly.filter((p) => !liveIds.has(p.id));
                   if (extra.length > 0) {
-                    setPhotosList([...extra, ...data.photos]);
+                    const combined = [...extra, ...data.photos];
+                    setPhotosList(combined);
+                    try {
+                      localStorage.setItem('user_gallery_photos', JSON.stringify(combined));
+                    } catch (e) {}
                     if (Array.isArray(data.folders) && data.folders.length > 0) {
                       setCloudFolders(data.folders);
                     }
@@ -207,6 +211,9 @@ function GalleryApp() {
               }
             } catch (e) {}
             setPhotosList(data.photos);
+            try {
+              localStorage.setItem('user_gallery_photos', JSON.stringify(data.photos));
+            } catch (e) {}
           }
           if (Array.isArray(data.folders) && data.folders.length > 0) {
             setCloudFolders(data.folders);
@@ -232,9 +239,11 @@ function GalleryApp() {
   // Compute folders dynamically from cloud folders + photos
   const availableFolders = useMemo(() => {
     const foldersMap = new Map();
+    const normalize = (p) => (p || '/').replace(/\/+$/, '').toLowerCase() || '/';
 
     cloudFolders.forEach((f) => {
-      foldersMap.set(f.path, {
+      const key = normalize(f.path);
+      foldersMap.set(key, {
         name: f.name,
         path: f.path,
         photos: []
@@ -242,16 +251,17 @@ function GalleryApp() {
     });
 
     photosList.forEach((photo) => {
-      const path = photo.folderPath || (photo.src?.startsWith('/Pics') ? '/Pics' : '/');
-      const name = photo.folder || (path === '/' ? 'Root Library' : path.replace(/^\/+/, ''));
-      if (!foldersMap.has(path)) {
-        foldersMap.set(path, {
+      const rawPath = photo.folderPath || (photo.src?.startsWith('/Pics') ? '/Pics' : '/');
+      const key = normalize(rawPath);
+      const name = photo.folder || (key === '/' ? 'Root Library' : rawPath.replace(/^\/+/, ''));
+      if (!foldersMap.has(key)) {
+        foldersMap.set(key, {
           name,
-          path,
+          path: rawPath,
           photos: []
         });
       }
-      foldersMap.get(path).photos.push(photo);
+      foldersMap.get(key).photos.push(photo);
     });
 
     return Array.from(foldersMap.values());
@@ -265,7 +275,13 @@ function GalleryApp() {
         if (cat === 'Videos') {
           counts[cat] = photosList.filter((p) => p.mediaType === 'video' || p.category === 'Videos').length;
         } else {
-          counts[cat] = photosList.filter((p) => p.category === cat || p.folder === cat || p.folderPath === `/${cat}`).length;
+          const catNorm = cat.toLowerCase();
+          counts[cat] = photosList.filter((p) => {
+            const photoCat = (p.category || '').toLowerCase();
+            const photoFolder = (p.folder || '').toLowerCase();
+            const photoFolderPath = (p.folderPath || '').toLowerCase();
+            return photoCat === catNorm || photoFolder === catNorm || photoFolderPath === `/${catNorm}`;
+          }).length;
         }
       }
     });
@@ -284,14 +300,16 @@ function GalleryApp() {
         // Folder match
         if (activeCategory === 'Folders') {
           if (selectedFolderPath) {
+            const normalize = (p) => (p || '/').replace(/\/+$/, '').toLowerCase() || '/';
             const photoPath = photo.folderPath || (photo.src?.startsWith('/Pics') ? '/Pics' : '/');
-            if (photoPath !== selectedFolderPath) return false;
+            if (normalize(photoPath) !== normalize(selectedFolderPath)) return false;
           }
         } else if (activeCategory === 'Videos') {
           if (photo.mediaType !== 'video' && photo.category !== 'Videos') return false;
         } else if (activeCategory !== 'All') {
-          const matchCategory = photo.category === activeCategory;
-          const matchFolder = photo.folder === activeCategory || photo.folderPath === `/${activeCategory}`;
+          const activeNorm = activeCategory.toLowerCase();
+          const matchCategory = (photo.category || '').toLowerCase() === activeNorm;
+          const matchFolder = (photo.folder || '').toLowerCase() === activeNorm || (photo.folderPath || '').toLowerCase() === `/${activeNorm}`;
           if (!matchCategory && !matchFolder) return false;
         }
 

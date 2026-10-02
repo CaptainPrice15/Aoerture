@@ -5,6 +5,7 @@ export const CATEGORIES = [
   "Kedarnath",
   "Badrinath",
   "Haridwar",
+  "Tunganath",
   "Pics",
   "Videos"
 ];
@@ -29,6 +30,10 @@ export const INITIAL_FOLDERS = [
   {
     "name": "Haridwar",
     "path": "/Haridwar"
+  },
+  {
+    "name": "Tunganath",
+    "path": "/Tunganath"
   },
   {
     "name": "Pics",
@@ -2924,12 +2929,12 @@ export const photos = [
   {
     "id": "6ab2a13bead997d09a731687",
     "title": "Frame 2025-05-23 18:59",
-    "category": "Haridwar",
-    "folder": "Haridwar",
-    "folderPath": "/Haridwar",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
     "mediaType": "photo",
     "mime": "image/heic",
-    "location": "ImageKit /Haridwar",
+    "location": "ImageKit /Kedarnath",
     "date": "2025-05-23",
     "aspectRatio": "3/2",
     "width": 4000,
@@ -2937,7 +2942,7 @@ export const photos = [
     "featured": false,
     "description": "Original photo streamed from your ImageKit cloud folder: IMG20250523185910.heic",
     "tags": [
-      "haridwar",
+      "kedarnath",
       "photo",
       "realme 10 pro+ 5g",
       "imagekit"
@@ -3141,12 +3146,12 @@ export const photos = [
   {
     "id": "6ab2a13dead997d09a734c6c",
     "title": "Frame 2025-05-23 19:29",
-    "category": "Haridwar",
-    "folder": "Haridwar",
-    "folderPath": "/Haridwar",
+    "category": "Kedarnath",
+    "folder": "Kedarnath",
+    "folderPath": "/Kedarnath",
     "mediaType": "photo",
     "mime": "image/heic",
-    "location": "ImageKit /Haridwar",
+    "location": "ImageKit /Kedarnath",
     "date": "2025-05-23",
     "aspectRatio": "3/2",
     "width": 4000,
@@ -3154,7 +3159,7 @@ export const photos = [
     "featured": false,
     "description": "Original photo streamed from your ImageKit cloud folder: IMG20250523192949.heic",
     "tags": [
-      "haridwar",
+      "kedarnath",
       "photo",
       "realme 10 pro+ 5g",
       "imagekit"
@@ -5647,6 +5652,1658 @@ export const photos = [
       "aperture": "f/1.8",
       "shutterSpeed": "1/25s",
       "iso": "3200"
+    }
+  },
+  {
+    "id": "6abf2793ead997d09aed6ba1",
+    "title": "Frame 2026-05-05 05:10",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260505051027.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260505051027.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/33s",
+      "iso": "3200"
+    }
+  },
+  {
+    "id": "6abf2793ead997d09aed7680",
+    "title": "Frame 2026-05-05 05:42",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/jpeg",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-05",
+    "aspectRatio": "3/2",
+    "width": 1373,
+    "height": 1030,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG_20260505_054245.jpg",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG_20260505_054245.jpg",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "1373 × 1030",
+      "focalLength": "Native",
+      "aperture": "f/1.75",
+      "shutterSpeed": "Cloud CDN",
+      "iso": "100"
+    }
+  },
+  {
+    "id": "6abf2794ead997d09aed9651",
+    "title": "Frame 2026-05-05 05:28",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260505052859.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260505052859.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/100s",
+      "iso": "640"
+    }
+  },
+  {
+    "id": "6abf2794ead997d09aed9a03",
+    "title": "Frame 2026-05-05 05:33",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-05",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260505053321.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260505053321.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/50s",
+      "iso": "125"
+    }
+  },
+  {
+    "id": "6abf2795ead997d09aedae16",
+    "title": "Frame 2026-05-05 05:10",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260505051011.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260505051011.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/25s",
+      "iso": "4000"
+    }
+  },
+  {
+    "id": "6abf2795ead997d09aedb0d4",
+    "title": "Frame 2026-05-05 05:40",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-05",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260505054033.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260505054033.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/100s",
+      "iso": "125"
+    }
+  },
+  {
+    "id": "6abf2795ead997d09aedb707",
+    "title": "Frame 2026-05-05 05:10",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260505051043.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260505051043.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/20s",
+      "iso": "2500"
+    }
+  },
+  {
+    "id": "6abf2795ead997d09aedbe55",
+    "title": "Frame 2026-05-03 17:07",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-03",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260503170732.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260503170732.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/275s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6abf2796ead997d09aedc63f",
+    "title": "Frame 2026-05-03 17:15",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-03",
+    "aspectRatio": "3/2",
+    "width": 3264,
+    "height": 2448,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260503171536.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260503171536.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3264 × 2448",
+      "focalLength": "1.7 mm",
+      "aperture": "f/2.2",
+      "shutterSpeed": "1/764s",
+      "iso": "64"
+    }
+  },
+  {
+    "id": "6abf2796ead997d09aedd1ca",
+    "title": "Frame 2026-05-04 07:18",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504071848.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504071848.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/136s",
+      "iso": "100"
+    }
+  },
+  {
+    "id": "6abf2796ead997d09aedd2ea",
+    "title": "Frame 2026-05-04 08:15",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504081533.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504081533.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/186s",
+      "iso": "100"
+    }
+  },
+  {
+    "id": "6abf2796ead997d09aedd2ee",
+    "title": "Frame 2026-05-04 19:22",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504192259.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504192259.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/13s",
+      "iso": "12800"
+    }
+  },
+  {
+    "id": "6abf2796ead997d09aeddbf5",
+    "title": "Frame 2026-05-04 07:39",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504073917.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504073917.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/200s",
+      "iso": "64"
+    }
+  },
+  {
+    "id": "6abf2796ead997d09aeddd06",
+    "title": "Frame 2026-05-05 05:41",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-05",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260505054110.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260505054110.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/100s",
+      "iso": "100"
+    }
+  },
+  {
+    "id": "6abf2796ead997d09aede0c3",
+    "title": "Frame 2026-05-03 17:27",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-03",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260503172725.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260503172725.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/385s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6abf2796ead997d09aede19b",
+    "title": "Frame 2026-05-04 10:59",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504105927.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504105927.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/622s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6abf2797ead997d09aede538",
+    "title": "Frame 2026-05-04 08:15",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504081538.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504081538.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/196s",
+      "iso": "100"
+    }
+  },
+  {
+    "id": "6abf2797ead997d09aede87c",
+    "title": "Frame 2026-05-05 05:24",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260505052416.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260505052416.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/32s",
+      "iso": "400"
+    }
+  },
+  {
+    "id": "6abf2797ead997d09aedef6e",
+    "title": "Frame 2026-05-04 11:57",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504115720.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504115720.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/449s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6abf2797ead997d09aedf731",
+    "title": "Frame 2026-05-04 11:57",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504115747.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504115747.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/337s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6abf2797ead997d09aedfa87",
+    "title": "Frame 2026-05-04 07:18",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504071843.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504071843.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/160s",
+      "iso": "100"
+    }
+  },
+  {
+    "id": "6abf2797ead997d09aedfcf2",
+    "title": "Frame 2026-05-04 10:24",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 3264,
+    "height": 2448,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504102400.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504102400.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3264 × 2448",
+      "focalLength": "1.7 mm",
+      "aperture": "f/2.2",
+      "shutterSpeed": "1/1018s",
+      "iso": "64"
+    }
+  },
+  {
+    "id": "6abf2797ead997d09aedfd72",
+    "title": "Frame 2026-05-04 11:57",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504115754.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504115754.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/289s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6abf2797ead997d09aee00ff",
+    "title": "Frame 2026-05-04 11:57",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504115726.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504115726.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/341s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6abf2797ead997d09aee0101",
+    "title": "Frame 2026-05-03 17:07",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-03",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260503170724.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260503170724.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/370s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6abf2797ead997d09aee03ae",
+    "title": "Frame 2026-05-05 05:28",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260505052849.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260505052849.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/100s",
+      "iso": "500"
+    }
+  },
+  {
+    "id": "6abf2798ead997d09aee04f1",
+    "title": "Frame 2026-05-03 17:15",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-03",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260503171529.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260503171529.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/332s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6abf2798ead997d09aee0ab0",
+    "title": "Frame 2026-05-05 05:24",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260505052403.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260505052403.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/28s",
+      "iso": "400"
+    }
+  },
+  {
+    "id": "6abf2798ead997d09aee0cbe",
+    "title": "Frame 2026-05-04 07:39",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504073907.heic (1).heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504073907.heic (1).heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/200s",
+      "iso": "64"
+    }
+  },
+  {
+    "id": "6abf2798ead997d09aee0dc7",
+    "title": "Frame 2026-05-04 07:51",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504075158.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504075158.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/200s",
+      "iso": "80"
+    }
+  },
+  {
+    "id": "6abf2798ead997d09aee1b68",
+    "title": "Frame 2026-05-03 14:24",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-03",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260503142438.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260503142438.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/210s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6abf2798ead997d09aee20c0",
+    "title": "Frame 2026-05-04 08:15",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504081542.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504081542.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/184s",
+      "iso": "100"
+    }
+  },
+  {
+    "id": "6abf2799ead997d09aee23f0",
+    "title": "Frame 2026-05-05 05:24",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260505052423.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260505052423.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/50s",
+      "iso": "500"
+    }
+  },
+  {
+    "id": "6abf2799ead997d09aee2582",
+    "title": "Frame 2026-05-04 11:57",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504115732.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504115732.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/334s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6abf2799ead997d09aee26a8",
+    "title": "Frame 2026-05-05 05:32",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-05",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260505053253.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260505053253.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/50s",
+      "iso": "100"
+    }
+  },
+  {
+    "id": "6abf2799ead997d09aee2731",
+    "title": "Frame 2026-05-04 09:05",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504090557.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504090557.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/200s",
+      "iso": "64"
+    }
+  },
+  {
+    "id": "6abf2799ead997d09aee2764",
+    "title": "Frame 2026-05-04 09:05",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504090529.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504090529.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/197s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6abf2799ead997d09aee27a4",
+    "title": "Frame 2026-05-04 07:28",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504072827.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504072827.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/164s",
+      "iso": "100"
+    }
+  },
+  {
+    "id": "6abf2799ead997d09aee283f",
+    "title": "Frame 2026-05-04 10:59",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504105920.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504105920.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/593s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6abf2799ead997d09aee2d67",
+    "title": "Frame 2026-05-04 07:01",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504070117.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504070117.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/120s",
+      "iso": "320"
+    }
+  },
+  {
+    "id": "6abf2799ead997d09aee2ec8",
+    "title": "Frame 2026-05-07 07:55",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/jpeg",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG_20260507_075553.jpg",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG_20260507_075553.jpg",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "Native",
+      "aperture": "f/1.75",
+      "shutterSpeed": "Cloud CDN",
+      "iso": "12800"
+    }
+  },
+  {
+    "id": "6abf2799ead997d09aee2f1b",
+    "title": "Frame 2026-05-04 19:32",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504193204.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504193204.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/25s",
+      "iso": "5000"
+    }
+  },
+  {
+    "id": "6abf2799ead997d09aee3441",
+    "title": "Frame 2026-05-03 14:24",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-03",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260503142442.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260503142442.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/233s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6abf2799ead997d09aee3737",
+    "title": "Frame 2026-05-05 05:23",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260505052332.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260505052332.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/50s",
+      "iso": "640"
+    }
+  },
+  {
+    "id": "6abf2799ead997d09aee386a",
+    "title": "Frame 2026-05-04 09:05",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504090539.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504090539.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/218s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6abf2799ead997d09aee39f9",
+    "title": "Frame 2026-05-03 14:24",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-03",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260503142447.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260503142447.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/298s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6abf2799ead997d09aee3b5c",
+    "title": "Frame 2026-05-04 07:01",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504070114.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504070114.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/120s",
+      "iso": "320"
+    }
+  },
+  {
+    "id": "6abf2799ead997d09aee3b6e",
+    "title": "Frame 2026-05-04 19:31",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504193122.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504193122.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/13s",
+      "iso": "12800"
+    }
+  },
+  {
+    "id": "6abf2799ead997d09aee3beb",
+    "title": "Frame 2026-05-04 09:05",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504090534.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504090534.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/200s",
+      "iso": "64"
+    }
+  },
+  {
+    "id": "6abf2799ead997d09aee3d34",
+    "title": "Frame 2026-05-03 11:22",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-03",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260503112205.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260503112205.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/368s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6abf2799ead997d09aee4122",
+    "title": "Frame 2026-05-03 11:40",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-03",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260503114018.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260503114018.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/233s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6abf2799ead997d09aee42d4",
+    "title": "Frame 2026-05-04 06:16",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504061622.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504061622.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/25s",
+      "iso": "2500"
+    }
+  },
+  {
+    "id": "6abf279aead997d09aee45a4",
+    "title": "Frame 2026-05-04 10:24",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504102406.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504102406.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/467s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6abf279aead997d09aee4654",
+    "title": "Frame 2026-05-04 07:28",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504072839.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504072839.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/120s",
+      "iso": "160"
+    }
+  },
+  {
+    "id": "6abf279aead997d09aee47f4",
+    "title": "Frame 2026-05-04 07:18",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "3/2",
+    "width": 4000,
+    "height": 3000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504071852.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504071852.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "4000 × 3000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/120s",
+      "iso": "160"
+    }
+  },
+  {
+    "id": "6abf279aead997d09aee4899",
+    "title": "Frame 2026-05-04 07:28",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504072833.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504072833.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/120s",
+      "iso": "160"
+    }
+  },
+  {
+    "id": "6abf279aead997d09aee4cbb",
+    "title": "Frame 2026-05-04 06:49",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-04",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260504064920.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260504064920.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/60s",
+      "iso": "500"
+    }
+  },
+  {
+    "id": "6abf279aead997d09aee505b",
+    "title": "Frame 2026-05-05 09:11",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-05",
+    "aspectRatio": "4/5",
+    "width": 3000,
+    "height": 4000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260505091118.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260505091118.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "3000 × 4000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/449s",
+      "iso": "50"
+    }
+  },
+  {
+    "id": "6abf279cead997d09aee8e09",
+    "title": "Frame 2026-05-05 05:41",
+    "category": "Tunganath",
+    "folder": "Tunganath",
+    "folderPath": "/Tunganath",
+    "mediaType": "photo",
+    "mime": "image/heif",
+    "location": "ImageKit /Tunganath",
+    "date": "2026-05-05",
+    "aspectRatio": "3/2",
+    "width": 12000,
+    "height": 9000,
+    "featured": false,
+    "description": "Original photo streamed from your ImageKit cloud folder: IMG20260505054133.heic.heif",
+    "tags": [
+      "Tunganath"
+    ],
+    "src": "/IMG20260505054133.heic.heif",
+    "exif": {
+      "camera": "realme 10 Pro+ 5G",
+      "lens": "12000 × 9000",
+      "focalLength": "5.2 mm",
+      "aperture": "f/1.8",
+      "shutterSpeed": "1/102s",
+      "iso": "100"
     }
   }
 ];
