@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   X,
   Camera,
@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { getThumbnailUrl, isVideoSource, downloadMedia } from '../utils/imagekit';
 import { useAuth } from '../context/AuthContext';
+import { recordPhotoView, recordPhotoDownload } from '../utils/analytics';
 
 export const ExifDrawer = ({
   photo,
@@ -35,6 +36,14 @@ export const ExifDrawer = ({
   const [copied, setCopied] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const [isDownloaded, setIsDownloaded] = useState(false);
+
+  useEffect(() => {
+    if (isOpen && photo?.id) {
+      try {
+        recordPhotoView(photo.id);
+      } catch (err) {}
+    }
+  }, [isOpen, photo?.id]);
 
   if (!isOpen || !photo) return null;
 
@@ -75,6 +84,9 @@ export const ExifDrawer = ({
     setIsDownloading(true);
     try {
       await downloadMedia(photo);
+      try {
+        recordPhotoDownload(photo.id);
+      } catch (err) {}
       setIsDownloaded(true);
       setTimeout(() => setIsDownloaded(false), 2000);
     } catch (err) {
@@ -312,11 +324,11 @@ export const ExifDrawer = ({
               </div>
             )}
 
-            {/* Admin Management Section */}
-            {user?.role === 'admin' && (
+            {/* Management Section (Admin / Editor) */}
+            {(user?.role === 'admin' || user?.role === 'userstd') && (
               <div className="p-3 rounded-xl bg-purple-50 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-800/40 space-y-2">
                 <span className="text-[11px] font-bold text-purple-700 dark:text-purple-300 uppercase tracking-wider block">
-                  Admin Tools
+                  {user?.role === 'admin' ? 'Admin Tools' : 'Management Tools'}
                 </span>
                 <div className="flex items-center gap-2">
                   <button
@@ -326,18 +338,20 @@ export const ExifDrawer = ({
                     <Edit3 className="w-3.5 h-3.5" />
                     <span>Edit Metadata</span>
                   </button>
-                  <button
-                    onClick={() => {
-                      if (window.confirm(`Are you sure you want to delete "${photo.title}"?`)) {
-                        if (onDelete) onDelete(photo.id);
-                        onClose();
-                      }
-                    }}
-                    className="py-1.5 px-3 rounded-lg text-xs font-semibold bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800 flex items-center justify-center gap-1.5 cursor-pointer"
-                  >
-                    <Trash2 className="w-3.5 h-3.5" />
-                    <span>Delete</span>
-                  </button>
+                  {user?.role === 'admin' && (
+                    <button
+                      onClick={() => {
+                        if (window.confirm(`Are you sure you want to delete "${photo.title}"?`)) {
+                          if (onDelete) onDelete(photo.id);
+                          onClose();
+                        }
+                      }}
+                      className="py-1.5 px-3 rounded-lg text-xs font-semibold bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800 flex items-center justify-center gap-1.5 cursor-pointer"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                      <span>Delete</span>
+                    </button>
+                  )}
                 </div>
               </div>
             )}

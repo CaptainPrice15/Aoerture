@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { recordPhotoLove } from '../utils/analytics';
 
 const AuthContext = createContext(null);
 
@@ -31,14 +32,29 @@ export const AuthProvider = ({ children }) => {
         if (stored) {
           const parsed = JSON.parse(stored);
           if (parsed && parsed.authenticated && !parsed.bypass) {
-            return (
-              parsed.user || {
-                id: parsed.role === 'admin' ? 'admin' : 'member',
-                name: parsed.role === 'admin' ? 'Admin' : 'Member',
-                email: parsed.role === 'admin' ? 'admin@aperture.local' : '',
-                role: parsed.role || 'user'
-              }
-            );
+            if (parsed.user) return parsed.user;
+            if (parsed.role === 'admin') {
+              return {
+                id: 'admin',
+                name: 'Admin',
+                email: 'admin@aperture.local',
+                role: 'admin'
+              };
+            }
+            if (parsed.role === 'userstd') {
+              return {
+                id: 'userstd',
+                name: 'Standard User (userstd)',
+                email: 'userstd@aperture.local',
+                role: 'userstd'
+              };
+            }
+            return {
+              id: 'member',
+              name: 'Member',
+              email: '',
+              role: parsed.role || 'user'
+            };
           }
           if (parsed?.bypass) {
             localStorage.removeItem(SESSION_STORAGE_KEY);
@@ -99,6 +115,9 @@ export const AuthProvider = ({ children }) => {
           localStorage.setItem(`${FAVORITES_KEY_PREFIX}${uid}`, JSON.stringify(updated));
         } catch (e) {}
       }
+      try {
+        recordPhotoLove(photoId, !exists);
+      } catch (err) {}
       return updated;
     });
   };
@@ -178,6 +197,35 @@ export const AuthProvider = ({ children }) => {
         } catch (e) {}
       }
       return { success: true, user: adminUser };
+    }
+
+    // Check if logging in as userstd (Standard User with NO delete permission):
+    const isExplicitUserStd =
+      identifier.toLowerCase() === 'userstd' || identifier.toLowerCase() === 'userstd@aperture.local';
+    const isUserStdMatch = isExplicitUserStd && (rawPassword === 'userstd' || rawPassword === 'userstd123');
+
+    if (isUserStdMatch) {
+      const stdUser = {
+        id: 'userstd',
+        name: 'Standard User (userstd)',
+        email: 'userstd@aperture.local',
+        role: 'userstd'
+      };
+      setUser(stdUser);
+      if (typeof window !== 'undefined') {
+        try {
+          localStorage.setItem(
+            SESSION_STORAGE_KEY,
+            JSON.stringify({
+              authenticated: true,
+              role: 'userstd',
+              user: stdUser,
+              timestamp: Date.now()
+            })
+          );
+        } catch (e) {}
+      }
+      return { success: true, user: stdUser };
     }
 
     // Check registered users
@@ -331,11 +379,25 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const isAdmin = user?.role === 'admin';
+  const isStandardUser = user?.role === 'userstd';
+  // Strictly admin has delete permissions; userstd and guests do not
+  const canDelete = isAdmin;
+  const canEdit = isAdmin || isStandardUser;
+  const canAddMedia = isAdmin || isStandardUser;
+  const canViewAnalytics = isAdmin;
+
   return (
     <AuthContext.Provider
       value={{
         isAuthenticated,
         user,
+        isAdmin,
+        isStandardUser,
+        canDelete,
+        canEdit,
+        canAddMedia,
+        canViewAnalytics,
         favorites,
         toggleFavorite,
         isFavorite,

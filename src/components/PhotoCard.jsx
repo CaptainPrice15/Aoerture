@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { getThumbnailUrl, getThumbnailSrcSet, getLqipUrl, isVideoSource, downloadMedia } from '../utils/imagekit';
 import { useAuth } from '../context/AuthContext';
+import { recordPhotoView, recordPhotoDownload } from '../utils/analytics';
 
 // Computes dynamic ambient glow color gradient based on category & tags
 const getAmbientGlowColor = (category = '') => {
@@ -94,6 +95,9 @@ export const PhotoCard = ({
     }
     tapTimeoutRef.current = setTimeout(() => {
       tapTimeoutRef.current = null;
+      try {
+        recordPhotoView(photo.id);
+      } catch (err) {}
       if (onClick) onClick();
     }, 280);
   };
@@ -104,6 +108,9 @@ export const PhotoCard = ({
     setIsDownloading(true);
     try {
       await downloadMedia(photo);
+      try {
+        recordPhotoDownload(photo.id);
+      } catch (err) {}
       setIsDownloaded(true);
       setTimeout(() => setIsDownloaded(false), 2000);
     } catch (err) {
@@ -298,22 +305,24 @@ export const PhotoCard = ({
                 <Maximize2 className="w-3.5 h-3.5" />
                 <span>Fullscreen</span>
               </button>
-              {user?.role === 'admin' && (
+              {(user?.role === 'admin' || user?.role === 'userstd') && (
                 <div className="flex items-center gap-1.5 pl-2 border-l border-slate-200 dark:border-zinc-800">
                   <button
                     onClick={handleEditClick}
-                    title="Edit details (Admin)"
+                    title="Edit details"
                     className="p-2 rounded-xl bg-purple-50 dark:bg-purple-950/40 text-purple-600 hover:bg-purple-100 transition-colors cursor-pointer"
                   >
                     <Edit3 className="w-3.5 h-3.5" />
                   </button>
-                  <button
-                    onClick={handleDeleteClick}
-                    title="Delete media (Admin)"
-                    className="p-2 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-rose-600 hover:bg-rose-100 transition-colors cursor-pointer"
-                  >
-                    <Trash2 className="w-3.5 h-3.5" />
-                  </button>
+                  {user?.role === 'admin' && (
+                    <button
+                      onClick={handleDeleteClick}
+                      title="Delete media (Admin)"
+                      className="p-2 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-rose-600 hover:bg-rose-100 transition-colors cursor-pointer"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  )}
                 </div>
               )}
             </div>
@@ -494,25 +503,27 @@ export const PhotoCard = ({
               </button>
             )}
 
-            {/* Admin Edit & Delete Quick Buttons */}
-            {user?.role === 'admin' && !isSelectMode && (
+            {/* Edit & Delete Quick Buttons */}
+            {(user?.role === 'admin' || user?.role === 'userstd') && !isSelectMode && (
               <>
                 <button
                   type="button"
                   onClick={handleEditClick}
-                  title="Edit photo (Admin)"
+                  title="Edit photo"
                   className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-purple-600/90 hover:bg-purple-500 active:scale-95 text-white border border-white/15 shadow-md flex items-center justify-center transition-colors cursor-pointer"
                 >
                   <Edit3 className="w-3.5 h-3.5" />
                 </button>
-                <button
-                  type="button"
-                  onClick={handleDeleteClick}
-                  title="Delete photo (Admin)"
-                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-rose-600/90 hover:bg-rose-500 active:scale-95 text-white border border-white/15 shadow-md flex items-center justify-center transition-colors cursor-pointer"
-                >
-                  <Trash2 className="w-3.5 h-3.5" />
-                </button>
+                {user?.role === 'admin' && (
+                  <button
+                    type="button"
+                    onClick={handleDeleteClick}
+                    title="Delete photo (Admin)"
+                    className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-rose-600/90 hover:bg-rose-500 active:scale-95 text-white border border-white/15 shadow-md flex items-center justify-center transition-colors cursor-pointer"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </button>
+                )}
               </>
             )}
           </div>

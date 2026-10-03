@@ -274,7 +274,40 @@ export const LoginModal = ({ isOpen, onClose, initialMode = 'signin' }) => {
               <ArrowRight className="w-4 h-4" />
             </button>
 
-            <div className="pt-2 text-center text-xs text-zinc-500 dark:text-zinc-400">
+            {/* Quick Preset Credentials Pills */}
+            <div className="pt-2 border-t border-zinc-100 dark:border-zinc-800/80">
+              <span className="text-[10px] uppercase font-bold tracking-wider text-zinc-400 block mb-2">
+                Quick Demo Accounts
+              </span>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSignInIdentifier('admin');
+                    setSignInPassword('admin');
+                    setError('');
+                  }}
+                  className="p-2 rounded-xl bg-purple-50 dark:bg-purple-950/40 hover:bg-purple-100 dark:hover:bg-purple-900/60 border border-purple-200/80 dark:border-purple-800/50 text-left transition-all active:scale-95 cursor-pointer"
+                >
+                  <p className="text-xs font-bold text-purple-700 dark:text-purple-300">Admin</p>
+                  <p className="text-[10px] text-zinc-500 dark:text-zinc-400">admin / admin (Full access)</p>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSignInIdentifier('userstd');
+                    setSignInPassword('userstd');
+                    setError('');
+                  }}
+                  className="p-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 border border-indigo-200/80 dark:border-indigo-800/50 text-left transition-all active:scale-95 cursor-pointer"
+                >
+                  <p className="text-xs font-bold text-indigo-700 dark:text-indigo-300">Standard User</p>
+                  <p className="text-[10px] text-zinc-500 dark:text-zinc-400">userstd (No delete)</p>
+                </button>
+              </div>
+            </div>
+
+            <div className="pt-1 text-center text-xs text-zinc-500 dark:text-zinc-400">
               Don't have an account?{' '}
               <button
                 type="button"

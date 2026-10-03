@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Lightbox from 'yet-another-react-lightbox';
 import Zoom from 'yet-another-react-lightbox/plugins/zoom';
 import Fullscreen from 'yet-another-react-lightbox/plugins/fullscreen';
@@ -8,10 +8,52 @@ import Captions from 'yet-another-react-lightbox/plugins/captions';
 import Video from 'yet-another-react-lightbox/plugins/video';
 import { getFullUrl, getThumbnailUrl, isVideoSource, getDownloadUrl, getDownloadFilename, downloadMedia } from '../utils/imagekit';
 import { useAuth } from '../context/AuthContext';
+import { recordPhotoView, recordPhotoDownload, recordTimeSpent } from '../utils/analytics';
 
 export const LightboxModal = ({ photos, currentIndex, isOpen, onClose, onIndexChange, onOpenExif }) => {
   const { isAuthenticated } = useAuth();
   const [isMobile, setIsMobile] = useState(() => (typeof window !== 'undefined' ? window.innerWidth < 640 : false));
+  const slideStartTimeRef = useRef(Date.now());
+  const currentPhotoIdRef = useRef(photos[currentIndex]?.id);
+
+  // Track active slide viewing duration and impression
+  useEffect(() => {
+    if (!isOpen) return;
+    const now = Date.now();
+    const prevId = currentPhotoIdRef.current;
+    if (prevId) {
+      const elapsedSeconds = (now - slideStartTimeRef.current) / 1000;
+      if (elapsedSeconds >= 1) {
+        try {
+          recordTimeSpent(prevId, elapsedSeconds);
+        } catch (e) {}
+      }
+    }
+
+    const currentPhoto = photos[currentIndex];
+    if (currentPhoto?.id) {
+      currentPhotoIdRef.current = currentPhoto.id;
+      slideStartTimeRef.current = now;
+      try {
+        recordPhotoView(currentPhoto.id);
+      } catch (e) {}
+    }
+  }, [currentIndex, isOpen, photos]);
+
+  // Flush final slide duration when lightbox closes
+  useEffect(() => {
+    return () => {
+      const prevId = currentPhotoIdRef.current;
+      if (prevId) {
+        const elapsedSeconds = (Date.now() - slideStartTimeRef.current) / 1000;
+        if (elapsedSeconds >= 1) {
+          try {
+            recordTimeSpent(prevId, elapsedSeconds);
+          } catch (e) {}
+        }
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -133,6 +175,9 @@ export const LightboxModal = ({ photos, currentIndex, isOpen, onClose, onIndexCh
                   });
                   if (photo) {
                     downloadMedia(photo);
+                    try {
+                      recordPhotoDownload(photo.id);
+                    } catch (e) {}
                   } else if (slide.download) {
                     const url = typeof slide.download === 'object' ? slide.download.url : slide.download;
                     const filename = typeof slide.download === 'object' ? slide.download.filename : undefined;

@@ -10,6 +10,7 @@ import {
   LogOut,
   ShieldCheck,
   User,
+  UserCheck,
   UserPlus,
   LogIn,
   Menu,
@@ -19,7 +20,8 @@ import {
   MapPin,
   Instagram,
   Twitter,
-  Mail
+  Mail,
+  BarChart3
 } from 'lucide-react';
 import { siteConfig } from '../data/siteConfig';
 import { useAuth } from '../context/AuthContext';
@@ -31,7 +33,9 @@ export const Navbar = ({
   onOpenCloudGuide,
   onOpenAddMedia,
   onOpenLogin,
-  totalPhotos
+  totalPhotos,
+  currentView = 'gallery',
+  onNavigateView
 }) => {
   const { isAuthenticated, user, logout } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -66,7 +70,14 @@ export const Navbar = ({
       <header className="sticky top-0 z-40 w-full backdrop-blur-xl bg-white/90 dark:bg-zinc-950/85 border-b border-slate-200/80 dark:border-zinc-800/60 shadow-[0_1px_12px_rgba(0,0,0,0.03)] transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2">
           {/* Brand / Logo */}
-          <a href="#" className="flex items-center gap-2.5 sm:gap-3 group min-w-0">
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              if (onNavigateView) onNavigateView('gallery');
+            }}
+            className="flex items-center gap-2.5 sm:gap-3 group min-w-0 text-left cursor-pointer"
+          >
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-tr from-purple-600 via-fuchsia-500 to-indigo-500 p-0.5 shadow-md shadow-purple-500/25 group-hover:shadow-purple-500/40 transition-all shrink-0">
               <div className="w-full h-full bg-white dark:bg-zinc-950 rounded-[14px] flex items-center justify-center transition-colors">
                 <Aperture className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600 dark:text-purple-400 group-hover:rotate-45 transition-transform duration-500" />
@@ -83,10 +94,26 @@ export const Navbar = ({
                 {siteConfig.photographer.title}
               </p>
             </div>
-          </a>
+          </button>
 
           {/* Desktop Action Buttons (Visible sm: and up) */}
           <div className="hidden sm:flex items-center gap-1.5 sm:gap-2 shrink-0">
+            {/* Admin-Only Analytics Dashboard Button */}
+            {user?.role === 'admin' && (
+              <button
+                onClick={() => onNavigateView && onNavigateView(currentView === 'analytics' ? 'gallery' : 'analytics')}
+                className={`flex items-center gap-1.5 px-3 py-1.5 sm:py-2 rounded-xl text-xs font-semibold active:scale-95 shadow-xs transition-all cursor-pointer ${
+                  currentView === 'analytics'
+                    ? 'bg-purple-600 text-white shadow-purple-600/30 ring-2 ring-purple-500/40'
+                    : 'text-purple-700 dark:text-purple-300 bg-purple-50/90 dark:bg-purple-950/60 hover:bg-purple-100 dark:hover:bg-purple-900/60 border border-purple-200/90 dark:border-purple-800/60'
+                }`}
+                title="Admin Portfolio Analytics Console"
+              >
+                <BarChart3 className="w-3.5 h-3.5" />
+                <span>Analytics</span>
+              </button>
+            )}
+
             {/* Add Media Button */}
             <button
               onClick={onOpenAddMedia}
@@ -125,6 +152,14 @@ export const Navbar = ({
                   <span className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 shadow-xs">
                     <ShieldCheck className="w-3.5 h-3.5" />
                     <span>Admin</span>
+                  </span>
+                ) : user?.role === 'userstd' ? (
+                  <span
+                    className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 border border-indigo-500/20 shadow-xs"
+                    title="Standard User (No delete permission)"
+                  >
+                    <UserCheck className="w-3.5 h-3.5" />
+                    <span className="max-w-[100px] truncate">userstd</span>
                   </span>
                 ) : (
                   <span
@@ -300,6 +335,11 @@ export const Navbar = ({
                     <ShieldCheck className="w-3 h-3" />
                     Admin
                   </span>
+                ) : user?.role === 'userstd' ? (
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-indigo-500/15 text-indigo-700 dark:text-indigo-400 border border-indigo-500/30 shrink-0">
+                    <UserCheck className="w-3 h-3" />
+                    userstd
+                  </span>
                 ) : (
                   <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-purple-500/15 text-purple-700 dark:text-purple-400 border border-purple-500/30 shrink-0">
                     <User className="w-3 h-3" />
@@ -352,6 +392,44 @@ export const Navbar = ({
                 </button>
               </div>
             </div>
+          )}
+
+          {/* Admin-Only Analytics Mobile Nav Button */}
+          {user?.role === 'admin' && (
+            <button
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                if (onNavigateView) onNavigateView(currentView === 'analytics' ? 'gallery' : 'analytics');
+              }}
+              className={`w-full flex items-center justify-between p-3.5 rounded-2xl border text-left active:scale-98 transition-all cursor-pointer ${
+                currentView === 'analytics'
+                  ? 'bg-purple-600 text-white border-purple-500 shadow-md shadow-purple-600/25'
+                  : 'bg-purple-50/80 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 border-purple-200/80 dark:border-purple-800/40 hover:bg-purple-100 dark:hover:bg-purple-900/50'
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <div
+                  className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
+                    currentView === 'analytics'
+                      ? 'bg-white/20'
+                      : 'bg-purple-100 dark:bg-purple-900/60 text-purple-600 dark:text-purple-400'
+                  }`}
+                >
+                  <BarChart3 className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-xs font-bold leading-tight">Admin Analytics</p>
+                  <p
+                    className={`text-[11px] ${
+                      currentView === 'analytics' ? 'text-purple-100' : 'text-zinc-500 dark:text-zinc-400'
+                    }`}
+                  >
+                    Views, downloads & retention
+                  </p>
+                </div>
+              </div>
+              <ChevronRight className="w-4 h-4 opacity-75" />
+            </button>
           )}
 
           {/* Quick Action: Add Media Banner */}

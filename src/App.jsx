@@ -25,6 +25,8 @@ import { Footer } from './components/Footer';
 import { useImageProtection } from './hooks/useImageProtection';
 import { photos as initialPhotos, INITIAL_FOLDERS } from './data/photos';
 import { downloadMedia } from './utils/imagekit';
+import { recordPhotoDownload } from './utils/analytics';
+import { AnalyticsPage } from './components/AnalyticsPage';
 
 // Code-split heavy modals and Lightbox to drastically reduce initial mobile load time
 const LightboxModal = lazy(() => import('./components/LightboxModal').then((m) => ({ default: m.LightboxModal })));
@@ -41,6 +43,15 @@ function GalleryApp() {
   const { toastMessage } = useImageProtection(isAuthenticated);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [authMode, setAuthMode] = useState('signin');
+  const [currentView, setCurrentView] = useState(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('view') === 'analytics') return 'analytics';
+      } catch (e) {}
+    }
+    return 'gallery';
+  });
 
   // State
   const [photosList, setPhotosList] = useState(() => {
@@ -131,6 +142,10 @@ function GalleryApp() {
   }, []);
 
   const handleDeletePhoto = useCallback((photoId) => {
+    if (user?.role !== 'admin') {
+      alert('Permission denied: Only administrators can delete photos.');
+      return;
+    }
     setPhotosList((prev) => {
       const updated = prev.filter((p) => p.id !== photoId);
       if (typeof window !== 'undefined') {
@@ -140,7 +155,7 @@ function GalleryApp() {
       }
       return updated;
     });
-  }, []);
+  }, [user?.role]);
 
   // 1. Initial Deep-linking check on page mount
   useEffect(() => {
@@ -151,6 +166,11 @@ function GalleryApp() {
       const folderParam = params.get('folder');
       const layoutParam = params.get('layout');
       const collectionParam = params.get('collection');
+      const viewParam = params.get('view');
+
+      if (viewParam === 'analytics') {
+        setCurrentView('analytics');
+      }
 
       if (layoutParam && ['masonry', 'grid', 'editorial'].includes(layoutParam)) {
         setLayoutMode(layoutParam);
@@ -433,9 +453,15 @@ function GalleryApp() {
         url.searchParams.delete('folder');
       }
 
+      if (currentView === 'analytics') {
+        url.searchParams.set('view', 'analytics');
+      } else {
+        url.searchParams.delete('view');
+      }
+
       window.history.replaceState({}, '', url.toString());
     } catch (e) {}
-  }, [lightboxIndex, activeCategory, selectedFolderPath, filteredPhotos]);
+  }, [lightboxIndex, activeCategory, selectedFolderPath, filteredPhotos, currentView]);
 
   const handleResetFilters = useCallback(() => {
     setActiveCategory('All');
@@ -489,6 +515,9 @@ function GalleryApp() {
       const toDownload = photosList.filter((p) => selectedPhotoIds.has(p.id));
       for (const photo of toDownload) {
         await downloadMedia(photo);
+        try {
+          recordPhotoDownload(photo.id);
+        } catch (e) {}
         await new Promise((r) => setTimeout(r, 350));
       }
       setCollectionToast(`Downloaded ${toDownload.length} items successfully`);
@@ -554,11 +583,50 @@ function GalleryApp() {
           setIsLoginOpen(true);
         }}
         totalPhotos={photosList.length}
+        currentView={currentView}
+        onNavigateView={setCurrentView}
       />
 
       <main className="flex-1">
-        {/* Photographer Intro & Stats (Hidden in Cinema Focus Mode) */}
-        {!isFocusMode && <HeroSection totalPhotos={photosList.length} />}
+        {currentView === 'analytics' ? (
+          user?.role === 'admin' ? (
+            <AnalyticsPage
+              photos={photosList}
+              onBack={() => setCurrentView('gallery')}
+              onSelectPhoto={handleOpenLightbox}
+            />
+          ) : (
+            <div className="max-w-md mx-auto py-24 px-4 text-center">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-3xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 flex items-center justify-center text-rose-600 dark:text-rose-400">
+                <ShieldAlert className="w-8 h-8" />
+              </div>
+              <h2 className="text-xl font-bold text-zinc-900 dark:text-white">Admin Access Restricted</h2>
+              <p className="mt-2 text-xs text-zinc-500 leading-relaxed">
+                The Analytics Console is confidential and only accessible when logged in with administrator credentials.
+              </p>
+              <div className="mt-6 flex items-center justify-center gap-2.5">
+                <button
+                  onClick={() => setCurrentView('gallery')}
+                  className="px-4 py-2 rounded-xl text-xs font-semibold bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-200 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors cursor-pointer"
+                >
+                  Return to Gallery
+                </button>
+                <button
+                  onClick={() => {
+                    setAuthMode('signin');
+                    setIsLoginOpen(true);
+                  }}
+                  className="px-4 py-2 rounded-xl text-xs font-semibold bg-purple-600 hover:bg-purple-500 text-white shadow-md shadow-purple-600/20 transition-all cursor-pointer"
+                >
+                  Sign in as Admin
+                </button>
+              </div>
+            </div>
+          )
+        ) : (
+          <>
+            {/* Photographer Intro & Stats (Hidden in Cinema Focus Mode) */}
+            {!isFocusMode && <HeroSection totalPhotos={photosList.length} />}
 
         {/* Sync Notice Banner if in Static Mode */}
         {!isFocusMode && !isLiveSync && showSyncBanner && (
@@ -729,6 +797,8 @@ function GalleryApp() {
                 onToggleSelect={handleToggleSelect}
               />
             )}
+          </>
+        )}
           </>
         )}
       </main>
