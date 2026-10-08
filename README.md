@@ -121,6 +121,18 @@ Pic_display/
    - `VITE_IMAGEKIT_URL_ENDPOINT` = `https://ik.imagekit.io/your_id`
 5. Click **Deploy**.
 
+## Server-side admin and uploads
+
+Set these server-side environment variables for administrator sign-in and uploads:
+
+- `ADMIN_PASSWORD`: a strong, unique administrator password.
+- `SESSION_SECRET`: a random secret with at least 32 characters (generate one with `openssl rand -base64 48`).
+- `IMAGEKIT_PRIVATE_KEY`: the ImageKit private API key.
+
+Do not prefix secrets with `VITE_`; Vite bundles `VITE_` values into browser code. Direct uploads require an administrator session and currently accept files up to 3 MB. Adding an ImageKit path or URL from the modal only saves that reference in the current browser.
+
+The included API routes use Vercel's function format. Netlify deployments need equivalent Netlify Functions for administrator sign-in and uploads.
+
 ### Deploy to Netlify
 1. Go to [netlify.com](https://netlify.com) and select **"Add new site"** -> **"Import an existing project"**.
 2. Connect your GitHub repository.

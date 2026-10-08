@@ -32,6 +32,8 @@ export const AuthProvider = ({ children }) => {
         if (stored) {
           const parsed = JSON.parse(stored);
           if (parsed && parsed.authenticated && !parsed.bypass) {
+            // Browser storage is user-controlled and cannot establish an admin session.
+            if (parsed.role === 'admin' || parsed.user?.role === 'admin') return null;
             if (parsed.user) return parsed.user;
             if (parsed.role === 'admin') {
               return {
@@ -68,6 +70,19 @@ export const AuthProvider = ({ children }) => {
   });
 
   const isAuthenticated = !!user;
+
+  useEffect(() => {
+    let active = true;
+    fetch('/api/auth', { credentials: 'same-origin' })
+      .then((response) => response.ok ? response.json() : null)
+      .then((session) => {
+        if (active && session?.authenticated) {
+          setUser({ id: 'admin', name: 'Admin', email: 'admin', role: 'admin' });
+        }
+      })
+      .catch(() => {});
+    return () => { active = false; };
+  }, []);
 
   // Favorites state for active user (or guest)
   const [favorites, setFavorites] = useState(() => {
@@ -126,10 +141,6 @@ export const AuthProvider = ({ children }) => {
     return favorites.includes(photoId);
   };
 
-  const getAdminPassword = () => {
-    return import.meta.env.VITE_ADMIN_PASSWORD || 'admin';
-  };
-
   const getRegisteredUsers = () => {
     if (typeof window === 'undefined') return [];
     try {
@@ -168,35 +179,23 @@ export const AuthProvider = ({ children }) => {
       rawPassword = identifierOrPassword || '';
     }
 
-    const adminPass = getAdminPassword();
-
-    // Check if logging in as Admin:
-    const isExplicitAdmin = identifier.toLowerCase() === 'admin';
-    const isPasswordOnlyAdminMatch = !identifier && rawPassword === adminPass;
-    const isAdminMatch = (isExplicitAdmin || isPasswordOnlyAdminMatch) && rawPassword === adminPass;
-
-    if (isAdminMatch) {
-      const adminUser = {
-        id: 'admin',
-        name: 'Admin',
-        email: 'admin@aperture.local',
-        role: 'admin'
-      };
-      setUser(adminUser);
-      if (typeof window !== 'undefined') {
-        try {
-          localStorage.setItem(
-            SESSION_STORAGE_KEY,
-            JSON.stringify({
-              authenticated: true,
-              role: 'admin',
-              user: adminUser,
-              timestamp: Date.now()
-            })
-          );
-        } catch (e) {}
+    if (identifier.toLowerCase() === 'admin' || identifier.toLowerCase() === 'admin@aperture.local') {
+      try {
+        const response = await fetch('/api/auth', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'same-origin',
+          body: JSON.stringify({ password: rawPassword })
+        });
+        const result = await response.json();
+        if (!response.ok) return { success: false, error: result.error || 'Administrator sign-in failed.' };
+        const adminUser = result.user;
+        setUser(adminUser);
+        try { localStorage.removeItem(SESSION_STORAGE_KEY); } catch (e) {}
+        return { success: true, user: adminUser };
+      } catch {
+        return { success: false, error: 'Could not reach the server authentication endpoint.' };
       }
-      return { success: true, user: adminUser };
     }
 
     // Check if logging in as userstd (Standard User with NO delete permission):
@@ -267,31 +266,6 @@ export const AuthProvider = ({ children }) => {
         } catch (e) {}
       }
       return { success: true, user: safeUser };
-    }
-
-    // Direct password match for admin without username
-    if (rawPassword === adminPass) {
-      const adminUser = {
-        id: 'admin',
-        name: 'Admin',
-        email: 'admin@aperture.local',
-        role: 'admin'
-      };
-      setUser(adminUser);
-      if (typeof window !== 'undefined') {
-        try {
-          localStorage.setItem(
-            SESSION_STORAGE_KEY,
-            JSON.stringify({
-              authenticated: true,
-              role: 'admin',
-              user: adminUser,
-              timestamp: Date.now()
-            })
-          );
-        } catch (e) {}
-      }
-      return { success: true, user: adminUser };
     }
 
     return {
@@ -371,6 +345,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
+    if (user?.role === 'admin') {
+      fetch('/api/auth', { method: 'DELETE', credentials: 'same-origin' }).catch(() => {});
+    }
     setUser(null);
     if (typeof window !== 'undefined') {
       try {
@@ -383,8 +360,8 @@ export const AuthProvider = ({ children }) => {
   const isStandardUser = user?.role === 'userstd';
   // Strictly admin has delete permissions; userstd and guests do not
   const canDelete = isAdmin;
-  const canEdit = isAdmin || isStandardUser;
-  const canAddMedia = isAdmin || isStandardUser;
+  const canEdit = isAdmin;
+  const canAddMedia = isAdmin;
   const canViewAnalytics = isAdmin;
 
   return (

@@ -17,6 +17,7 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [], fo
   const [description, setDescription] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMsg, setSuccessMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
   const [previewError, setPreviewError] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
 
@@ -49,14 +50,20 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [], fo
   // Process dropped or selected file
   const handleFileProcess = (file) => {
     if (!file) return;
+    if (file.size > 3 * 1024 * 1024) {
+      setErrorMsg('Choose a file that is 3 MB or smaller.');
+      return;
+    }
 
     const isVid = file.type.startsWith('video/');
     const isImg = file.type.startsWith('image/');
 
     if (!isImg && !isVid) {
-      alert('Please upload an image or video file.');
+      setErrorMsg('Choose a supported image or video file.');
       return;
     }
+
+    setErrorMsg('');
 
     setMediaType(isVid ? 'video' : 'photo');
     if (isVid) {
@@ -145,6 +152,7 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [], fo
     if (!normalizedSrc) return;
 
     setIsSubmitting(true);
+    setErrorMsg('');
     const finalCategory = category === 'Custom' ? (customCategory.trim() || 'Gallery') : category;
     const isVid = mediaType === 'video' || isVideoSource(normalizedSrc);
     const folderName = selectedFolder === '/' ? 'Root Library' : selectedFolder.replace(/^\/+/, '');
@@ -164,28 +172,34 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [], fo
       tags: [isVid ? 'video' : 'photo', finalCategory.toLowerCase(), folderName.toLowerCase()].filter(Boolean),
       src: normalizedSrc,
       exif: {
-        camera: isVid ? 'Video Capture' : 'Digital Camera',
-        lens: isVid ? '1080p HD' : 'Standard Prime',
-        focalLength: 'Native',
-        aperture: isVid ? 'MP4' : 'Auto',
-        shutterSpeed: isVid ? 'Streaming' : '1/500s',
-        iso: 'Auto'
+        camera: 'Not available',
+        lens: 'Not available',
+        focalLength: 'Not available',
+        aperture: 'Not available',
+        shutterSpeed: 'Not available',
+        iso: 'Not available'
       }
     };
 
     try {
-      if (!normalizedSrc.startsWith('data:')) {
-        // Try saving to local dev server file if not data url
-        fetch('/api/add-photo', {
+      let savedPhoto = newPhoto;
+      if (sourceType === 'upload' && fileDataUrl.startsWith('data:')) {
+        const response = await fetch('/api/add-photo', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(newPhoto)
-        }).catch(() => {});
+          credentials: 'same-origin',
+          body: JSON.stringify({ photo: newPhoto, fileDataUrl })
+        });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || 'Upload failed.');
+        savedPhoto = result.photo;
       }
 
-      onAddMedia(newPhoto);
+      onAddMedia(savedPhoto);
 
-      setSuccessMsg(`"${newPhoto.title}" added to gallery successfully!`);
+      setSuccessMsg(sourceType === 'upload'
+        ? `"${newPhoto.title}" uploaded to ImageKit.`
+        : `"${newPhoto.title}" added to this browser's gallery only.`);
       setTimeout(() => {
         setSuccessMsg('');
         setSrcInput('');
@@ -197,6 +211,7 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [], fo
         onClose();
       }, 1000);
     } catch (err) {
+      setErrorMsg(err.message || 'Could not add this media.');
       setIsSubmitting(false);
     }
   };
@@ -219,7 +234,7 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [], fo
             </div>
             <div>
               <h2 className="text-sm sm:text-base font-bold text-zinc-900 dark:text-white">Add Picture or Video</h2>
-              <p className="text-[11px] sm:text-xs text-zinc-500 dark:text-zinc-400">Upload directly or link an ImageKit cloud file</p>
+              <p className="text-[11px] sm:text-xs text-zinc-500 dark:text-zinc-400">Files upload to ImageKit; linked paths stay in this browser</p>
             </div>
           </div>
           <button
@@ -266,7 +281,7 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [], fo
               <input
                 ref={fileInputRef}
                 type="file"
-                accept="image/*,video/*"
+                accept="image/jpeg,image/png,image/webp,image/gif,image/avif,video/mp4,video/webm"
                 className="hidden"
                 onChange={(e) => {
                   if (e.target.files && e.target.files[0]) {
@@ -301,7 +316,7 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [], fo
                     )}
                   </p>
                   <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5">
-                    or click to browse from your device (JPG, PNG, WebP, MP4)
+                    or click to browse from your device (images, MP4, WebM; 3 MB max)
                   </p>
                 </div>
               </div>
@@ -515,6 +530,12 @@ export const AddMediaModal = ({ isOpen, onClose, onAddMedia, categories = [], fo
             <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-medium flex items-center gap-2">
               <Check className="w-4 h-4" />
               <span>{successMsg}</span>
+            </div>
+          )}
+
+          {errorMsg && (
+            <div role="alert" className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 text-xs font-medium">
+              {errorMsg}
             </div>
           )}
 

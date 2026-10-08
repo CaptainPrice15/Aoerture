@@ -39,7 +39,7 @@ const EditPhotoModal = lazy(() => import('./components/EditPhotoModal').then((m)
 
 function GalleryApp() {
   const { theme, toggleTheme } = useTheme();
-  const { isAuthenticated, user, favorites } = useAuth();
+  const { isAuthenticated, user, favorites, canAddMedia } = useAuth();
   const { toastMessage } = useImageProtection(isAuthenticated);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [authMode, setAuthMode] = useState('signin');
@@ -771,12 +771,14 @@ function GalleryApp() {
                     <ArrowLeft className="w-3.5 h-3.5" />
                     <span>Back to All Folders</span>
                   </button>
-                  <button
-                    onClick={() => setIsAddMediaOpen(true)}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-purple-600 hover:bg-purple-500 text-white shadow-md shadow-purple-600/20 transition-all cursor-pointer"
-                  >
-                    <span>Add Media</span>
-                  </button>
+                  {canAddMedia && (
+                    <button
+                      onClick={() => setIsAddMediaOpen(true)}
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-purple-600 hover:bg-purple-500 text-white shadow-md shadow-purple-600/20 transition-all cursor-pointer"
+                    >
+                      <span>Add Media</span>
+                    </button>
+                  )}
                 </div>
               </div>
             ) : (

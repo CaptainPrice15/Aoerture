@@ -1,10 +1,11 @@
 /**
  * Portfolio Analytics Engine
  * Tracks views, downloads, favorites (loves), and time spent viewing media.
- * Data is persisted in localStorage and pre-seeded with realistic baseline metrics.
+ * Data is stored in this browser only. It is not a source of global analytics.
  */
 
-const ANALYTICS_STORAGE_KEY = 'aperture_analytics_store';
+// v2 intentionally starts clean; the old store contained generated demo counts.
+const ANALYTICS_STORAGE_KEY = 'aperture_analytics_store_v2';
 
 // Helper to get raw store
 export const getAnalyticsStore = () => {
@@ -30,45 +31,6 @@ export const saveAnalyticsStore = (store) => {
   } catch (e) {
     console.error('Failed to save analytics to localStorage:', e);
   }
-};
-
-/**
- * Initialize / Seed baseline realistic metrics for photos if store is empty
- */
-export const initializeAnalytics = (photos = []) => {
-  if (typeof window === 'undefined') return {};
-  const current = getAnalyticsStore();
-  if (Object.keys(current).length > 0) return current;
-
-  const seeded = {};
-  photos.forEach((photo, index) => {
-    // Generate organic, realistic distribution:
-    // Featured photos or top index photos get higher engagement
-    const baseMultiplier = photo.featured ? 3.5 : 1.0;
-    const recencyWeight = Math.max(0.4, 1.2 - (index / Math.max(photos.length, 1)) * 0.8);
-    
-    // Deterministic pseudo-random based on photo ID string for stable seed values
-    const hash = String(photo.id || index)
-      .split('')
-      .reduce((acc, char) => (acc * 31 + char.charCodeAt(0)) % 10000, 7);
-
-    const views = Math.floor((120 + (hash % 650)) * baseMultiplier * recencyWeight);
-    const downloads = Math.floor(views * (0.12 + ((hash % 15) / 100)));
-    const loves = Math.floor(views * (0.08 + ((hash % 20) / 100)));
-    const avgSecondsPerView = 12 + (hash % 38);
-    const timeSpent = views * avgSecondsPerView;
-
-    seeded[photo.id] = {
-      views,
-      downloads,
-      loves,
-      timeSpent, // in seconds
-      lastViewedAt: Date.now() - (hash % (14 * 86400 * 1000))
-    };
-  });
-
-  saveAnalyticsStore(seeded);
-  return seeded;
 };
 
 /**
@@ -309,11 +271,11 @@ export const getCategoryAnalytics = (photos = []) => {
 };
 
 /**
- * Reset and re-seed analytics data
+ * Clear analytics recorded in this browser
  */
-export const resetAnalyticsData = (photos = []) => {
+export const resetAnalyticsData = () => {
   if (typeof window !== 'undefined') {
-    localStorage.removeItem(ANALYTICS_STORAGE_KEY);
+    saveAnalyticsStore({});
   }
-  return initializeAnalytics(photos);
+  return {};
 };

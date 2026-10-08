@@ -37,7 +37,7 @@ export const Navbar = ({
   currentView = 'gallery',
   onNavigateView
 }) => {
-  const { isAuthenticated, user, logout } = useAuth();
+  const { isAuthenticated, user, logout, canAddMedia } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Lock body scroll when mobile menu is open
@@ -114,15 +114,16 @@ export const Navbar = ({
               </button>
             )}
 
-            {/* Add Media Button */}
-            <button
-              onClick={onOpenAddMedia}
-              className="flex items-center gap-1.5 px-3 py-1.5 sm:py-2 rounded-xl text-xs font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 active:scale-95 shadow-md shadow-purple-600/25 transition-all touch-manipulation cursor-pointer"
-              title="Add Picture or Video"
-            >
-              <Plus className="w-3.5 h-3.5" />
-              <span>Add Media</span>
-            </button>
+            {canAddMedia && (
+              <button
+                onClick={onOpenAddMedia}
+                className="flex items-center gap-1.5 px-3 py-1.5 sm:py-2 rounded-xl text-xs font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 active:scale-95 shadow-md shadow-purple-600/25 transition-all touch-manipulation cursor-pointer"
+                title="Add Picture or Video"
+              >
+                <Plus className="w-3.5 h-3.5" />
+                <span>Add Media</span>
+              </button>
+            )}
 
             {/* Cloud Storage Guide Modal Trigger */}
             <button
@@ -217,16 +218,17 @@ export const Navbar = ({
 
           {/* Mobile Action Buttons (Visible only below sm: <640px) */}
           <div className="flex sm:hidden items-center gap-1.5 shrink-0">
-            {/* Quick Add Media Button */}
-            <button
-              onClick={onOpenAddMedia}
-              className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 active:scale-95 shadow-md shadow-purple-600/25 transition-all touch-manipulation cursor-pointer"
-              title="Add Media"
-              aria-label="Add Picture or Video"
-            >
-              <Plus className="w-3.5 h-3.5" />
-              <span className="text-[11px] font-medium">Add</span>
-            </button>
+            {canAddMedia && (
+              <button
+                onClick={onOpenAddMedia}
+                className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 active:scale-95 shadow-md shadow-purple-600/25 transition-all touch-manipulation cursor-pointer"
+                title="Add Media"
+                aria-label="Add Picture or Video"
+              >
+                <Plus className="w-3.5 h-3.5" />
+                <span className="text-[11px] font-medium">Add</span>
+              </button>
+            )}
 
             {/* Quick Theme Toggle */}
             <button
@@ -432,25 +434,26 @@ export const Navbar = ({
             </button>
           )}
 
-          {/* Quick Action: Add Media Banner */}
-          <button
-            onClick={() => {
-              setIsMobileMenuOpen(false);
-              onOpenAddMedia();
-            }}
-            className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-gradient-to-r from-purple-600 via-fuchsia-600 to-indigo-600 text-white shadow-md shadow-purple-600/25 text-left active:scale-98 transition-all group cursor-pointer"
-          >
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center shrink-0">
-                <Plus className="w-5 h-5 text-white" />
+          {canAddMedia && (
+            <button
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                onOpenAddMedia();
+              }}
+              className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-gradient-to-r from-purple-600 via-fuchsia-600 to-indigo-600 text-white shadow-md shadow-purple-600/25 text-left active:scale-98 transition-all group cursor-pointer"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center shrink-0">
+                  <Plus className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <p className="text-xs font-bold leading-tight">Add Media</p>
+                  <p className="text-[11px] text-purple-100 opacity-90">Upload photo or video</p>
+                </div>
               </div>
-              <div>
-                <p className="text-xs font-bold leading-tight">Add Media</p>
-                <p className="text-[11px] text-purple-100 opacity-90">Upload photo or video</p>
-              </div>
-            </div>
-            <ChevronRight className="w-4 h-4 opacity-75 group-hover:translate-x-0.5 transition-transform" />
-          </button>
+              <ChevronRight className="w-4 h-4 opacity-75 group-hover:translate-x-0.5 transition-transform" />
+            </button>
+          )}
 
           {/* App Navigation Rows */}
           <div className="flex flex-col gap-2">

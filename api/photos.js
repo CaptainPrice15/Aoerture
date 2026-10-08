@@ -3,7 +3,7 @@
  * Securely communicates with ImageKit Media Library API using IMAGEKIT_PRIVATE_KEY
  */
 export default async function handler(req, res) {
-  const privateKey = process.env.IMAGEKIT_PRIVATE_KEY || process.env.VITE_IMAGEKIT_PRIVATE_KEY;
+  const privateKey = process.env.IMAGEKIT_PRIVATE_KEY;
 
   const defaultFolders = [
     { name: 'Pics', path: '/Pics' },

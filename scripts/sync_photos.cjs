@@ -16,7 +16,7 @@ try {
   });
 } catch (e) {}
 
-const privateKey = process.env.IMAGEKIT_PRIVATE_KEY || process.env.VITE_IMAGEKIT_PRIVATE_KEY;
+const privateKey = process.env.IMAGEKIT_PRIVATE_KEY;
 if (!privateKey) {
   console.error('No IMAGEKIT_PRIVATE_KEY found in process.env or .env');
   process.exit(1);

@@ -1,11 +1,21 @@
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
-import fs from 'node:fs';
-import path from 'node:path';
+import {
+  adminAuthIsConfigured,
+  createAdminToken,
+  getAdminSession,
+  setAdminCookie,
+  clearAdminCookie,
+  verifyAdminPassword
+} from './server/adminSession.js';
+import { handleMediaUpload } from './server/uploadMedia.js';
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
+  if (env.ADMIN_PASSWORD) process.env.ADMIN_PASSWORD ||= env.ADMIN_PASSWORD;
+  if (env.SESSION_SECRET) process.env.SESSION_SECRET ||= env.SESSION_SECRET;
+  if (env.IMAGEKIT_PRIVATE_KEY) process.env.IMAGEKIT_PRIVATE_KEY ||= env.IMAGEKIT_PRIVATE_KEY;
 
   return {
     plugins: [
@@ -14,36 +24,70 @@ export default defineConfig(({ mode }) => {
         name: 'imagekit-api-dev-middleware',
         configureServer(server) {
           server.middlewares.use(async (req, res, next) => {
-            if (req.url === '/api/add-photo' && req.method === 'POST') {
+            if (req.url?.split('?')[0] === '/api/auth') {
+              res.setHeader('Content-Type', 'application/json');
+              res.setHeader('Cache-Control', 'no-store');
+              if (req.method === 'GET') {
+                res.end(JSON.stringify({ authenticated: getAdminSession(req) }));
+                return;
+              }
+              if (req.method === 'DELETE') {
+                clearAdminCookie(req, res);
+                res.end(JSON.stringify({ authenticated: false }));
+                return;
+              }
+              if (req.method !== 'POST') {
+                res.statusCode = 405;
+                res.setHeader('Allow', 'GET, POST, DELETE');
+                res.end(JSON.stringify({ error: 'Method not allowed.' }));
+                return;
+              }
+              if (!adminAuthIsConfigured()) {
+                res.statusCode = 503;
+                res.end(JSON.stringify({ error: 'Set ADMIN_PASSWORD and a SESSION_SECRET of at least 32 characters.' }));
+                return;
+              }
               let body = '';
-              req.on('data', (chunk) => { body += chunk; });
+              let bodyTooLarge = false;
+              req.on('data', (chunk) => {
+                body += chunk;
+                if (body.length > 8192) bodyTooLarge = true;
+              });
               req.on('end', () => {
+                if (bodyTooLarge) {
+                  res.statusCode = 413;
+                  res.end(JSON.stringify({ error: 'Request body is too large.' }));
+                  return;
+                }
                 try {
-                  const newMedia = JSON.parse(body);
-                  const photosFilePath = path.resolve(process.cwd(), 'src/data/photos.js');
-                  let fileContent = fs.readFileSync(photosFilePath, 'utf8');
-
-                  const marker = 'export const photos = [';
-                  if (fileContent.includes(marker)) {
-                    const jsonFormatted = JSON.stringify(newMedia, null, 2);
-                    const indented = jsonFormatted.split('\n').map((l) => '  ' + l).join('\n');
-                    fileContent = fileContent.replace(marker, `${marker}\n${indented},`);
-                    fs.writeFileSync(photosFilePath, fileContent, 'utf8');
+                  const { password } = JSON.parse(body || '{}');
+                  if (!verifyAdminPassword(password)) {
+                    res.statusCode = 401;
+                    res.end(JSON.stringify({ error: 'Invalid administrator password.' }));
+                    return;
                   }
-
-                  res.setHeader('Content-Type', 'application/json');
-                  res.end(JSON.stringify({ success: true, photo: newMedia }));
-                } catch (err) {
-                  res.statusCode = 500;
-                  res.setHeader('Content-Type', 'application/json');
-                  res.end(JSON.stringify({ error: err.message }));
+                  setAdminCookie(req, res, createAdminToken());
+                  res.end(JSON.stringify({ authenticated: true, user: { id: 'admin', name: 'Admin', email: 'admin', role: 'admin' } }));
+                } catch {
+                  res.statusCode = 400;
+                  res.end(JSON.stringify({ error: 'Invalid request body.' }));
                 }
               });
               return;
             }
 
-            if (req.url === '/api/photos') {
-              const privateKey = env.IMAGEKIT_PRIVATE_KEY || process.env.IMAGEKIT_PRIVATE_KEY || env.VITE_IMAGEKIT_PRIVATE_KEY;
+            if (req.url?.split('?')[0] === '/api/add-photo') {
+              const result = await handleMediaUpload(req);
+              res.statusCode = result.status;
+              res.setHeader('Content-Type', 'application/json');
+              res.setHeader('Cache-Control', 'no-store');
+              if (result.allow) res.setHeader('Allow', result.allow);
+              res.end(JSON.stringify(result.body));
+              return;
+            }
+
+            if (req.url?.split('?')[0] === '/api/photos' && req.method === 'GET') {
+              const privateKey = env.IMAGEKIT_PRIVATE_KEY || process.env.IMAGEKIT_PRIVATE_KEY;
               const defaultFolders = [
                 { name: 'Pics', path: '/Pics' },
                 { name: 'Darjeeling', path: '/Darjeeling' },
