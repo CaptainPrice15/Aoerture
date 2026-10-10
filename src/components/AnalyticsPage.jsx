@@ -41,8 +41,27 @@ export const AnalyticsPage = ({
   const [downloadSort, setDownloadSort] = useState('combined'); // 'combined', 'downloads', 'loved'
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [timeFilter, setTimeFilter] = useState('all');
+  const [customStartDate, setCustomStartDate] = useState('');
+  const [customEndDate, setCustomEndDate] = useState('');
   const [toastMsg, setToastMsg] = useState('');
   const [refreshKey, setRefreshKey] = useState(0);
+
+  const analyticsRange = useMemo(() => {
+    if (timeFilter === 'all') return { type: 'all' };
+    if (timeFilter === 'custom') {
+      const start = customStartDate ? new Date(`${customStartDate}T00:00:00`).getTime() : null;
+      const end = customEndDate ? new Date(`${customEndDate}T23:59:59.999`).getTime() : null;
+      return { type: 'custom', start, end };
+    }
+    const days = Number(timeFilter);
+    const startDate = new Date();
+    startDate.setHours(0, 0, 0, 0);
+    startDate.setDate(startDate.getDate() - days + 1);
+    const endDate = new Date();
+    endDate.setHours(23, 59, 59, 999);
+    return { type: 'range', start: startDate.getTime(), end: endDate.getTime() };
+  }, [timeFilter, customStartDate, customEndDate]);
 
   // Listen for live analytics update events
   useEffect(() => {
@@ -68,33 +87,33 @@ export const AnalyticsPage = ({
 
   // Compute analytics summaries
   const summary = useMemo(() => {
-    return getAnalyticsSummary(photos);
-  }, [photos, refreshKey]);
+    return getAnalyticsSummary(photos, analyticsRange);
+  }, [photos, refreshKey, analyticsRange]);
 
   // Compute most viewed
   const allViewedPhotos = useMemo(() => {
-    return getMostViewedPhotos(photos, null);
-  }, [photos, refreshKey]);
+    return getMostViewedPhotos(photos, null, analyticsRange);
+  }, [photos, refreshKey, analyticsRange]);
 
   // Compute most downloaded
   const allDownloadedPhotos = useMemo(() => {
-    return getMostDownloadedPhotos(photos, null);
-  }, [photos, refreshKey]);
+    return getMostDownloadedPhotos(photos, null, analyticsRange);
+  }, [photos, refreshKey, analyticsRange]);
 
   // Compute most loved
   const allLovedPhotos = useMemo(() => {
-    return getMostLovedPhotos(photos, null);
-  }, [photos, refreshKey]);
+    return getMostLovedPhotos(photos, null, analyticsRange);
+  }, [photos, refreshKey, analyticsRange]);
 
   // Compute most time spent
   const allTimeSpentPhotos = useMemo(() => {
-    return getMostTimeSpentPhotos(photos, null);
-  }, [photos, refreshKey]);
+    return getMostTimeSpentPhotos(photos, null, analyticsRange);
+  }, [photos, refreshKey, analyticsRange]);
 
   // Compute category analytics
   const categoryStats = useMemo(() => {
-    return getCategoryAnalytics(photos);
-  }, [photos, refreshKey]);
+    return getCategoryAnalytics(photos, analyticsRange);
+  }, [photos, refreshKey, analyticsRange]);
 
   // Find top category
   const topCategory = categoryStats[0]?.category || 'None';
@@ -369,7 +388,43 @@ export const AnalyticsPage = ({
           </div>
 
           {/* Search & Category Filter */}
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="flex items-center gap-2">
+              <Calendar className="w-3.5 h-3.5 text-purple-500 shrink-0" />
+              <select
+                aria-label="Filter analytics by time"
+                value={timeFilter}
+                onChange={(e) => setTimeFilter(e.target.value)}
+                className="py-2 px-3 rounded-xl text-xs font-semibold bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 focus:outline-none focus:border-purple-500 shadow-xs cursor-pointer"
+              >
+                <option value="all">All time</option>
+                <option value="7">Last 7 days</option>
+                <option value="30">Last 30 days</option>
+                <option value="90">Last 90 days</option>
+                <option value="custom">Custom range</option>
+              </select>
+            </div>
+            {timeFilter === 'custom' && (
+              <div className="flex items-center gap-1.5">
+                <input
+                  aria-label="Start date"
+                  type="date"
+                  value={customStartDate}
+                  max={customEndDate || undefined}
+                  onChange={(e) => setCustomStartDate(e.target.value)}
+                  className="max-w-[140px] py-2 px-2 rounded-xl text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 focus:outline-none focus:border-purple-500 shadow-xs"
+                />
+                <span className="text-xs text-zinc-400">to</span>
+                <input
+                  aria-label="End date"
+                  type="date"
+                  value={customEndDate}
+                  min={customStartDate || undefined}
+                  onChange={(e) => setCustomEndDate(e.target.value)}
+                  className="max-w-[140px] py-2 px-2 rounded-xl text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 focus:outline-none focus:border-purple-500 shadow-xs"
+                />
+              </div>
+            )}
             <div className="relative flex-1 md:w-64">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-400" />
               <input
