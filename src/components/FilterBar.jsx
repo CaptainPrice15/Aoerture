@@ -13,7 +13,8 @@ import {
   Palette,
   CheckSquare,
   Eye,
-  EyeOff
+  EyeOff,
+  Loader2
 } from 'lucide-react';
 import { CATEGORIES } from '../data/photos';
 
@@ -46,6 +47,7 @@ export const FilterBar = ({
   favoritesCount = 0,
   colorFilter = 'All',
   onColorFilterChange,
+  isToneAnalyzing = false,
   isSelectMode = false,
   onToggleSelectMode,
   selectedCount = 0,
@@ -325,6 +327,7 @@ export const FilterBar = ({
               aria-label={`Filter by tone: ${activeColorObj.name}`}
               aria-haspopup="menu"
               aria-expanded={isPaletteOpen}
+              aria-busy={isToneAnalyzing}
               className={`p-1.5 sm:px-2.5 sm:py-1.5 rounded-xl border flex items-center gap-1.5 text-xs transition-all cursor-pointer ${
                 colorFilter !== 'All'
                   ? 'bg-purple-50 dark:bg-purple-950/50 text-purple-700 dark:text-purple-300 border-purple-300 dark:border-purple-800 shadow-xs font-semibold'
@@ -332,6 +335,7 @@ export const FilterBar = ({
               }`}
             >
               <Palette className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
+              {isToneAnalyzing && <Loader2 className="w-3.5 h-3.5 animate-spin text-purple-600 dark:text-purple-400" />}
               <span className={`w-2.5 h-2.5 rounded-full ${activeColorObj.dotClass} shrink-0 ring-1 ring-black/10`} />
               <span className="hidden lg:inline text-[11px]">{activeColorObj.name}</span>
             </button>

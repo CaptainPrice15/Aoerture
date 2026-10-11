@@ -24,47 +24,22 @@ import { ExifDrawer } from './components/ExifDrawer';
 import { Footer } from './components/Footer';
 import { useImageProtection } from './hooks/useImageProtection';
 import { photos as initialPhotos, INITIAL_FOLDERS } from './data/photos';
-import { downloadMedia } from './utils/imagekit';
+import { buildOptimizedUrl, downloadMedia, isVideoSource } from './utils/imagekit';
+import { classifyPhotosForTone } from './utils/toneClassifier';
 import { recordPhotoDownload } from './utils/analytics';
 import { AnalyticsPage } from './components/AnalyticsPage';
 
-const TONE_KEYWORDS = {
-  warm: ['warm', 'gold', 'golden', 'sunset', 'orange', 'yellow', 'sun', 'autumn', 'red', 'dawn', 'sunrise'],
-  emerald: ['green', 'forest', 'trees', 'nature', 'tea', 'valley', 'leaf', 'emerald'],
-  blue: ['water', 'river', 'sky', 'blue', 'ganga', 'ice', 'snow', 'glacier', 'lake', 'ocean'],
-  purple: ['purple', 'neon', 'violet', 'fuchsia', 'vibrant', 'pink', 'magenta'],
-  mono: ['mono', 'black', 'white', 'b&w', 'shadow', 'contrast', 'dark', 'monochrome', 'grayscale', 'grey', 'gray']
+const getToneSampleUrl = (photo) => {
+  const source = photo.thumbnail || photo.src;
+  if (!source) return '';
+  const isVideo = photo.mediaType === 'video' || isVideoSource(photo.src);
+  return buildOptimizedUrl(source, {
+    width: 32,
+    height: 32,
+    quality: 35,
+    asThumbnail: isVideo
+  });
 };
-
-function matchesTone(photo, tone) {
-  const tags = Array.isArray(photo.tags)
-    ? photo.tags
-    : typeof photo.tags === 'string'
-      ? photo.tags.split(/[;,]/)
-      : [];
-  const text = [
-    photo.title,
-    photo.category,
-    photo.description,
-    photo.location,
-    photo.folder,
-    photo.folderPath,
-    photo.src,
-    ...tags
-  ].filter(Boolean).join(' ').toLowerCase();
-  const category = String(photo.category || '').toLowerCase();
-
-  // Keep the existing location-based defaults for the gallery's location folders,
-  // while allowing explicit tone words from any photo metadata to match as well.
-  const categoryMatches = {
-    warm: ['darjeeling', 'kedarnath', 'badrinath'],
-    emerald: ['sikkim', 'nature'],
-    blue: ['haridwar'],
-    purple: ['pics', 'videos']
-  };
-  return (categoryMatches[tone] || []).includes(category) ||
-    (TONE_KEYWORDS[tone] || []).some((keyword) => text.includes(keyword));
-}
 
 // Code-split heavy modals and Lightbox to drastically reduce initial mobile load time
 const LightboxModal = lazy(() => import('./components/LightboxModal').then((m) => ({ default: m.LightboxModal })));
@@ -112,6 +87,7 @@ function GalleryApp() {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('featured');
   const [colorFilter, setColorFilter] = useState('All');
+  const [toneAnalysis, setToneAnalysis] = useState({ key: 'All', matchedIds: new Set(), loading: false, completed: 0, total: 0 });
   const [visibleCount, setVisibleCount] = useState(20);
   const [isSelectMode, setIsSelectMode] = useState(false);
   const [selectedPhotoIds, setSelectedPhotoIds] = useState(() => new Set());
@@ -351,7 +327,7 @@ function GalleryApp() {
   }, [photosList, availableCategories]);
 
   // Filter and sort photos
-  const filteredPhotos = useMemo(() => {
+  const toneCandidates = useMemo(() => {
     return photosList
       .filter((photo) => {
         // Favorites filter
@@ -373,11 +349,6 @@ function GalleryApp() {
           const matchCategory = (photo.category || '').toLowerCase() === activeNorm;
           const matchFolder = (photo.folder || '').toLowerCase() === activeNorm || (photo.folderPath || '').toLowerCase() === `/${activeNorm}`;
           if (!matchCategory && !matchFolder) return false;
-        }
-
-        // Chromatic Color Filter match
-        if (colorFilter && colorFilter !== 'All') {
-          if (!matchesTone(photo, colorFilter)) return false;
         }
 
         // Search match
@@ -413,7 +384,58 @@ function GalleryApp() {
         }
         return 0;
       });
-  }, [photosList, activeCategory, searchQuery, sortBy, showFavoritesOnly, favorites, selectedFolderPath, colorFilter]);
+  }, [photosList, activeCategory, searchQuery, sortBy, showFavoritesOnly, favorites, selectedFolderPath]);
+
+  const toneCandidateKey = useMemo(
+    () => toneCandidates.map((photo) => `${photo.id}:${photo.src || ''}:${photo.thumbnail || ''}:${photo.updatedAt || ''}`).join('|'),
+    [toneCandidates]
+  );
+  const toneRequestKey = colorFilter === 'All' ? 'All' : `${colorFilter}|${toneCandidateKey}`;
+
+  useEffect(() => {
+    if (!colorFilter || colorFilter === 'All') {
+      setToneAnalysis({ key: 'All', matchedIds: new Set(), loading: false, completed: 0, total: 0 });
+      return undefined;
+    }
+
+    let cancelled = false;
+    setToneAnalysis({ key: toneRequestKey, matchedIds: new Set(), loading: true, completed: 0, total: toneCandidates.length });
+
+    classifyPhotosForTone(toneCandidates, colorFilter, {
+      concurrency: 4,
+      getSampleUrl: getToneSampleUrl,
+      onProgress: (completed, total) => {
+        if (!cancelled && (completed === total || completed % 8 === 0)) {
+          setToneAnalysis((current) => current.key === toneRequestKey
+            ? { ...current, completed, total }
+            : current);
+        }
+      }
+    }).then((matchedIds) => {
+      if (!cancelled) {
+        setToneAnalysis({ key: toneRequestKey, matchedIds, loading: false, completed: toneCandidates.length, total: toneCandidates.length });
+      }
+    }).catch(() => {
+      if (!cancelled) {
+        setToneAnalysis({ key: toneRequestKey, matchedIds: new Set(), loading: false, completed: toneCandidates.length, total: toneCandidates.length });
+      }
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [colorFilter, toneCandidates, toneRequestKey, toneCandidateKey]);
+
+  const isToneAnalyzing = colorFilter !== 'All' && (toneAnalysis.key !== toneRequestKey || toneAnalysis.loading);
+  const toneProgress = toneAnalysis.key === toneRequestKey
+    ? { completed: toneAnalysis.completed, total: toneAnalysis.total }
+    : { completed: 0, total: toneCandidates.length };
+
+  const filteredPhotos = useMemo(() => {
+    if (!colorFilter || colorFilter === 'All') return toneCandidates;
+    if (toneAnalysis.key !== toneRequestKey || toneAnalysis.loading) return [];
+    return toneCandidates.filter((photo) => toneAnalysis.matchedIds.has(photo.id));
+  }, [colorFilter, toneCandidates, toneAnalysis, toneRequestKey]);
 
   // 1b. Reliably resolve deep-linked photo across categories, filters, and async ImageKit sync
   useEffect(() => {
@@ -725,6 +747,7 @@ function GalleryApp() {
           favoritesCount={favorites?.length || 0}
           colorFilter={colorFilter}
           onColorFilterChange={setColorFilter}
+          isToneAnalyzing={isToneAnalyzing}
           isSelectMode={isSelectMode}
           onToggleSelectMode={(mode) => {
             setIsSelectMode(mode);
@@ -736,7 +759,14 @@ function GalleryApp() {
         />
 
         {/* If in Folders view with no specific folder selected: show Folders Grid */}
-        {activeCategory === 'Folders' && !selectedFolderPath ? (
+        {isToneAnalyzing ? (
+          <div role="status" aria-live="polite" className="max-w-7xl mx-auto w-full px-4 py-24 flex flex-col items-center justify-center gap-3 text-center text-zinc-500 dark:text-zinc-400">
+            <Loader2 className="w-7 h-7 animate-spin text-purple-600 dark:text-purple-400" />
+            <p className="text-sm font-medium">
+              Analyzing image colors ({toneProgress.completed} of {toneProgress.total})…
+            </p>
+          </div>
+        ) : activeCategory === 'Folders' && !selectedFolderPath && colorFilter === 'All' ? (
           <FolderGrid
             folders={availableFolders}
             onSelectFolder={(path) => setSelectedFolderPath(path)}
