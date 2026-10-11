@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import {
   Search,
   X,
@@ -53,21 +54,56 @@ export const FilterBar = ({
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isPaletteOpen, setIsPaletteOpen] = useState(false);
+  const [palettePosition, setPalettePosition] = useState({ top: 0, left: 8 });
   const dropdownRef = useRef(null);
   const paletteRef = useRef(null);
+  const paletteTriggerRef = useRef(null);
+  const paletteMenuRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setIsDropdownOpen(false);
       }
-      if (paletteRef.current && !paletteRef.current.contains(e.target)) {
+      if (
+        paletteRef.current &&
+        !paletteRef.current.contains(e.target) &&
+        !paletteMenuRef.current?.contains(e.target)
+      ) {
         setIsPaletteOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    if (!isPaletteOpen) return undefined;
+
+    const updatePalettePosition = () => {
+      const trigger = paletteTriggerRef.current;
+      if (!trigger) return;
+
+      const rect = trigger.getBoundingClientRect();
+      const menuWidth = Math.min(192, window.innerWidth - 16);
+      const menuHeight = 245;
+      const left = Math.max(8, Math.min(rect.right - menuWidth, window.innerWidth - menuWidth - 8));
+      const below = rect.bottom + 8;
+      const top = below + menuHeight <= window.innerHeight - 8
+        ? below
+        : Math.max(8, rect.top - menuHeight - 8);
+
+      setPalettePosition({ top, left });
+    };
+
+    updatePalettePosition();
+    window.addEventListener('resize', updatePalettePosition);
+    window.addEventListener('scroll', updatePalettePosition, true);
+    return () => {
+      window.removeEventListener('resize', updatePalettePosition);
+      window.removeEventListener('scroll', updatePalettePosition, true);
+    };
+  }, [isPaletteOpen]);
 
   const isFoldersActive = activeCategory === 'Folders';
   const activeFolderObj = activeFolder ? folders.find((f) => f.path === activeFolder) : null;
@@ -283,8 +319,12 @@ export const FilterBar = ({
           {/* Chromatic Color Palette Filter Trigger */}
           <div className="relative shrink-0" ref={paletteRef}>
             <button
+              ref={paletteTriggerRef}
               onClick={() => setIsPaletteOpen((prev) => !prev)}
               title={`Filter by color: ${activeColorObj.name}`}
+              aria-label={`Filter by tone: ${activeColorObj.name}`}
+              aria-haspopup="menu"
+              aria-expanded={isPaletteOpen}
               className={`p-1.5 sm:px-2.5 sm:py-1.5 rounded-xl border flex items-center gap-1.5 text-xs transition-all cursor-pointer ${
                 colorFilter !== 'All'
                   ? 'bg-purple-50 dark:bg-purple-950/50 text-purple-700 dark:text-purple-300 border-purple-300 dark:border-purple-800 shadow-xs font-semibold'
@@ -297,8 +337,14 @@ export const FilterBar = ({
             </button>
 
             {/* Color Swatches Popover */}
-            {isPaletteOpen && (
-              <div className="absolute right-0 sm:left-0 mt-2 p-2 w-48 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 shadow-2xl z-50 animate-fade-in flex flex-col gap-1">
+            {isPaletteOpen && createPortal(
+              <div
+                ref={paletteMenuRef}
+                role="menu"
+                aria-label="Filter by tone"
+                style={{ top: palettePosition.top, left: palettePosition.left }}
+                className="fixed p-2 w-48 max-w-[calc(100vw-1rem)] rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 shadow-2xl z-[100] animate-fade-in flex flex-col gap-1"
+              >
                 <span className="px-2 py-1 text-[10px] font-bold text-slate-400 dark:text-zinc-500 uppercase tracking-wider">
                   Chromatic Tone
                 </span>
@@ -309,6 +355,8 @@ export const FilterBar = ({
                       if (onColorFilterChange) onColorFilterChange(pal.id);
                       setIsPaletteOpen(false);
                     }}
+                    role="menuitemradio"
+                    aria-checked={colorFilter === pal.id}
                     className={`flex items-center justify-between px-2.5 py-1.5 rounded-xl text-xs transition-colors cursor-pointer ${
                       colorFilter === pal.id
                         ? 'bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 font-semibold'
@@ -322,7 +370,8 @@ export const FilterBar = ({
                     {colorFilter === pal.id && <span className="text-[10px] font-bold text-purple-600">✓</span>}
                   </button>
                 ))}
-              </div>
+              </div>,
+              document.body
             )}
           </div>
 
