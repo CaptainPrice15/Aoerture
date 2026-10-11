@@ -28,6 +28,44 @@ import { downloadMedia } from './utils/imagekit';
 import { recordPhotoDownload } from './utils/analytics';
 import { AnalyticsPage } from './components/AnalyticsPage';
 
+const TONE_KEYWORDS = {
+  warm: ['warm', 'gold', 'golden', 'sunset', 'orange', 'yellow', 'sun', 'autumn', 'red', 'dawn', 'sunrise'],
+  emerald: ['green', 'forest', 'trees', 'nature', 'tea', 'valley', 'leaf', 'emerald'],
+  blue: ['water', 'river', 'sky', 'blue', 'ganga', 'ice', 'snow', 'glacier', 'lake', 'ocean'],
+  purple: ['purple', 'neon', 'violet', 'fuchsia', 'vibrant', 'pink', 'magenta'],
+  mono: ['mono', 'black', 'white', 'b&w', 'shadow', 'contrast', 'dark', 'monochrome', 'grayscale', 'grey', 'gray']
+};
+
+function matchesTone(photo, tone) {
+  const tags = Array.isArray(photo.tags)
+    ? photo.tags
+    : typeof photo.tags === 'string'
+      ? photo.tags.split(/[;,]/)
+      : [];
+  const text = [
+    photo.title,
+    photo.category,
+    photo.description,
+    photo.location,
+    photo.folder,
+    photo.folderPath,
+    photo.src,
+    ...tags
+  ].filter(Boolean).join(' ').toLowerCase();
+  const category = String(photo.category || '').toLowerCase();
+
+  // Keep the existing location-based defaults for the gallery's location folders,
+  // while allowing explicit tone words from any photo metadata to match as well.
+  const categoryMatches = {
+    warm: ['darjeeling', 'kedarnath', 'badrinath'],
+    emerald: ['sikkim', 'nature'],
+    blue: ['haridwar'],
+    purple: ['pics', 'videos']
+  };
+  return (categoryMatches[tone] || []).includes(category) ||
+    (TONE_KEYWORDS[tone] || []).some((keyword) => text.includes(keyword));
+}
+
 // Code-split heavy modals and Lightbox to drastically reduce initial mobile load time
 const LightboxModal = lazy(() => import('./components/LightboxModal').then((m) => ({ default: m.LightboxModal })));
 const AboutModal = lazy(() => import('./components/AboutModal').then((m) => ({ default: m.AboutModal })));
@@ -339,33 +377,7 @@ function GalleryApp() {
 
         // Chromatic Color Filter match
         if (colorFilter && colorFilter !== 'All') {
-          const text = `${photo.title || ''} ${photo.category || ''} ${photo.description || ''} ${(photo.tags || []).join(' ')}`.toLowerCase();
-          if (colorFilter === 'warm') {
-            const isWarm =
-              ['darjeeling', 'kedarnath', 'badrinath'].includes(photo.category?.toLowerCase()) ||
-              ['warm', 'gold', 'sunset', 'orange', 'yellow', 'sun', 'autumn', 'red'].some((w) => text.includes(w));
-            if (!isWarm) return false;
-          } else if (colorFilter === 'emerald') {
-            const isEmerald =
-              ['sikkim', 'nature'].includes(photo.category?.toLowerCase()) ||
-              ['green', 'forest', 'trees', 'nature', 'tea', 'valley', 'leaf', 'mountain'].some((w) => text.includes(w));
-            if (!isEmerald) return false;
-          } else if (colorFilter === 'blue') {
-            const isBlue =
-              ['haridwar'].includes(photo.category?.toLowerCase()) ||
-              ['water', 'river', 'sky', 'blue', 'ganga', 'ice', 'snow', 'glacier', 'lake'].some((w) => text.includes(w));
-            if (!isBlue) return false;
-          } else if (colorFilter === 'purple') {
-            const isPurple =
-              ['pics', 'videos'].includes(photo.category?.toLowerCase()) ||
-              ['purple', 'neon', 'violet', 'fuchsia', 'night', 'vibrant', 'pink'].some((w) => text.includes(w));
-            if (!isPurple) return false;
-          } else if (colorFilter === 'mono') {
-            const isMono = ['mono', 'black', 'white', 'b&w', 'shadow', 'contrast', 'dark', 'monochrome'].some((w) =>
-              text.includes(w)
-            );
-            if (!isMono) return false;
-          }
+          if (!matchesTone(photo, colorFilter)) return false;
         }
 
         // Search match
